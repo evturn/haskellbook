@@ -176,7 +176,27 @@ data Quad =
   deriving (Eq, Show)
 
 eQuad :: Either Quad Quad
--- eQuad
+-- 4 + 4
+-- 8 different forms
 
 prodQuad :: (Quad, Quad)
--- prodQuad (1 + 1 + 1 + 1) * (1 + 1 + 1 + 1) = 16 different forms
+-- 4 * 4
+-- 16 different forms
+
+funcQuad :: Quad -> Quad
+-- 4 ^ 4
+-- 256 different forms
+
+funcTBool :: (Bool, Bool, Bool)
+-- 2 * 2 * 2
+-- 8 different forms
+
+gTwo :: Bool -> Bool -> Bool
+-- (2 ^ 2) ^ 2
+-- 2 ^ (2 * 2)
+-- 8 different forms
+
+fTwo :: Bool -> Quad -> Quad
+-- (4 ^ 4) ^ 2
+-- 4 ^ (4 * 2)
+-- 65536 different forms

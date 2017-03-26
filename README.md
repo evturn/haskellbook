@@ -125,7 +125,7 @@
 - [x] Product types
 - [x] Normal form
 - [x] Constructing and deconstructing values
-- [ ] Function type is exponential
+- [x] Function type is exponential
 - [ ] Higher-kinded datatypes
 - [ ] Lists are polymorphic
 - [ ] Binary Tree
