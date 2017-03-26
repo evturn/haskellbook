@@ -40,7 +40,7 @@ testTree' =
 
 mapExpected = Node (Node Leaf 4 Leaf) 2 (Node Leaf 5 Leaf)
 
-mapOkay = if mapTree (+1) testTree' == mapExpected then print "Yes things were fine." else error "Test found things to be kinda bad."
+mapOkay = if mapTree (+1) testTree' == mapExpected  then print "Yes things were fine." else error "Test found things to be kinda bad."
 
 --------------------------
 
@@ -67,6 +67,13 @@ testInorder = if inorder testTree == [1, 2, 3] then putStrLn "Inorder was totall
 
 testPostorder :: IO ()
 testPostorder = if postorder testTree == [1, 3, 2] then putStrLn "Postorder was cool" else putStrLn "Postorder not cool."
+
+---------------
+
+
+foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
+foldTree _ acc Leaf = acc
+foldTree f acc (Node left x right) = f x (foldTree f acc left) (foldTree f acc right)
 
 main :: IO ()
 main = do
