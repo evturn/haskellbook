@@ -126,8 +126,8 @@
 - [x] Normal form
 - [x] Constructing and deconstructing values
 - [x] Function type is exponential
-- [ ] Higher-kinded datatypes
-- [ ] Lists are polymorphic
+- [x] Higher-kinded datatypes
+- [x] Lists are polymorphic
 - [ ] Binary Tree
 
 ##### 12 Signaling adversity
