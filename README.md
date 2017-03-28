@@ -128,7 +128,7 @@
 - [x] Function type is exponential
 - [x] Higher-kinded datatypes
 - [x] Lists are polymorphic
-- [ ] Binary Tree
+- [x] Binary Tree
 
 ##### 12 Signaling adversity
 - [ ] Signaling adversity
