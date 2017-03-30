@@ -1,3 +1,14 @@
+import Data.Char (isUpper, toLower, toUpper)
+
+type Digit      = Char
+type PressCount = Int
+
+data Button = Button (Digit, String)
+            deriving (Eq, Show)
+
+data Keypad = Keypad [Button]
+            deriving (Eq, Show)
+
 -- -----------------------------------------
 -- |   1        |    2 ABC    |   3 DEF    |
 -- _________________________________________
@@ -8,52 +19,46 @@
 -- |   * ^      |    0 + _    |   # .,     |
 -- -----------------------------------------
 
+buttonDigits :: String
+buttonDigits = ['0'..'9'] ++ "*#"
+
+buttonChars :: String
+buttonChars = ['a'..'z'] ++ ['A'..'Z'] ++ ['0'..'9'] ++ " ."
+
+phoneKeypad :: [Button]
+phoneKeypad =
+  [ Button ('1', "1"),    Button ('2', "ABC"), Button ('3', "DEF"),
+    Button ('4', "GHI"),  Button ('5', "JKL"), Button ('6', "MNO"),
+    Button ('7', "PQRS"), Button ('8', "TUV"), Button ('9', "WXYZ"),
+    Button ('*', ""),     Button ('0', " "),   Button ('#', ".," ) ]
+
 -- 2     -> 'A'
 -- 22    -> 'B'
 -- 222   -> 'C'
 -- 2222  -> '2'
 -- 22222 -> 'A'
 
-type Digit = Char
-type PressCount = Int
-
-
-data Button = One | Two | Three | Four
-            | Five | Six | Seven | Eight
-            | Nine | Star | Zero | Pound
-            deriving (Eq, Show)
-
-button :: Button -> (Digit, String)
-button a
-  | a == One   = ('1', "1")
-  | a == Two   = ('2', "ABC")
-  | a == Three = ('3', "DEF")
-  | a == Four  = ('4', "GHI")
-  | a == Five  = ('5', "JKL")
-  | a == Six   = ('6', "MNO")
-  | a == Seven = ('7', "PQRS")
-  | a == Eight = ('8', "TUV")
-  | a == Nine  = ('9', "WXYZ")
-  | a == Star  = ('*', "*^")
-  | a == Zero  = ('0', "+_")
-  | a == Pound = ('#', ".,")
-  | otherwise  = button Zero
-
-
-data TextEntry = Selection (Button, PressCount) deriving (Eq, Show)
-data Keypad = Keypad [Button] deriving (Eq, Show)
-
 convo :: [String]
 convo =
-   ["Wanna play a 36 hour game of tackle football",
-    "I definitely do",
-    "Ok, great",
-    "Wait, can we used spiked bats?",
-    "Of course, you don't have to ask",
-    "Do I need to wear goggles though?",
-    "Are you for real?",
-    "Yes",
-    "It's called football, so yes, definitely wear googgles."]
+  ["We shoild play a 36 hour game of tackle football",
+    "We definitely should",
+    "Ok great",
+    "I will bring a spiked bat",
+    "Remember to wear a batman costume",
+    "Obviously",
+    "Please remember",
+    "Remember the Alamo",
+    "Remember to keep all personal and carry on items with you at all times"]
 
--- reverseTaps :: Keypad -> Char -> [TextEntry]
--- reverseTaps = undefined
+testChar :: Char -> String -> Bool
+testChar c s = elem (toUpper c) s
+
+charInButtonChars :: Char -> Button -> [Char]
+charInButtonChars char (Button (d, c)) = if testChar char c then [d] else []
+
+matchButton :: [Button] -> Char -> [Char]
+matchButton [] _ = ['0']
+matchButton (x:xs) c = (charInButtonChars c x) ++ (matchButton xs c)
+
+reverseTaps :: [Button] -> Char -> [(Digit, PressCount)]
+reverseTaps keypad char = [((head $ matchButton keypad char), 2)]
