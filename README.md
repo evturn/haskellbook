@@ -131,8 +131,8 @@
 - [x] Binary Tree
 
 ##### 12 Signaling adversity
-- [ ] Signaling adversity
-- [ ] How I learned to stop worrying and love Nothing
+- [x] Signaling adversity
+- [x] How I learned to stop worrying and love Nothing
 - [ ] Bleating either
 - [ ] Kinds, a thousand stars in your types
 

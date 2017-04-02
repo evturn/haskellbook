@@ -1,0 +1,4 @@
+-- datatype
+-- How we declare and create data for our functions to receive as inputs.
+-- Made up of a type constuctor and zero or more data constructors
+--   which each have zero or more arguments.
