@@ -133,7 +133,7 @@
 ##### 12 Signaling adversity
 - [x] Signaling adversity
 - [x] How I learned to stop worrying and love Nothing
-- [ ] Bleating either
+- [x] Bleating either
 - [ ] Kinds, a thousand stars in your types
 
 ##### 13 Building projects
