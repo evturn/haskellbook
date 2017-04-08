@@ -20,6 +20,11 @@ countTheBeforeVowel = counter . words
       | otherwise                            = 0 + counter (x2:xs)
     counter _ = 0
 
+isVowel :: Char -> Bool
+isVowel = (flip elem) vowels
+
+counVowels :: String -> Integer
+counVowels = fromIntegral . length . filter isVowel
 
 main :: IO ()
-main = print $ countTheBeforeVowel "Where are the oranges I left in the upper cabinet"
+main = print $ counVowels "Where are the oranges I left in the upper cabinet"
