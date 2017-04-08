@@ -23,8 +23,8 @@ countTheBeforeVowel = counter . words
 isVowel :: Char -> Bool
 isVowel = (flip elem) vowels
 
-counVowels :: String -> Integer
-counVowels = fromIntegral . length . filter isVowel
+countVowels :: String -> Integer
+countVowels = fromIntegral . length . filter isVowel
 
 main :: IO ()
-main = print $ counVowels "Where are the oranges I left in the upper cabinet"
+main = print $ countVowels "Where are the oranges I left in the upper cabinet"
