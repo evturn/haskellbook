@@ -134,11 +134,11 @@
 - [x] Signaling adversity
 - [x] How I learned to stop worrying and love Nothing
 - [x] Bleating either
-- [ ] Kinds, a thousand stars in your types
+- [x] Kinds, a thousand stars in your types
 
 ##### 13 Building projects
-- [ ] Modules
-- [ ] Making packages with Stack
+- [x] Modules
+- [x] Making packages with Stack
 - [ ] Working with a basic project
 - [ ] Making our project a library
 - [ ] Module exports
