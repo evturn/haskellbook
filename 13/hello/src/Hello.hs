@@ -1,4 +1,6 @@
-module Hello where
+module Hello
+  ( sayHello )
+  where
 
 sayHello :: IO ()
 sayHello = do

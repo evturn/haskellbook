@@ -140,8 +140,8 @@
 - [x] Modules
 - [x] Making packages with Stack
 - [x] Working with a basic project
-- [ ] Making our project a library
-- [ ] Module exports
+- [x] Making our project a library
+- [x] Module exports
 - [ ] More on importing modules
 - [ ] Making our program interactive
 - [ ] do syntax and IO
