@@ -3,8 +3,6 @@ version:             0.1.0.0
 synopsis:            Simple project template from stack
 description:         Please see README.md
 homepage:            https://github.com/evturn/haskell-programming
-license:             BSD3
-license-file:        LICENSE
 author:              Evan Turner
 maintainer:          ev@evturn.com
 copyright:           2017, Ev
