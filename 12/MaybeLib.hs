@@ -49,3 +49,12 @@ listToMaybe (x:_) = Just x
 maybeToList :: Maybe a -> [a]
 maybeToList Nothing  = []
 maybeToList (Just x) = [x]
+
+-- >>> catMaybes [Just 1, Nothing, Just 2]
+-- [1, 2]
+-- >>> catMaybes [Nothing, Nothing, Nothing]
+-- []
+catMaybes :: [Maybe a] -> [a]
+catMaybes []           = []
+catMaybes (Nothing:xs) = catMaybes xs
+catMaybes (Just x:xs)  = x : catMaybes xs
