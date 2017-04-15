@@ -1,11 +1,9 @@
-module MaybeLib where
-
 -- >>> isJust (Just 1)
 -- True
 -- >>> isJust Nothing
 -- False
 isJust :: Maybe a -> Bool
-isJust Nothing = False
+isJust Nothing  = False
 isJust (Just a) = True
 
 -- >>> isNothing (Just 1)
@@ -14,7 +12,7 @@ isJust (Just a) = True
 -- True
 isNothing :: Maybe a -> Bool
 isNothing (Just _) = False
-isNothing Nothing = True
+isNothing Nothing  = True
 
 
 -- >>> mayybee 0 (+1) Nothing
@@ -23,7 +21,7 @@ isNothing Nothing = True
 -- 2
 
 mayybee :: b -> (a -> b) -> Maybe a -> b
-mayybee b _ Nothing = b
+mayybee b _ Nothing  = b
 mayybee b f (Just a) = f a
 
 
@@ -32,8 +30,22 @@ mayybee b f (Just a) = f a
 -- >>> fromMaybe 0 (Just 1)
 -- 1
 fromMaybe :: a -> Maybe a -> a
-fromMaybe x Nothing = x
+fromMaybe x Nothing  = x
 fromMaybe _ (Just a) = a
 
-main :: IO ()
-main = print (fromMaybe 0 (Just 12))
+-- >>> listToMaybe [1, 2, 3]
+-- Just 1
+-- >>> listToMaybe []
+-- Nothing
+listToMaybe :: [a] -> Maybe a
+listToMaybe []    = Nothing
+listToMaybe (x:_) = Just x
+
+
+-- >>> maybeToList (Just 1)
+-- [1]
+-- >>> maybeToList Nothing
+-- []
+maybeToList :: Maybe a -> [a]
+maybeToList Nothing  = []
+maybeToList (Just x) = [x]
