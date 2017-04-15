@@ -25,3 +25,9 @@ either' = doIt
   where
     doIt f1 _ (Left a)  = f1 a
     doIt _ f2 (Right b) = f2 b
+
+eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe'' = doIt
+  where
+    doIt _ (Left a)  = Nothing
+    doIt f (Right b) = Just (f b)
