@@ -65,6 +65,7 @@ catMaybes (Just x:xs)  = x : catMaybes xs
 -- Nothing
 flipMaybe :: [Maybe a] -> Maybe [a]
 flipMaybe xs = foldr f (Just []) xs
-  where f _ Nothing         = Nothing
-        f Nothing _         = Nothing
-        f (Just a) (Just b) = Just (a:b)
+  where
+    f _ Nothing         = Nothing
+    f Nothing _         = Nothing
+    f (Just a) (Just b) = Just (a:b)
