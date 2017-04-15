@@ -19,3 +19,9 @@ partitionEithers' = foldr f ([], [])
 eitherMaybe' :: (b -> c) -> Either a b -> Maybe c
 eitherMaybe' _ (Left _)  = Nothing
 eitherMaybe' f (Right b) = Just (f b)
+
+either' :: (a -> c) -> (b -> c) -> Either a b -> c
+either' = doIt
+  where
+    doIt f1 _ (Left a)  = f1 a
+    doIt _ f2 (Right b) = f2 b
