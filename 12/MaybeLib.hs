@@ -58,3 +58,13 @@ catMaybes :: [Maybe a] -> [a]
 catMaybes []           = []
 catMaybes (Nothing:xs) = catMaybes xs
 catMaybes (Just x:xs)  = x : catMaybes xs
+
+-- >>> flipMaybe [Just 1, Just 2, Just 3]
+-- Just [1, 2, 3]
+-- >>> flipMaybe [Just 1, Nothing, Just 3]
+-- Nothing
+flipMaybe :: [Maybe a] -> Maybe [a]
+flipMaybe xs = foldr f (Just []) xs
+  where f _ Nothing         = Nothing
+        f Nothing _         = Nothing
+        f (Just a) (Just b) = Just (a:b)
