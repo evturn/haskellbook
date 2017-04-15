@@ -139,7 +139,7 @@
 ##### 13 Building projects
 - [x] Modules
 - [x] Making packages with Stack
-- [ ] Working with a basic project
+- [x] Working with a basic project
 - [ ] Making our project a library
 - [ ] Module exports
 - [ ] More on importing modules
