@@ -144,7 +144,7 @@
 - [x] Module exports
 - [x] More on importing modules
 - [x] Making our program interactive
-- [ ] do syntax and IO
+- [x] do syntax and IO
 - [ ] Hangman game
 - [ ] Step One: Importing modules
 - [ ] Step Two: Generating a word list
