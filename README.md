@@ -142,8 +142,8 @@
 - [x] Working with a basic project
 - [x] Making our project a library
 - [x] Module exports
-- [ ] More on importing modules
-- [ ] Making our program interactive
+- [x] More on importing modules
+- [x] Making our program interactive
 - [ ] do syntax and IO
 - [ ] Hangman game
 - [ ] Step One: Importing modules
