@@ -145,9 +145,9 @@
 - [x] More on importing modules
 - [x] Making our program interactive
 - [x] do syntax and IO
-- [ ] Hangman game
-- [ ] Step One: Importing modules
-- [ ] Step Two: Generating a word list
+- [x] Hangman game
+- [x] Step One: Importing modules
+- [x] Step Two: Generating a word list
 - [ ] Step Three: Making a puzzle
 - [ ] Adding a newtype
 
