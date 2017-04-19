@@ -46,4 +46,7 @@ instance Show Puzzle where
 freshPuzzle :: String -> Puzzle
 freshPuzzle s = (Puzzle s ((map (const Nothing)) s) [])
 
+charInWord :: Puzzle -> Char -> Bool
+charInWord (Puzzle s _ _) c = elem c s
+
 
