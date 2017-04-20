@@ -49,4 +49,5 @@ freshPuzzle s = (Puzzle s ((map (const Nothing)) s) [])
 charInWord :: Puzzle -> Char -> Bool
 charInWord (Puzzle s _ _) c = elem c s
 
-
+alreadyGuessed :: Puzzle -> Char -> Bool
+alreadyGuessed (Puzzle _ _ g) c = elem c g
