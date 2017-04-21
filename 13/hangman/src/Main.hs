@@ -36,6 +36,10 @@ randomWord wl = do
 randomWord' :: IO String
 randomWord' = gameWords >>= randomWord
 
+renderPuzzleChar :: Maybe Char -> Char
+renderPuzzleChar Nothing  = '_'
+renderPuzzleChar (Just c) = c
+
 data Puzzle = Puzzle String [Maybe Char] [Char]
 
 instance Show Puzzle where
@@ -44,10 +48,33 @@ instance Show Puzzle where
     ++ " Guessed so far: " ++ guessed
 
 freshPuzzle :: String -> Puzzle
-freshPuzzle s = (Puzzle s ((map (const Nothing)) s) [])
+freshPuzzle w = (Puzzle w ((map (const Nothing)) w) [])
 
 charInWord :: Puzzle -> Char -> Bool
-charInWord (Puzzle s _ _) c = elem c s
+charInWord (Puzzle w _ _) c = elem c w
 
 alreadyGuessed :: Puzzle -> Char -> Bool
 alreadyGuessed (Puzzle _ _ g) c = elem c g
+
+fillInCharacter :: Puzzle -> Char -> Puzzle
+fillInCharacter (Puzzle word filledInSoFar charsGuessed) c =
+  Puzzle word newFilledInSoFar (c : charsGuessed)
+  where zipFn guessed wordChar guessChar =
+      if wordChar == guessed
+      then Just wordChar
+      else guessChar
+    newFilledInSoFar = zipWith (zipFn c) word filledInSoFar
+
+handleGuess :: Puzzle -> Char -> IO Puzzle
+handleGuess puzzle guess = do
+  putStrLn $ "Your guess was: " ++ [guess]
+  case (charInWord puzzle guess, alreadyGuessed puzzle guess) of
+    (_, True) -> do
+      putStrLn "You already guessed that, pick something else."
+      return puzzle
+    (True, _) -> do
+      putStrLn "This character was in the word, so congrats on that."
+      return puzzle
+    (False, _) -> do
+      putStrLn "This character does not appear in the word, try again."
+      return (fillInCharacter puzzle guess)
