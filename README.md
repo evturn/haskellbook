@@ -149,7 +149,7 @@
 - [x] Step One: Importing modules
 - [x] Step Two: Generating a word list
 - [x] Step Three: Making a puzzle
-- [ ] Adding a newtype
+- [x] Adding a newtype
 
 ##### 14 Testing
 - [ ] Testing
