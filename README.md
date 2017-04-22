@@ -158,14 +158,74 @@
 - [ ] Enter QuickCheck
 - [ ] Morse code
 - [ ] Kicking around QuickCheck
-- [ ] 
  
 ##### 15 Monoid, Semigroup
+- [ ] Monoids and semigroups
+- [ ] What we talk about when we talk about algebras
+- [ ] Monoid
+- [ ] How Monoid is defined in Haskell
+- [ ] Examples of using Monoid
+- [ ] Why bother?
+- [ ] Laws
+- [ ] Different instance, same representation
+- [ ] Reusing algebras by asking for algebras
+- [ ] Madness
+- [ ] Better living through QuickCheck
+- [ ] Semigroup
+
 ##### 16 Functor
+- [ ] Functor
+- [ ] What's a functor?
+- [ ] There's a whole lot of fmap going round
+- [ ] Let's talk about ⨍, baby
+- [ ] Functor Laws
+- [ ] The Good, the Bad, and the Ugly
+- [ ] Commonly used functors
+- [ ] Transforming the unapplied type argument
+- [ ] QuickChecking Functor instances
+- [ ] Exercises: Instances of Func
+- [ ] Ignoring possibilities
+- [ ] A somewhat surprising functor
+- [ ] More structure, more functors
+- [ ] IO Functor
+- [ ] What if we want to do something different?
+- [ ] Functors are unique to a datatype
+
 ##### 17 Applicitive
+- [ ] Applicative
+- [ ] Defining Applicative
+- [ ] Functor vs. Applicative
+- [ ] Applicative functors are monoidal functors
+- [ ] Applicative in use
+- [ ] Applicative laws
+- [ ] You knew this was coming
+- [ ] ZipList Monoid
+
 ##### 18 Monad
+- [ ] Monad
+- [ ] Sorry - Monad is not a burrito
+- [ ] Do syntax and monads
+- [ ] Examples of Monad use
+- [ ] Monad laws
+- [ ] Application and composition
+
 ##### 19 Applying structure
+- [ ] Applied structure
+- [ ] Monoid
+- [ ] Functor
+- [ ] Applicative
+- [ ] Monad
+- [ ] An end-to-end example: URL shortener
+- [ ] That's a wrap!
+
 ##### 20 Foldable
+- [ ] Foldable
+- [ ] The Foldable class
+- [ ] Revenge of the monoids
+- [ ] Demonstrating Foldable instances
+- [ ] Some basic derived operations
+
+
 ##### 21 Traversable
 ##### 22 Reader
 ##### 23 State
