@@ -148,7 +148,7 @@
 - [x] Hangman game
 - [x] Step One: Importing modules
 - [x] Step Two: Generating a word list
-- [ ] Step Three: Making a puzzle
+- [x] Step Three: Making a puzzle
 - [ ] Adding a newtype
 
 ##### 14 Testing

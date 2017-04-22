@@ -7,12 +7,25 @@ import Data.List (intersperse)
 import System.Exit (exitSuccess)
 import System.Random (randomRIO)
 
+newtype WordList = WordList [String]
+                   deriving (Eq, Show)
+
+{-----using type synonym-----
 type WordList = [String]
+-}
+
 
 allWords :: IO WordList
 allWords = do
   dict <- readFile "data/dict.txt"
+  return $ WordList (lines dict)
+
+{-----using type synonym-----
+allWords = do
+  dict <- readFile "data/dict.txt"
   return (lines dict)
+-}
+
 
 minWordLength :: Int
 minWordLength = 5
@@ -22,16 +35,33 @@ maxWordLength = 9
 
 gameWords :: IO WordList
 gameWords = do
+  (WordList aw) <- allWords
+  return $ WordList (filter gameLength aw)
+  where gameLength w =
+          let l = length (w :: String)
+          in  l > minWordLength && l < maxWordLength
+
+{-----using type synonym-----
+gameWords :: IO WordList
+gameWords = do
   aw <- allWords
   return (filter gameLength aw)
   where gameLength w =
           let l = length (w :: String)
-          in l > minWordLength && l < maxWordLength
+          in  l > minWordLength && l < maxWordLength
+-}
+
 
 randomWord :: WordList -> IO String
+randomWord (WordList wl) = do
+  randomIndex <- randomRIO (0, (length wl) -1)
+  return $ wl !! randomIndex
+
+{-----using type synonym-----
 randomWord wl = do
   randomIndex <- randomRIO (0, length wl - 1)
   return $ wl !! randomIndex
+-}
 
 randomWord' :: IO String
 randomWord' = gameWords >>= randomWord
