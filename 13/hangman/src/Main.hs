@@ -60,10 +60,11 @@ fillInCharacter :: Puzzle -> Char -> Puzzle
 fillInCharacter (Puzzle word filledInSoFar charsGuessed) c =
   Puzzle word newFilledInSoFar (c : charsGuessed)
   where zipFn guessed wordChar guessChar =
-      if wordChar == guessed
-      then Just wordChar
-      else guessChar
-    newFilledInSoFar = zipWith (zipFn c) word filledInSoFar
+          if wordChar == guessed
+          then Just wordChar
+          else guessChar
+        newFilledInSoFar =
+          zipWith (zipFn c) word filledInSoFar
 
 handleGuess :: Puzzle -> Char -> IO Puzzle
 handleGuess puzzle guess = do
@@ -74,7 +75,7 @@ handleGuess puzzle guess = do
       return puzzle
     (True, _) -> do
       putStrLn "This character was in the word, so congrats on that."
-      return puzzle
+      return (fillInCharacter puzzle guess)
     (False, _) -> do
       putStrLn "This character does not appear in the word, try again."
       return (fillInCharacter puzzle guess)
@@ -91,5 +92,22 @@ gameWin :: Puzzle -> IO ()
 gameWin (Puzzle _ filledInSoFar _) =
   if all isJust filledInSoFar then
     do putStrLn "You did it, you won."
-    exitSuccess
+       exitSuccess
   else return ()
+
+runGame :: Puzzle -> IO ()
+runGame puzzle = forever $ do
+  gameOver puzzle
+  gameWin puzzle
+  putStrLn $ "Current puzzle is: " ++ show puzzle
+  putStrLn "Take a guess: "
+  guess <- getLine
+  case guess of
+    [c] -> handleGuess puzzle c >>= runGame
+    _   -> putStrLn "Your guess has gotta be a single character"
+
+main :: IO ()
+main = do
+  word <- randomWord'
+  let puzzle = freshPuzzle (fmap toLower word)
+  runGame puzzle
