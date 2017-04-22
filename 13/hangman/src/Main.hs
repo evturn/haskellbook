@@ -78,3 +78,18 @@ handleGuess puzzle guess = do
     (False, _) -> do
       putStrLn "This character does not appear in the word, try again."
       return (fillInCharacter puzzle guess)
+
+gameOver :: Puzzle -> IO ()
+gameOver (Puzzle wordToGuess _ guessed) =
+  if (length guessed) > 7 then
+    do putStrLn "=G=A=M=E==O=V=E=R="
+       putStrLn $ "The word you couldn't manage to guess was: " ++ wordToGuess
+       exitSuccess
+    else return ()
+
+gameWin :: Puzzle -> IO ()
+gameWin (Puzzle _ filledInSoFar _) =
+  if all isJust filledInSoFar then
+    do putStrLn "You did it, you won."
+    exitSuccess
+  else return ()
