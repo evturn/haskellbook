@@ -1,6 +1,6 @@
 name:                addition
 version:             0.1.0.0
-license-file:        LICENCE
+license-file:        LICENSE
 author:              Ev
 maintainer:          bgates@microsoft.com
 category:            Text
