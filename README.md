@@ -3,7 +3,7 @@
   <img src="https://wiki.haskell.org/wikistatic/haskellwiki_logo.png">
 </p>
 
-##### 01 All You Need is Lambda
+##### [01 All You Need is Lambda](https://github.com/evturn/haskell-programming/tree/master/01)
 - [x] AllYouNeedisLambda
 - [x] [What is functional programming?](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#functional-programming-1)
 - [x] [What is a function?](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#functions-2)
@@ -14,38 +14,38 @@
 - [x] [Combinators](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#combinators)
 - [x] [Divergence](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#divergence)
 
-##### 02 Hello, Haskell!
+##### [02 Hello, Haskell!](https://github.com/evturn/haskell-programming/tree/master/02)
 - [x] Hello,Haskell
 - [x] Interacting with Haskell code
-- [x] Understanding expressions
-- [x] Functions
+- [x] [Understanding expressions](https://github.com/evturn/haskell-programming/blob/master/02/notes.md#expressions)
+- [x] [Functions](https://github.com/evturn/haskell-programming/blob/master/02/notes.md#functions)
 - [x] Evaluation
 - [x] Infix operators
 - [x] Declaring values
-- [x] Arithmetic functions in Haskell
+- [x] [Arithmetic functions in Haskell](https://github.com/evturn/haskell-programming/blob/master/02/notes.md#arithmetic-functions)
 - [x] Parenthesization
-- [x] Letandwhere
+- [x] [Letandwhere](https://github.com/evturn/haskell-programming/blob/master/02/notes.md#let-and-where)
 
-##### 03 Strings
+##### [03 Strings](https://github.com/evturn/haskell-programming/tree/master/03)
 - [x] Printing strings
 - [x] A first look at types
-- [x] [Printing simple strings](https://github.com/evturn/haskell-programming/blob/master/03/Print1.hs)
-- [x] [Top-level versus local definitions](https://github.com/evturn/haskell-programming/blob/master/03/topOrLocal.hs)
+- [x] Printing simple strings
+- [x] Top-level versus local definitions
 - [x] Types of concatenation functions
-- [x] [Concatenation and scoping](https://github.com/evturn/haskell-programming/blob/master/03/Print3Flipped.hs)
+- [x] Concatenation and scoping
 - [x] More list functions
 
-##### 04 Basic datatypes
+##### [04 Basic datatypes](https://github.com/evturn/haskell-programming/tree/master/04)
 - [x] Basic Datatypes
-- [x] What are types?
-- [x] Anatomy of a data declaration
+- [x] [What are types?](https://github.com/evturn/haskell-programming/blob/master/04/notes.md#types)
+- [x] [Anatomy of a data declaration](https://github.com/evturn/haskell-programming/blob/master/04/notes.md#data-constructors)
 - [x] Numeric types
 - [x] Comparing values
 - [x] Go on and Bool me
-- [x] Tuples
+- [x] [Tuples](https://github.com/evturn/haskell-programming/blob/master/04/notes.md#tuple)
 - [x] Lists
 
-##### 05 Types
+##### [05 Types](https://github.com/evturn/haskell-programming/tree/master/05)
 - [x] Types
 - [x] What are types for?
 - [x] How to read type signatures
@@ -54,7 +54,7 @@
 - [x] Type inference
 - [x] Asserting types for declarations
 
-##### 06 Typeclasses
+##### [06 Typeclasses](https://github.com/evturn/haskell-programming/tree/master/06)
 - [x] Typeclasses
 - [x] What are typeclasses?
 - [x] Back to Bool
@@ -65,11 +65,11 @@
 - [x] Enum
 - [x] Show
 - [x] Read
-- [x] Instances are dispatched by type
+- [x] [Instances are dispatched by type](https://github.com/evturn/haskell-programming/blob/master/06/notes.md#instances-are-dispatched-by-type)
 - [x] Gimme more operations
 - [x] Typeclass inheritance, partial
 
-##### 07 More functional patterns
+##### [07 More functional patterns](https://github.com/evturn/haskell-programming/tree/master/07)
 - [x] Make it func-y
 - [x] Arguments and parameters
 - [x] Anonymous functions
@@ -81,14 +81,14 @@
 - [x] Point freestyle
 - [x] Demonstrating composition
 
-##### 08 Recursion
+##### [08 Recursion](https://github.com/evturn/haskell-programming/tree/master/08)
 - [x] Recursion
 - [x] Factorial
 - [x] Bottom
 - [x] Fibonacci numbers
 - [x] Integral division from scratch
 
-##### 09 Lists
+##### [09 Lists](https://github.com/evturn/haskell-programming/tree/master/09)
 - [x] Lists
 - [x] The list data type
 - [x] Pattern matching on lists
@@ -101,7 +101,7 @@
 - [x] Filtering lists of values
 - [x] Zipping lists
 
-##### 10 Folding lists
+##### [10 Folding lists](https://github.com/evturn/haskell-programming/tree/master/10)
 - [x] Folds
 - [x] Bringing you into the fold
 - [x] Recursive patterns
@@ -111,7 +111,7 @@
 - [x] Folding and evaluation
 - [x] Scans
 
-##### 11 Algebraic datatypes
+##### [11 Algebraic datatypes](https://github.com/evturn/haskell-programming/tree/master/11)
 - [x] Algebraic datatypes
 - [x] Data declarations review
 - [x] Data and type constuctors
@@ -130,13 +130,13 @@
 - [x] Lists are polymorphic
 - [x] Binary Tree
 
-##### 12 Signaling adversity
+##### [12 Signaling adversity](https://github.com/evturn/haskell-programming/tree/master/12)
 - [x] Signaling adversity
 - [x] How I learned to stop worrying and love Nothing
 - [x] Bleating either
 - [x] Kinds, a thousand stars in your types
 
-##### 13 Building projects
+##### [13 Building projects](https://github.com/evturn/haskell-programming/tree/master/13)
 - [x] Modules
 - [x] Making packages with Stack
 - [x] Working with a basic project
