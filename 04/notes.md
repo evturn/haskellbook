@@ -1,7 +1,7 @@
 # 04
 ##### Basic Types
 
-<hr><hr>
+</br><hr><hr>
 ## Types
 </br>
 
@@ -11,7 +11,7 @@
 - Set theory was used prolifically in the design of programming languages like Haskell. 
 - Logical operations like disjunction (or) and conjunction (and) used in the manipulation of sets have equivalents in Haskell’s type system.
 
-<hr><hr>
+</br><hr><hr>
 ## Tuple
 </br>
 - An ordered grouping of values. 
@@ -19,7 +19,7 @@
 - The types of the elements of tuples are allowed to vary, so you can have both (String, String) or (Integer, String). 
 - Tuples are the usual means of expressing an anonymous product.
 
-<hr><hr>
+</br><hr><hr>
 ## Typeclass
 </br>
 
@@ -27,7 +27,7 @@
 - When a type is an instance of a typeclass, values of that type can be used in the standard operations defined for that typeclass. 
 - Are unique pairings of class and concrete instance.
 
-<hr><hr>
+</br><hr><hr>
 ## Data constructors
 </br>
 
@@ -49,14 +49,14 @@ Cat :: Pet
 Dog :: Name -> Pet
 ```
 
-<hr><hr>
+</br><hr><hr>
 ## Type constructors
 </br>
 
 - Are not values and can only be used in type signatures. 
 - Data declarations generate type constructors which can be used to denote that type.
 
-<hr><hr>
+</br><hr><hr>
 ## Data declarations
 </br>
 
@@ -64,13 +64,13 @@ Dog :: Name -> Pet
 - Data declarations always create a new type constructor, but may or may not create new data constructors. 
 - Data declarations are how we refer to the entire definition that begins with the data keyword.
 
-<hr><hr>
+</br><hr><hr>
 ## Type alias
 </br>
 
 - A way to refer to a type constructor or type constant by an alternate name.
 
-<hr><hr>
+</br><hr><hr>
 ## Polymorphism
 </br>
 

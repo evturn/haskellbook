@@ -1,7 +1,7 @@
 # 04
 ##### Typeclasses
 
-<hr><hr>
+</br><hr><hr>
 ## Instances are dispatched by type
 </br>
 

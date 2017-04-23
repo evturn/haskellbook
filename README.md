@@ -5,14 +5,14 @@
 
 ##### 01 All You Need is Lambda
 - [x] AllYouNeedisLambda
-- [x] What is functional programming?
-- [x] What is a function?
-- [x] The structure of lambda terms
-- [x] Beta reduction
-- [x] Multiple arguments
+- [x] [What is functional programming?](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#functional-programming-1)
+- [x] [What is a function?](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#functions-2)
+- [x] [The structure of lambda terms](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#lambda-terms-1)
+- [x] [Beta reduction](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#beta-reduction-1)
+- [x] [Multiple arguments](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#multiple-arguments)
 - [x] Evaluation is simplification
-- [x] Combinators
-- [x] Divergence
+- [x] [Combinators](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#combinators)
+- [x] [Divergence](https://github.com/evturn/haskell-programming/blob/master/01/notes.md#divergence)
 
 ##### 02 Hello, Haskell!
 - [x] Hello,Haskell
@@ -29,10 +29,10 @@
 ##### 03 Strings
 - [x] Printing strings
 - [x] A first look at types
-- [x] Printing simple strings
-- [x] Top-level versus local definitions
+- [x] [Printing simple strings](https://github.com/evturn/haskell-programming/blob/master/03/Print1.hs)
+- [x] [Top-level versus local definitions](https://github.com/evturn/haskell-programming/blob/master/03/topOrLocal.hs)
 - [x] Types of concatenation functions
-- [x] Concatenation and scoping
+- [x] [Concatenation and scoping](https://github.com/evturn/haskell-programming/blob/master/03/Print3Flipped.hs)
 - [x] More list functions
 
 ##### 04 Basic datatypes
@@ -145,14 +145,14 @@
 - [x] More on importing modules
 - [x] Making our program interactive
 - [x] do syntax and IO
-- [x] Hangman game
+- [x] [Hangman game](https://github.com/evturn/haskell-programming/tree/master/13/hangman)
 - [x] Step One: Importing modules
 - [x] Step Two: Generating a word list
 - [x] Step Three: Making a puzzle
 - [x] Adding a newtype
 
 ##### 14 Testing
-- [ ] Testing
+- [x] Testing
 - [ ] A quick tour of testing for the uninitiated
 - [ ] Conventional testing
 - [ ] Enter QuickCheck

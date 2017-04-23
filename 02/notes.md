@@ -1,7 +1,7 @@
 # 02
 ##### Expressions
 
-<hr><hr>
+</br><hr><hr>
 ## The Lambda Calculus
 ##### Everything in Haskell is an expression or declaration
 </br>
@@ -14,7 +14,7 @@
 is  a reducible expression.
 
 
-<hr><hr>
+</br><hr><hr>
 ## Functions
 ##### Expressions are the most basic unit of a Haskell program, and functions are a specific type of expression.
 </br>
@@ -35,7 +35,7 @@ reduces to the following in WHNF:
 ```
 
 
-<hr><hr>
+</br><hr><hr>
 ## Arithmetic Functions
 </br>
 
@@ -54,7 +54,7 @@ reduces to the following in WHNF:
 Modular arithmetic is a system of arithmetic for integers where numbers “wrap around” upon reaching a certain value, called the modulus. It is often explained in terms of a clock.
 
 
-<hr><hr>
+</br><hr><hr>
 ## Let and where
 </br>
 
