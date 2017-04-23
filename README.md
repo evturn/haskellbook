@@ -153,7 +153,7 @@
 
 ##### 14 Testing
 - [x] Testing
-- [ ] A quick tour of testing for the uninitiated
+- [x] A quick tour of testing for the uninitiated
 - [ ] Conventional testing
 - [ ] Enter QuickCheck
 - [ ] Morse code
