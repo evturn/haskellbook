@@ -155,7 +155,7 @@
 - [x] Testing
 - [x] A quick tour of testing for the uninitiated
 - [x] Conventional testing
-- [ ] Enter QuickCheck
+- [x] Enter QuickCheck
 - [ ] Morse code
 - [ ] Kicking around QuickCheck
  
