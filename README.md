@@ -151,10 +151,10 @@
 - [x] Step Three: Making a puzzle
 - [x] Adding a newtype
 
-##### 14 Testing
+##### [14 Testing](https://github.com/evturn/haskell-programming/tree/master/14)
 - [x] Testing
 - [x] A quick tour of testing for the uninitiated
-- [ ] Conventional testing
+- [x] Conventional testing
 - [ ] Enter QuickCheck
 - [ ] Morse code
 - [ ] Kicking around QuickCheck
