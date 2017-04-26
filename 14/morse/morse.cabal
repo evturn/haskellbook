@@ -2,7 +2,7 @@ name:                morse
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/evturn/haskell-programming/14/morse
+homepage:            https://github.com/evturn/haskell-programming/tree/master/14/morse
 license:             BSD3
 license-file:        LICENSE
 author:              Evan Turner
