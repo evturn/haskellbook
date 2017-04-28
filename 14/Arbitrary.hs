@@ -59,6 +59,17 @@ sumGenEqual = do
 sumGenCharInt :: Gen (Sum Char Int)
 sumGenCharInt = sumGenEqual
 
+
+sumGenFirstPls :: (Arbitrary a, Arbitrary b) => Gen (Sum a b)
+sumGenFirstPls = do
+  a <- arbitrary
+  b <- arbitrary
+  frequency [(10, return $ First a),
+             (1,  return $ Second b)]
+
+sumGenCharIntFirst :: Gen (Sum Char Int)
+sumGenCharIntFirst = sumGenFirstPls
+
 main :: IO ()
 main = do
   sample trivialGen
