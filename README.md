@@ -157,7 +157,7 @@
 - [x] Conventional testing
 - [x] Enter QuickCheck
 - [x] [Morse code](https://github.com/evturn/haskell-programming/tree/master/14/morse)
-- [ ] Kicking around QuickCheck
+- [x] Kicking around QuickCheck
  
 ##### 15 Monoid, Semigroup
 - [ ] Monoids and semigroups
