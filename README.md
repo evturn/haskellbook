@@ -225,9 +225,31 @@
 - [ ] Demonstrating Foldable instances
 - [ ] Some basic derived operations
 
-
 ##### 21 Traversable
+- [ ] The Traversable
+- [ ] The Traversable typeclass definition
+- [ ] sequenceA
+- [ ] traverse
+- [ ] So, what's traversable for?
+- [ ] Morse code revisited
+- [ ] Axing tedious code
+- [ ] Do all the things
+- [ ] Traversable instances
+- [ ] Traversable Laws
+- [ ] Quality Control
+
 ##### 22 Reader
+- [ ] Reader
+- [ ] A new beginning
+- [ ] This is Reader
+- [ ] Breaking down the Functor of functions
+- [ ] But uh, Reader?
+- [ ] Functions have an Applicative too
+- [ ] The Monad of functions
+- [ ] Reader Monad by itself is kinda boring
+- [ ] You can change what comes below, but not above
+- [ ] You tn to see ReaderT, not Reader
+
 ##### 23 State
 ##### 24 Parser combinators
 ##### 25 Composing types
