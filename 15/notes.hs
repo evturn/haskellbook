@@ -1,0 +1,33 @@
+-- ‘Algebra’ means the study of mathematical symbols and the rules governing their manipulation.
+-- It is differentiated from arithmetic by its use of abstractions such as variables.
+-- Variables represent the rules of how to manipulate this thing without reference to its particular value.
+
+-- 'An algebra' refers to some operations and the set they operate over.
+
+-- Algebras are implemented with typeclasses.
+   -- The typeclasses define the set of operations.
+      -- A set is the type the operations are for.
+      -- The instance defines how each operation will perform for a given type or set.
+
+-- A mondoid is a binary associative operation with an identity.
+--     [1]          [2]      [3]         [4]              [5]
+--
+-- 1. What will end up being the name of the typeclass.
+--
+-- 2. Binary - There will be two of something.
+--
+-- 3. Associative - This is a property or law that must be satisfied.
+--
+-- 4. Operation - In mathematics, this is usually an infix operator.
+      -- Interchangably a fucntion with two (binary) arugments.
+--
+-- 5. Identity - Some value when combined with any other value will always return that other value.
+
+-- A monoid is a function that takes two arguments and follows two laws: associativity and identity.
+   -- Associativity means arguments can be regrouped (or reparenthesized) in different orders
+   -- and give the same result (as in addition).
+   --
+   -- Identity means there exists some value such that when we pass it as input to our function,
+   -- the operation is rendered moot and the other value is returned (such as adding zero).
+   --
+   -- `Monoid` is the typeclass that generalizes these laws across types.

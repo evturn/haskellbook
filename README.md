@@ -160,9 +160,9 @@
 - [x] Kicking around QuickCheck
  
 ##### 15 Monoid, Semigroup
-- [ ] Monoids and semigroups
-- [ ] What we talk about when we talk about algebras
-- [ ] Monoid
+- [x] Monoids and semigroups
+- [x] What we talk about when we talk about algebras
+- [x] Monoid
 - [ ] How Monoid is defined in Haskell
 - [ ] Examples of using Monoid
 - [ ] Why bother?
