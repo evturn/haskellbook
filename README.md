@@ -163,8 +163,9 @@
 - [x] Monoids and semigroups
 - [x] What we talk about when we talk about algebras
 - [x] Monoid
-- [ ] How Monoid is defined in Haskell
-- [ ] Examples of using Monoid
+- [x] How Monoid is defined in Haskell
+- [x] Examples of using Monoid
+- [x] Why Integer doesn't have a Monoid
 - [ ] Why bother?
 - [ ] Laws
 - [ ] Different instance, same representation
