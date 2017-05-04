@@ -166,9 +166,9 @@
 - [x] How Monoid is defined in Haskell
 - [x] Examples of using Monoid
 - [x] Why Integer doesn't have a Monoid
-- [ ] Why bother?
-- [ ] Laws
-- [ ] Different instance, same representation
+- [x] Why bother?
+- [x] Laws
+- [x] Different instance, same representation
 - [ ] Reusing algebras by asking for algebras
 - [ ] Madness
 - [ ] Better living through QuickCheck

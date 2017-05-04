@@ -19,7 +19,7 @@
 -- 3. Associative - This is a property or law that must be satisfied.
 --
 -- 4. Operation - In mathematics, this is usually an infix operator.
-      -- Interchangably a fucntion with two (binary) arugments.
+      -- Interchangably a function with two (binary) arugments.
 --
 -- 5. Identity - Some value when combined with any other value will always return that other value.
 
@@ -31,3 +31,6 @@
    -- the operation is rendered moot and the other value is returned (such as adding zero).
    --
    -- `Monoid` is the typeclass that generalizes these laws across types.
+
+-- Mappending is best thought of not as a way of combining values in the way addition
+-- or list concatenation does, but as a way to condense any set of values to a summary value.
