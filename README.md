@@ -169,7 +169,7 @@
 - [x] Why bother?
 - [x] Laws
 - [x] Different instance, same representation
-- [ ] Reusing algebras by asking for algebras
+- [x] Reusing algebras by asking for algebras
 - [ ] Madness
 - [ ] Better living through QuickCheck
 - [ ] Semigroup
