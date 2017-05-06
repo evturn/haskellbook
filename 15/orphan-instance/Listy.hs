@@ -1,8 +1,3 @@
-module ListyInstances where
+module Listy where
 
-import Data.Monoid
-import Listy
-
-instance Monoid (Listy a) where
-  mempty = Listy []
-  mappend (Listy l) (Listy l') = Listy $ mappend l l'
+newtype Listy a = Listy [a] deriving (Eq, Show)
