@@ -22,4 +22,13 @@ madlib' :: Exclamation
         -> Noun
         -> Adjective
         -> String
-madlib' e adv noun adj = undefined
+madlib' e adv noun adj =
+  mconcat [ e
+  , "! he said "
+  , adv
+  , " as he jumped into his car "
+  , noun
+  , " and drove off with his "
+  , adj
+  ,  " wife."
+  ]
