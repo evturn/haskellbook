@@ -170,7 +170,7 @@
 - [x] Laws
 - [x] Different instance, same representation
 - [x] Reusing algebras by asking for algebras
-- [ ] Madness
+- [x] Madness
 - [ ] Better living through QuickCheck
 - [ ] Semigroup
 
