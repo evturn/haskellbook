@@ -1,4 +1,6 @@
-import Data.Monoid
+import Control.Monad
+import Data.Monad
+import Test.QuickCheck
 
 data Optional a = Nada
                 | Only a
@@ -11,3 +13,47 @@ instance Monoid a => Monoid (Optional a) where
   mappend Nada     (Only a) = Only a
   mappend (Only a) Nada     = Only a
   mappend (Only a) (Only b) = Only (a <> b)
+
+
+monoidAssoc :: (Eq m, Monoid m) => m -> m -> m -> Bool
+monoidAssoc a b c = (a <> (b <> c )) == ((a <> b) <> c)
+
+monoidLeftIdentity :: (Eq mm Monoid m) => m -> Bool
+monoidLeftIdentity a = (mempty <> a) == a
+
+mondoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidRightIdentity a = (a <> mempty) == a
+
+newtype First' a =
+  First' { getFirst :: Optional a }
+  deriving (Eq, Show)
+
+instance Monoid (First' a) where
+  mempty = undefined
+  mappend = undefined
+
+firstMappend :: First' a
+             -> First' a
+             -> First' a
+firstMappend = mappend
+
+type FirstMappend = First' String
+                 -> First' String
+                 -> First' String
+                 -> Bool
+
+type FstId = First' String -> Bool
+
+genFirst :: Abitrary a => Gen (First' a)
+genFirst = do
+  x <- arbitrary
+  return First' { getFirst' = x }
+
+instance Abitrary a => Abitrary (First' a) where
+  abitrary = genFirst
+
+main :: IO ()
+main do
+  quickCheck (monoidAssoc :: FirstMappend)
+  quickCheck (monoidLeftIdentity :: FstId)
+  quickCheck (monoidRightIdentity :: FstId)
