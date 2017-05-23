@@ -25,12 +25,15 @@ mondoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidRightIdentity a = (a <> mempty) == a
 
 newtype First' a =
-  First' { getFirst :: Optional a }
+  First' { getFirst' :: Optional a }
   deriving (Eq, Show)
 
 instance Monoid (First' a) where
-  mempty = undefined
-  mappend = undefined
+  mempty = (First' { getFirst' = Nada })
+  mappend = (First' { getFirst' = Nada }) (First' { getFirst' = Nada }) = (First' { getFirst' = Nada })
+  mappend = (First' { getFirst' = Nada }) (First' { getFirst' = Only a }) = (First' { getFirst' = Only a })
+  mappend = (First' { getFirst' = Only a }) (First' { getFirst' = Nada }) = (First' { getFirst' = Only a })
+  mappend = (First' { getFirst' = Only a }) (First' { getFirst' = Only _ }) = (First' { getFirst' = Only a })
 
 firstMappend :: First' a
              -> First' a
