@@ -1,5 +1,5 @@
 import Control.Monad
-import Data.Monad
+import Data.Monoid
 import Test.QuickCheck
 
 data Optional a = Nada
@@ -30,10 +30,10 @@ newtype First' a =
 
 instance Monoid (First' a) where
   mempty = (First' { getFirst' = Nada })
-  mappend = (First' { getFirst' = Nada }) (First' { getFirst' = Nada }) = (First' { getFirst' = Nada })
-  mappend = (First' { getFirst' = Nada }) (First' { getFirst' = Only a }) = (First' { getFirst' = Only a })
-  mappend = (First' { getFirst' = Only a }) (First' { getFirst' = Nada }) = (First' { getFirst' = Only a })
-  mappend = (First' { getFirst' = Only a }) (First' { getFirst' = Only _ }) = (First' { getFirst' = Only a })
+  mappend (First' { getFirst' = Nada }) (First' { getFirst' = Nada }) = (First' { getFirst' = Nada })
+  mappend (First' { getFirst' = Nada }) (First' { getFirst' = Only a }) = (First' { getFirst' = Only a })
+  mappend (First' { getFirst' = Only a }) (First' { getFirst' = Nada }) = (First' { getFirst' = Only a })
+  mappend (First' { getFirst' = Only a }) (First' { getFirst' = Only _ }) = (First' { getFirst' = Only a })
 
 firstMappend :: First' a
              -> First' a
@@ -56,7 +56,7 @@ instance Abitrary a => Abitrary (First' a) where
   abitrary = genFirst
 
 main :: IO ()
-main do
+main = do
   quickCheck (monoidAssoc :: FirstMappend)
   quickCheck (monoidLeftIdentity :: FstId)
   quickCheck (monoidRightIdentity :: FstId)
