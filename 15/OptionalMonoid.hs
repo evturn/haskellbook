@@ -18,10 +18,10 @@ instance Monoid a => Monoid (Optional a) where
 monoidAssoc :: (Eq m, Monoid m) => m -> m -> m -> Bool
 monoidAssoc a b c = (a <> (b <> c )) == ((a <> b) <> c)
 
-monoidLeftIdentity :: (Eq mm Monoid m) => m -> Bool
+monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidLeftIdentity a = (mempty <> a) == a
 
-mondoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidRightIdentity a = (a <> mempty) == a
 
 newtype First' a =
@@ -47,13 +47,13 @@ type FirstMappend = First' String
 
 type FstId = First' String -> Bool
 
-genFirst :: Abitrary a => Gen (First' a)
+genFirst :: Arbitrary a => Gen (First' a)
 genFirst = do
   x <- arbitrary
   return First' { getFirst' = x }
 
-instance Abitrary a => Abitrary (First' a) where
-  abitrary = genFirst
+instance Arbitrary a => Arbitrary (First' a) where
+  arbitrary = genFirst
 
 main :: IO ()
 main = do
