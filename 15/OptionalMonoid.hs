@@ -6,6 +6,14 @@ data Optional a = Nada
                 | Only a
                 deriving (Eq, Show)
 
+genOnly :: Arbitrary a => Gen (Optional a)
+genOnly = do
+  x <- arbitrary
+  return $ Only x
+
+instance Arbitrary a => Arbitrary (Optional a) where
+  arbitrary = frequency [ (1, genOnly)
+            , (1, return Nada) ]
 
 instance Monoid a => Monoid (Optional a) where
   mempty                    = Nada
