@@ -171,7 +171,7 @@
 - [x] Different instance, same representation
 - [x] Reusing algebras by asking for algebras
 - [x] Madness
-- [ ] Better living through QuickCheck
+- [x] Better living through QuickCheck
 - [ ] Semigroup
 
 ##### 16 Functor
