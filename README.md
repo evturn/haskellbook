@@ -175,9 +175,9 @@
 - [ ] Semigroup
 
 ##### 16 Functor
-- [ ] Functor
-- [ ] What's a functor?
-- [ ] There's a whole lot of fmap going round
+- [x] Functor
+- [x] What's a functor?
+- [x] There's a whole lot of fmap going round
 - [ ] Let's talk about ⨍, baby
 - [ ] Functor Laws
 - [ ] The Good, the Bad, and the Ugly
