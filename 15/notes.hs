@@ -34,3 +34,14 @@
 
 -- Mappending is best thought of not as a way of combining values in the way addition
 -- or list concatenation does, but as a way to condense any set of values to a summary value.
+
+
+-- Semigroup
+-- To get from a monoid to a semigroup, we simply no longer furnish nor require an identity.
+-- Data constructors with only non-alphanumeric symbols and that begin with a colon are infix by default;
+   -- those with alphanumeric names are prefix by default.
+-- Beyond this, you use NonEmpty just like you would a list, but what you’ve gained is being explicit
+   -- that having zero values is not valid for your use-case.
+-- Anything which is a Monoid is by definition also a semigroup.
+-- Polymorphism isn’t only useful for reusing code; it’s also useful for expressing intent through
+   -- parametricity so that people reading the code know what we meant to accomplish.

@@ -172,7 +172,7 @@
 - [x] Reusing algebras by asking for algebras
 - [x] Madness
 - [x] Better living through QuickCheck
-- [ ] Semigroup
+- [x] Semigroup
 
 ##### 16 Functor
 - [x] Functor
