@@ -25,3 +25,40 @@ class Functor f where
 
 -- The type signature of `fmap` tells us tha the f introduced by the class definition for Functor must
 -- accept a single argument and thus be of kind `* -> *`.
+
+{- 𝑓
+
+class Sumthin a where
+  s :: a -> a
+
+class Else where
+  e :: b -> f (g a b c)
+
+class Biffy where
+  slayer :: e a b -> (a -> c) -> (b -> d) -> e c d
+
+class Impish v where
+  impossibleKind :: v -> v a
+
+class AlsoImp v where
+  nope :: v a -> v
+
+-}
+
+-- Functor is a typeclass for function application “over”, or “through”, or “past” some structure f
+   -- that we want to ignore and leave untouched.
+
+data FixMePls a = FixMe
+                | Pls a
+                deriving (Eq, Show)
+
+instance Functor FixMePls where
+  fmap _ FixMe = FixMe
+  fmap f (Pls a) = Pls (f a)
+
+-- Notice the function gets applied over and inside of the “structure.”
+
+
+-- Instances of the Functor typeclass should abide by two basic laws.
+   -- Identity
+   -- Composition

@@ -178,7 +178,7 @@
 - [x] Functor
 - [x] What's a functor?
 - [x] There's a whole lot of fmap going round
-- [ ] Let's talk about ⨍, baby
+- [x] Let's talk about ⨍, baby
 - [ ] Functor Laws
 - [ ] The Good, the Bad, and the Ugly
 - [ ] Commonly used functors
