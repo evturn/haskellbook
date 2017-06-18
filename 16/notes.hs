@@ -62,3 +62,14 @@ instance Functor FixMePls where
 -- Instances of the Functor typeclass should abide by two basic laws.
    -- Identity
    -- Composition
+
+fmap ((+1) . (*2) [1..5])
+-- [3,5,7,9,11]
+fmap (+1) . fmap (*2) $ [1..5]
+-- [3,5,7,9,11]
+
+-- in other words:
+fmap (f . g) == fmap f . fmap g
+
+-- two functions lifted separately should produce the same result as if the function were composed
+   -- ahead of time and then lifted the composed function all together.

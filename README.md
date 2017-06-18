@@ -179,7 +179,7 @@
 - [x] What's a functor?
 - [x] There's a whole lot of fmap going round
 - [x] Let's talk about ⨍, baby
-- [ ] Functor Laws
+- [x] Functor Laws
 - [ ] The Good, the Bad, and the Ugly
 - [ ] Commonly used functors
 - [ ] Transforming the unapplied type argument
