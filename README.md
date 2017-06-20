@@ -182,7 +182,7 @@
 - [x] Functor Laws
 - [x] The Good, the Bad, and the Ugly
 - [x] Commonly used functors
-- [ ] Transforming the unapplied type argument
+- [x] Transforming the unapplied type argument
 - [ ] QuickChecking Functor instances
 - [ ] Exercises: Instances of Func
 - [ ] Ignoring possibilities
