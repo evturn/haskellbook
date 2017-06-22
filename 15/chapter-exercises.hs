@@ -44,6 +44,22 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 
 type TwoAssoc a b = Associativity (Two a b)
 
+
+-- 4.
+data Three a b c = Three a b c deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) where
+  Three x y z <> Three p q r = Three (x <> p) (y <> q) (z <> r)
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    c <- arbitrary
+    return (Three a b c)
+
+type ThreeAssoc a b c = Associativity (Three a b c)
+
 main :: IO ()
 main = do
   putStrLn "\n1. Trivial"
@@ -52,3 +68,5 @@ main = do
   quickCheck (semigroupAssoc :: IdentityAssoc String)
   putStrLn "\n3. Two"
   quickCheck (semigroupAssoc :: TwoAssoc String String)
+  putStrLn "\n4. Three"
+  quickCheck (semigroupAssoc :: ThreeAssoc String String String)
