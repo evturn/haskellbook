@@ -76,6 +76,19 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
 
 type FourAssoc a b c d = Associativity (Four a b c d)
 
+-- 6.
+newtype BoolConj = BoolConj Bool deriving (Eq, Show)
+
+instance Semigroup BoolConj where
+  BoolConj x <> BoolConj y = BoolConj (x && y)
+
+instance Arbitrary BoolConj where
+  arbitrary = do
+    a <- arbitrary
+    return (BoolConj a)
+
+type BoolConjAssoc = Associativity BoolConj
+
 main :: IO ()
 main = do
   putStrLn "\n1. Trivial"
@@ -88,3 +101,5 @@ main = do
   quickCheck (semigroupAssoc :: ThreeAssoc S S S)
   putStrLn "\n5. Four"
   quickCheck (semigroupAssoc :: FourAssoc S S S S)
+  putStrLn "\n6. BoolConj"
+  quickCheck (semigroupAssoc :: BoolConjAssoc)
