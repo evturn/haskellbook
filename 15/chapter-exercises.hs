@@ -87,7 +87,21 @@ instance Arbitrary BoolConj where
     a <- arbitrary
     return (BoolConj a)
 
-type BoolConjAssoc = Associativity BoolConj
+type ConjAssoc = Associativity BoolConj
+
+-- 7.
+newtype BoolDisj = BoolDisj Bool deriving (Eq, Show)
+
+instance Semigroup BoolDisj where
+  BoolDisj True <> BoolDisj _  = BoolDisj True
+  BoolDisj False <> BoolDisj x = BoolDisj x
+
+instance Arbitrary BoolDisj where
+  arbitrary = do
+    a <- arbitrary
+    return (BoolDisj a)
+
+type DisjAssoc = Associativity BoolDisj
 
 main :: IO ()
 main = do
@@ -101,5 +115,7 @@ main = do
   quickCheck (semigroupAssoc :: ThreeAssoc S S S)
   putStrLn "\n5. Four"
   quickCheck (semigroupAssoc :: FourAssoc S S S S)
-  putStrLn "\n6. BoolConj"
-  quickCheck (semigroupAssoc :: BoolConjAssoc)
+  putStrLn "\n6. Conjuntive"
+  quickCheck (semigroupAssoc :: ConjAssoc)
+  putStrLn "\n7. Disjunctive"
+  quickCheck (semigroupAssoc :: DisjAssoc)
