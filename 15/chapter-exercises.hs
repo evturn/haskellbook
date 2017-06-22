@@ -2,6 +2,7 @@ import Data.Semigroup
 import Test.QuickCheck
 
 type Associativity x = x -> x -> x -> Bool
+type S = String
 
 semigroupAssoc :: (Eq m, Semigroup m) => Associativity m
 semigroupAssoc a b c = (a <> (b <> c)) == ((a <> b) <> c)
@@ -44,7 +45,6 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 
 type TwoAssoc a b = Associativity (Two a b)
 
-
 -- 4.
 data Three a b c = Three a b c deriving (Eq, Show)
 
@@ -60,13 +60,31 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
 
 type ThreeAssoc a b c = Associativity (Three a b c)
 
+-- 5.
+data Four a b c d = Four a b c d deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four a b c d) where
+  Four w x y z <> Four ww xx yy zz = Four (w <> ww) (x <> xx) (y <> yy) (z <> zz)
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four a b c d) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    c <- arbitrary
+    d <- arbitrary
+    return (Four a b c d)
+
+type FourAssoc a b c d = Associativity (Four a b c d)
+
 main :: IO ()
 main = do
   putStrLn "\n1. Trivial"
   quickCheck (semigroupAssoc :: TrivialAssoc)
   putStrLn "\n2. Identity"
-  quickCheck (semigroupAssoc :: IdentityAssoc String)
+  quickCheck (semigroupAssoc :: IdentityAssoc S)
   putStrLn "\n3. Two"
-  quickCheck (semigroupAssoc :: TwoAssoc String String)
+  quickCheck (semigroupAssoc :: TwoAssoc S S)
   putStrLn "\n4. Three"
-  quickCheck (semigroupAssoc :: ThreeAssoc String String String)
+  quickCheck (semigroupAssoc :: ThreeAssoc S S S)
+  putStrLn "\n5. Four"
+  quickCheck (semigroupAssoc :: FourAssoc S S S S)
