@@ -56,6 +56,10 @@ type IdentityIdentity x = Identity x -> Bool
 -----------------------------
 data Two a b = Two a b deriving (Eq, Show)
 
+instance (Monoid a, Monoid b, Semigroup a, Semigroup b) => Monoid (Two a b) where
+  mempty = Two mempty mempty
+  mappend = (<>)
+
 instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
   Two x y <> Two p q = Two (x <> p) (y <> q)
 
@@ -66,6 +70,7 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
     return (Two a b)
 
 type TwoAssoc a b = Associativity (Two a b)
+type TwoIdentity a b = Two a b -> Bool
 
 -----------------------------
 -- 4. Three
@@ -250,6 +255,8 @@ main = do
 
   putStrLn "\n3. Two"
   quickCheck (semigroupAssoc :: TwoAssoc S S)
+  quickCheck (monoidLeftIdentity :: TwoIdentity S S)
+  quickCheck (monoidRightIdentity :: TwoIdentity S S)
 
   putStrLn "\n4. Three"
   quickCheck (semigroupAssoc :: ThreeAssoc S S S)
