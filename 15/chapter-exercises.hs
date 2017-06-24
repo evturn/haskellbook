@@ -36,6 +36,10 @@ type TrivialIdentity = Trivial -> Bool
 -----------------------------
 newtype Identity a = Identity a deriving (Eq, Show)
 
+instance (Monoid a, Semigroup a) => Monoid (Identity a) where
+  mempty = Identity mempty
+  mappend = (<>)
+
 instance Semigroup a => Semigroup (Identity a) where
   Identity x <> Identity y = Identity $ x <> y
 
@@ -45,6 +49,7 @@ instance Arbitrary a => Arbitrary (Identity a) where
     return (Identity a)
 
 type IdentityAssoc x = Associativity (Identity x)
+type IdentityIdentity x = Identity x -> Bool
 
 -----------------------------
 -- 3. Two
@@ -240,6 +245,8 @@ main = do
 
   putStrLn "\n2. Identity"
   quickCheck (semigroupAssoc :: IdentityAssoc S)
+  quickCheck (monoidLeftIdentity :: IdentityIdentity S)
+  quickCheck (monoidRightIdentity :: IdentityIdentity S)
 
   putStrLn "\n3. Two"
   quickCheck (semigroupAssoc :: TwoAssoc S S)
