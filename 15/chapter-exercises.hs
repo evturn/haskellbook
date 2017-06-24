@@ -7,10 +7,20 @@ type S = String
 semigroupAssoc :: (Eq m, Semigroup m) => Associativity m
 semigroupAssoc a b c = (a <> (b <> c)) == ((a <> b) <> c)
 
+monoidLeftIdentity :: (Eq m, Monoid m, Semigroup m) => m -> Bool
+monoidLeftIdentity a = (a <> mempty) == a
+
+monoidRightIdentity :: (Eq m, Monoid m, Semigroup m) => m -> Bool
+monoidRightIdentity a = (mempty <> a) == a
+
 -----------------------------
 -- 1. Trivial
 -----------------------------
 data Trivial = Trivial deriving (Eq, Show)
+
+instance Monoid Trivial where
+  mempty = Trivial
+  mappend = (<>)
 
 instance Semigroup Trivial where
   _ <> _ = Trivial
@@ -19,6 +29,7 @@ instance Arbitrary Trivial where
   arbitrary = return Trivial
 
 type TrivialAssoc = Trivial -> Trivial -> Trivial -> Bool
+type TrivialIdentity = Trivial -> Bool
 
 -----------------------------
 -- 2. Identity
@@ -224,6 +235,8 @@ main :: IO ()
 main = do
   putStrLn "\n1. Trivial"
   quickCheck (semigroupAssoc :: TrivialAssoc)
+  quickCheck (monoidLeftIdentity :: TrivialIdentity)
+  quickCheck (monoidRightIdentity :: TrivialIdentity)
 
   putStrLn "\n2. Identity"
   quickCheck (semigroupAssoc :: IdentityAssoc S)
