@@ -120,26 +120,15 @@ type DisjAssoc = Associativity BoolDisj
 -----------------------------
 -- 8. Or
 -----------------------------
-data Or a b = Fst a | Snd b deriving (Eq, Show)
+data Or a b = Fst a
+            | Snd b
+            deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b) => Semigroup (Or a b) where
   Fst _ <> Snd y = Snd y
   Fst _ <> Fst y = Fst y
   Snd x <> Fst _ = Snd x
   Snd x <> Snd _ = Snd x
-
--- instance (Semigroup a, Semigroup b) => Semigroup (Or a b) where
---   (Snd a) <> _ = Snd a
---   _ <> (Snd a) = (Snd a)
---   _ <> b = b
-
-
-
--- instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
---   arbitrary = do
---     a <- arbitrary
---     b <- arbitrary
---     return (Or a b)
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
   arbitrary = do
@@ -149,6 +138,50 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
 
 type OrAssoc a b = Associativity (Or a b)
 
+-----------------------------
+-- 9. Combine
+-----------------------------
+newtype Combine a b = Combine { unCombine :: (a -> b) }
+
+instance Semigroup b => Semigroup (Combine a b) where
+  Combine f <> Combine g = Combine (f <> g)
+
+instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
+  arbitrary = do
+    f <- arbitrary
+    return (Combine f)
+
+-----------------------------
+-- 10. Comp
+-----------------------------
+newtype Comp a = Comp { unComp :: (a -> a) }
+
+instance Semigroup a => Semigroup (Comp a) where
+  Comp { unComp = unCompF } <> Comp { unComp = unCompG } = Comp (unCompF <> unCompG)
+
+unCompF = Comp $ \(Sum n) -> Sum (n + 1)
+unCompG = Comp $ \(Sum n) -> Sum (n - 1)
+
+-----------------------------
+-- 11. Validation
+-----------------------------
+data Validation a b = Failure' a
+                    | Success' b
+                    deriving (Eq, Show)
+
+instance Semigroup a => Semigroup (Validation a b) where
+  Failure' x <> Failure' y = Failure' (x <> y)
+  Failure' x <> _          = Failure' x
+  _          <> Failure' y = Failure' y
+  x          <> _         = x
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Validation a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    elements [(Success' a), (Failure' b)]
+
+type ValidationAssoc a b = Associativity (Validation a b)
 
 main :: IO ()
 main = do
@@ -176,3 +209,11 @@ main = do
   putStrLn "\n8. Or"
   quickCheck (semigroupAssoc :: OrAssoc S S)
 
+  putStrLn "\n9. Combine"
+  putStrLn "--- Skipped"
+
+  putStrLn "\n10. Comp"
+  putStrLn "--- Skipped"
+
+  putStrLn "\n11. Validation"
+  quickCheck (semigroupAssoc :: ValidationAssoc S S)
