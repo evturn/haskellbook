@@ -159,7 +159,7 @@
 - [x] [Morse code](https://github.com/evturn/haskell-programming/tree/master/14/morse)
 - [x] Kicking around QuickCheck
  
-##### 15 Monoid, Semigroup
+##### [15 Monoid, Semigroup](https://github.com/evturn/haskell-programming/tree/master/15)
 - [x] Monoids and semigroups
 - [x] What we talk about when we talk about algebras
 - [x] Monoid

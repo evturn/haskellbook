@@ -7,7 +7,9 @@ type S = String
 semigroupAssoc :: (Eq m, Semigroup m) => Associativity m
 semigroupAssoc a b c = (a <> (b <> c)) == ((a <> b) <> c)
 
--- 1.
+-----------------------------
+-- 1. Trivial
+-----------------------------
 data Trivial = Trivial deriving (Eq, Show)
 
 instance Semigroup Trivial where
@@ -18,7 +20,9 @@ instance Arbitrary Trivial where
 
 type TrivialAssoc = Trivial -> Trivial -> Trivial -> Bool
 
--- 2.
+-----------------------------
+-- 2. Identity
+-----------------------------
 newtype Identity a = Identity a deriving (Eq, Show)
 
 instance Semigroup a => Semigroup (Identity a) where
@@ -31,7 +35,9 @@ instance Arbitrary a => Arbitrary (Identity a) where
 
 type IdentityAssoc x = Associativity (Identity x)
 
--- 3.
+-----------------------------
+-- 3. Two
+-----------------------------
 data Two a b = Two a b deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
@@ -45,7 +51,9 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 
 type TwoAssoc a b = Associativity (Two a b)
 
--- 4.
+-----------------------------
+-- 4. Three
+-----------------------------
 data Three a b c = Three a b c deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c) where
@@ -60,7 +68,9 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
 
 type ThreeAssoc a b c = Associativity (Three a b c)
 
--- 5.
+-----------------------------
+-- 5. Four
+-----------------------------
 data Four a b c d = Four a b c d deriving (Eq, Show)
 
 instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d) => Semigroup (Four a b c d) where
@@ -76,7 +86,9 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
 
 type FourAssoc a b c d = Associativity (Four a b c d)
 
--- 6.
+-----------------------------
+-- 6. Conjunction
+-----------------------------
 newtype BoolConj = BoolConj Bool deriving (Eq, Show)
 
 instance Semigroup BoolConj where
@@ -89,7 +101,9 @@ instance Arbitrary BoolConj where
 
 type ConjAssoc = Associativity BoolConj
 
--- 7.
+-----------------------------
+-- 7. Disconjuntion
+-----------------------------
 newtype BoolDisj = BoolDisj Bool deriving (Eq, Show)
 
 instance Semigroup BoolDisj where
@@ -103,19 +117,62 @@ instance Arbitrary BoolDisj where
 
 type DisjAssoc = Associativity BoolDisj
 
+-----------------------------
+-- 8. Or
+-----------------------------
+data Or a b = Fst a | Snd b deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b) => Semigroup (Or a b) where
+  Fst _ <> Snd y = Snd y
+  Fst _ <> Fst y = Fst y
+  Snd x <> Fst _ = Snd x
+  Snd x <> Snd _ = Snd x
+
+-- instance (Semigroup a, Semigroup b) => Semigroup (Or a b) where
+--   (Snd a) <> _ = Snd a
+--   _ <> (Snd a) = (Snd a)
+--   _ <> b = b
+
+
+
+-- instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
+--   arbitrary = do
+--     a <- arbitrary
+--     b <- arbitrary
+--     return (Or a b)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    elements [(Fst a), (Snd b)]
+
+type OrAssoc a b = Associativity (Or a b)
+
+
 main :: IO ()
 main = do
   putStrLn "\n1. Trivial"
   quickCheck (semigroupAssoc :: TrivialAssoc)
+
   putStrLn "\n2. Identity"
   quickCheck (semigroupAssoc :: IdentityAssoc S)
+
   putStrLn "\n3. Two"
   quickCheck (semigroupAssoc :: TwoAssoc S S)
+
   putStrLn "\n4. Three"
   quickCheck (semigroupAssoc :: ThreeAssoc S S S)
+
   putStrLn "\n5. Four"
   quickCheck (semigroupAssoc :: FourAssoc S S S S)
-  putStrLn "\n6. Conjuntive"
+
+  putStrLn "\n6. Conjunction"
   quickCheck (semigroupAssoc :: ConjAssoc)
-  putStrLn "\n7. Disjunctive"
+
+  putStrLn "\n7. Disjunction"
   quickCheck (semigroupAssoc :: DisjAssoc)
+
+  putStrLn "\n8. Or"
+  quickCheck (semigroupAssoc :: OrAssoc S S)
+
