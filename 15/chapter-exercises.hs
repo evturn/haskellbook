@@ -112,6 +112,10 @@ type FourAssoc a b c d = Associativity (Four a b c d)
 -----------------------------
 newtype BoolConj = BoolConj Bool deriving (Eq, Show)
 
+instance Monoid BoolConj where
+  mempty = BoolConj True
+  mappend = (<>)
+
 instance Semigroup BoolConj where
   BoolConj x <> BoolConj y = BoolConj (x && y)
 
@@ -121,6 +125,7 @@ instance Arbitrary BoolConj where
     return (BoolConj a)
 
 type ConjAssoc = Associativity BoolConj
+type ConjIdentity = BoolConj -> Bool
 
 -----------------------------
 -- 7. Disconjuntion
@@ -266,6 +271,8 @@ main = do
 
   putStrLn "\n6. Conjunction"
   quickCheck (semigroupAssoc :: ConjAssoc)
+  quickCheck (monoidLeftIdentity :: ConjIdentity)
+  quickCheck (monoidRightIdentity :: ConjIdentity)
 
   putStrLn "\n7. Disjunction"
   quickCheck (semigroupAssoc :: DisjAssoc)
