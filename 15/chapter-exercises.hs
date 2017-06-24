@@ -190,8 +190,8 @@ newtype AccumulateRight a b = AccumulateRight (Validation a b) deriving (Eq, Sho
 
 instance Semigroup b => Semigroup (AccumulateRight a b) where
   AccumulateRight (Success' x) <> AccumulateRight (Success' y) = AccumulateRight (Success' (x <> y))
-  AccumulateRight (Failure' x) <> _                           = AccumulateRight (Failure' x)
-  _                           <> AccumulateRight (Failure' y) = AccumulateRight (Failure' y)
+  AccumulateRight (Failure' x) <> _                            = AccumulateRight (Failure' x)
+  _                            <> AccumulateRight (Failure' y) = AccumulateRight (Failure' y)
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (AccumulateRight a b) where
   arbitrary = do
@@ -200,6 +200,25 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (AccumulateRight a b) where
     elements [(AccumulateRight (Success' a)), (AccumulateRight (Failure' b))]
 
 type AccumulateRightAssoc a b = Associativity (AccumulateRight a b)
+
+-----------------------------
+-- 13. AccumulateBoth
+-----------------------------
+newtype AccumulateBoth a b = AccumulateBoth (Validation a b) deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b) => Semigroup (AccumulateBoth a b) where
+  AccumulateBoth (Success' x) <> AccumulateBoth (Success' y) = AccumulateBoth (Success' (x <> y))
+  AccumulateBoth (Failure' x) <> AccumulateBoth (Failure' y) = AccumulateBoth (Failure' (x <> y))
+  _                           <> AccumulateBoth (Failure' y) = AccumulateBoth (Failure' y)
+  AccumulateBoth (Failure' x) <> _                           = AccumulateBoth (Failure' x)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (AccumulateBoth a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <-arbitrary
+    elements [(AccumulateBoth (Success' a)), (AccumulateBoth (Failure' b))]
+
+type AccumulateBothAssoc a b = Associativity (AccumulateBoth a b)
 
 main :: IO ()
 main = do
@@ -238,3 +257,6 @@ main = do
 
   putStrLn "\n12. AccumulateRight"
   quickCheck (semigroupAssoc :: AccumulateRightAssoc S S)
+
+  putStrLn "\n13. AccumulateBoth"
+  quickCheck (semigroupAssoc :: AccumulateBothAssoc S S)
