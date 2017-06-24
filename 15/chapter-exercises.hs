@@ -183,6 +183,24 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Validation a b) where
 
 type ValidationAssoc a b = Associativity (Validation a b)
 
+-----------------------------
+-- 12. AccumulateRight
+-----------------------------
+newtype AccumulateRight a b = AccumulateRight (Validation a b) deriving (Eq, Show)
+
+instance Semigroup b => Semigroup (AccumulateRight a b) where
+  AccumulateRight (Success' x) <> AccumulateRight (Success' y) = AccumulateRight (Success' (x <> y))
+  AccumulateRight (Failure' x) <> _                           = AccumulateRight (Failure' x)
+  _                           <> AccumulateRight (Failure' y) = AccumulateRight (Failure' y)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (AccumulateRight a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    elements [(AccumulateRight (Success' a)), (AccumulateRight (Failure' b))]
+
+type AccumulateRightAssoc a b = Associativity (AccumulateRight a b)
+
 main :: IO ()
 main = do
   putStrLn "\n1. Trivial"
@@ -217,3 +235,6 @@ main = do
 
   putStrLn "\n11. Validation"
   quickCheck (semigroupAssoc :: ValidationAssoc S S)
+
+  putStrLn "\n12. AccumulateRight"
+  quickCheck (semigroupAssoc :: AccumulateRightAssoc S S)
