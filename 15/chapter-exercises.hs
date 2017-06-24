@@ -132,6 +132,10 @@ type ConjIdentity = BoolConj -> Bool
 -----------------------------
 newtype BoolDisj = BoolDisj Bool deriving (Eq, Show)
 
+instance Monoid BoolDisj where
+  mempty = BoolDisj False
+  mappend = (<>)
+
 instance Semigroup BoolDisj where
   BoolDisj True <> BoolDisj _  = BoolDisj True
   BoolDisj False <> BoolDisj x = BoolDisj x
@@ -142,6 +146,7 @@ instance Arbitrary BoolDisj where
     return (BoolDisj a)
 
 type DisjAssoc = Associativity BoolDisj
+type DisjIdentity = BoolDisj -> Bool
 
 -----------------------------
 -- 8. Or
@@ -276,6 +281,8 @@ main = do
 
   putStrLn "\n7. Disjunction"
   quickCheck (semigroupAssoc :: DisjAssoc)
+  quickCheck (monoidLeftIdentity :: DisjIdentity)
+  quickCheck (monoidRightIdentity :: DisjIdentity)
 
   putStrLn "\n8. Or"
   quickCheck (semigroupAssoc :: OrAssoc S S)
