@@ -47,7 +47,19 @@ type PairCompose = IntFC
 -----------------------------
 -- 3.
 -----------------------------
+data Two a b = Two a b deriving (Eq, Show)
 
+instance Functor (Two a) where
+  fmap f (Two x y) = Two x (f y)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    return (Two a b)
+
+type TwoIdentity a b = Two a b -> Bool
+type TwoCompose = IntFC
 
 -----------------------------
 -- 4.
@@ -76,6 +88,10 @@ main = do
   putStrLn "\n2."
   quickCheck (functorIdentity :: PairIdentity Int)
   quickCheck (functorCompose' :: PairCompose)
+
+  putStrLn "\n3."
+  quickCheck (functorIdentity :: TwoIdentity Int Int)
+  quickCheck (functorCompose' :: TwoCompose)
 
   putStrLn "\n4."
   quickCheck (functorIdentity :: ThreeIdentity Int Int Int)
