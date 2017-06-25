@@ -115,6 +115,30 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d) => Arbitrary (Four
 type FourIdentity a b c d = Four a b c d -> Bool
 type FourCompose = IntFC
 
+-----------------------------
+-- 7.
+-----------------------------
+data Four' a b = Four' a a a b deriving (Eq, Show)
+
+instance Functor (Four' a) where
+  fmap f (Four' w x y z) = Four' w x y (f z)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return (Four' x x x y)
+
+type Four'Identity a b = Four' a b -> Bool
+type Four'Compose = IntFC
+
+-----------------------------
+-- 8.
+-----------------------------
+data Trivial = Trivial
+
+-- Trivial is of kind * and cannot be an instance of Functor
+
 main :: IO ()
 main = do
   putStrLn "\n1."
@@ -140,3 +164,9 @@ main = do
   putStrLn "\n6."
   quickCheck (functorIdentity :: FourIdentity Int Int Int Int)
   quickCheck (functorCompose' :: FourCompose)
+
+  putStrLn "\n7."
+  quickCheck (functorIdentity :: Four'Identity Int Int)
+  quickCheck (functorCompose' :: Four'Compose)
+
+

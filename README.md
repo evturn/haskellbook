@@ -184,7 +184,7 @@
 - [x] Commonly used functors
 - [x] Transforming the unapplied type argument
 - [x] QuickChecking Functor instances
-- [ ] Exercises: Instances of Func
+- [x] Exercises: Instances of Func
 - [ ] Ignoring possibilities
 - [ ] A somewhat surprising functor
 - [ ] More structure, more functors
