@@ -200,7 +200,7 @@
 - [x] [Transforming the unapplied type argument](https://github.com/evturn/haskell-programming/blob/master/16/heavy-lifting.hs)
 - [x] QuickChecking Functor instances
 - [x] [Exercises: Instances of Func](https://github.com/evturn/haskell-programming/blob/master/16/instances-of-func.hs)
-- [ ] Ignoring possibilities
+- [x] Ignoring possibilities
 - [ ] A somewhat surprising functor
 - [ ] More structure, more functors
 - [ ] IO Functor
