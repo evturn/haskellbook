@@ -201,11 +201,11 @@
 - [x] QuickChecking Functor instances
 - [x] [Exercises: Instances of Func](https://github.com/evturn/haskell-programming/blob/master/16/instances-of-func.hs)
 - [x] Ignoring possibilities
-- [ ] A somewhat surprising functor
-- [ ] More structure, more functors
-- [ ] IO Functor
-- [ ] What if we want to do something different?
-- [ ] Functors are unique to a datatype
+- [x] A somewhat surprising functor
+- [x] More structure, more functors
+- [x] IO Functor
+- [x] What if we want to do something different?
+- [x] Functors are unique to a datatype
 - ###### Chapter Exercises
 
 ##### 17 Applicitive
