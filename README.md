@@ -206,7 +206,7 @@
 - [x] IO Functor
 - [x] What if we want to do something different?
 - [x] Functors are unique to a datatype
-- ###### Chapter Exercises
+- ###### [Chapter Exercises](https://github.com/evturn/haskell-programming/blob/master/16/chapter-exercises)
 
 ##### 17 Applicitive
 - [ ] Applicative
