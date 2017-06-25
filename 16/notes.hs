@@ -73,3 +73,6 @@ fmap (f . g) == fmap f . fmap g
 
 -- two functions lifted separately should produce the same result as if the function were composed
    -- ahead of time and then lifted the composed function all together.
+
+fmapComposed :: (Functor f1, Functor f) => (a -> b) -> f (f1 a) -> f (f1 b)
+fmapComposed = (fmap . fmap)

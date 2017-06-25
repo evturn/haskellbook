@@ -183,7 +183,7 @@
 - [x] The Good, the Bad, and the Ugly
 - [x] Commonly used functors
 - [x] Transforming the unapplied type argument
-- [ ] QuickChecking Functor instances
+- [x] QuickChecking Functor instances
 - [ ] Exercises: Instances of Func
 - [ ] Ignoring possibilities
 - [ ] A somewhat surprising functor

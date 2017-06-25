@@ -33,30 +33,29 @@ main :: IO ()
 main = do
   putStr "replaceWithP' lms:   "
   print (replaceWithP' lms)
+-- replaceWithP' lms:   'p'
 
   putStr "liftedReplace lms:   "
   print (liftedReplace lms)
+-- liftedReplace lms:   "ppp"
 
   putStr "liftedReplace' lms:  "
   print (liftedReplace lms)
+-- liftedReplace' lms:  "ppp"
 
   putStr "twiceLifted lms:     "
   print (twiceLifted lms)
+-- twiceLifted lms:     [Just 'p',Nothing,Just 'p']
 
   putStr "twiceLifted' lms:    "
   print (twiceLifted' lms)
+-- twiceLifted' lms:    [Just 'p',Nothing,Just 'p']
 
   putStr "thriceLifted lms:    "
   print (thriceLifted lms)
+-- thriceLifted lms:    [Just "ppp",Nothing,Just "pppppppppp"]
 
   putStr "thriceLifted' lms:   "
   print (thriceLifted' lms)
-
-
--- replaceWithP' lms:   'p'
--- liftedReplace lms:   "ppp"
--- liftedReplace' lms:  "ppp"
--- twiceLifted lms:     [Just 'p',Nothing,Just 'p']
--- twiceLifted' lms:    [Just 'p',Nothing,Just 'p']
--- thriceLifted lms:    [Just "ppp",Nothing,Just "pppppppppp"]
 -- thriceLifted' lms:   [Just "ppp",Nothing,Just "pppppppppp"]
+
