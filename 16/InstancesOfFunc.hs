@@ -28,8 +28,28 @@ instance Arbitrary a => Arbitrary (Identity a) where
 type IdentityIdentity = Identity Int -> Bool
 type IdentityCompose = IntFC
 
+-----------------------------
+-- 2.
+-----------------------------
+data Pair a = Pair a a deriving (Eq, Show)
+
+instance Functor Pair where
+  fmap f (Pair x y) = Pair (f x) (f y)
+
+instance Arbitrary a => Arbitrary (Pair a) where
+  arbitrary = do
+    a <- arbitrary
+    return (Pair a a)
+
+type PairIdentity a = Pair a -> Bool
+type PairCompose = IntFC
+
 main :: IO ()
 main = do
   putStrLn "\n1."
   quickCheck (functorIdentity :: IdentityIdentity)
   quickCheck (functorCompose' :: IdentityCompose)
+
+  putStrLn "\n2."
+  quickCheck (functorIdentity :: PairIdentity Int)
+  quickCheck (functorCompose' :: PairCompose)
