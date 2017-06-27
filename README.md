@@ -209,8 +209,8 @@
 - ###### [Chapter Exercises](https://github.com/evturn/haskell-programming/blob/master/16/chapter-exercises)
 
 ##### 17 Applicitive
-- [ ] Applicative
-- [ ] Defining Applicative
+- [x] Applicative
+- [x] Defining Applicative
 - [ ] Functor vs. Applicative
 - [ ] Applicative functors are monoidal functors
 - [ ] Applicative in use
