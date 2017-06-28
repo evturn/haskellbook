@@ -23,3 +23,12 @@ class Functor f => Applicative f where
 -- The difference is the 𝑓 representing functorial structure that is on the
 -- outside of the 'apply' function defintion.
 -------------------------------
+
+-- List Applicative
+(<*>) ::  f  (a -> b)  -> f   a ->  f  b
+(<*>) :: [ ] (a -> b)  -> [ ] a -> [ ] b
+-- more syntactically typical
+(<*>) ::    [(a -> b)] -> [a]   ->    [b]
+
+pure :: a ->   f  a
+pure :: a ->  [ ] a

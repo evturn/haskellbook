@@ -211,8 +211,8 @@
 ##### 17 Applicitive
 - [x] Applicative
 - [x] Defining Applicative
-- [ ] Functor vs. Applicative
-- [ ] Applicative functors are monoidal functors
+- [x] Functor vs. Applicative
+- [x] Applicative functors are monoidal functors
 - [ ] Applicative in use
 - [ ] Applicative laws
 - [ ] You knew this was coming
