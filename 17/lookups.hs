@@ -27,3 +27,16 @@ max' = max
 
 maxed :: Maybe Int
 maxed = max' <$> x3 <*> y3
+
+-- 4.
+xs = [1, 2, 3]
+ys = [4, 5, 6]
+
+x4 :: Maybe Integer
+x4 = lookup 3 $ zip xs ys
+
+y4 :: Maybe Integer
+y4 = lookup 2 $ zip xs ys
+
+summed :: Maybe Integer
+summed = fmap sum $ (,) <$> x4 <*> y4
