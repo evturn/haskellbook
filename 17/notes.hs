@@ -19,7 +19,7 @@ class Functor f => Applicative f where
 -- fmap
 (<$>) :: Functor f =>       (a -> b) -> f a -> f b
 
--- 'apply'
+-- 'apply' / 'app' / 'splat'
 (<*>) :: Applicative f => f (a -> b) -> f a -> f b
 
 -- The difference is the 𝑓 representing functorial structure
@@ -36,6 +36,11 @@ class Functor f => Applicative f where
 
 pure :: a ->   f  a
 pure :: a ->  [ ] a
+
+-- `pure` takes a value of any type `a` and returns a context/container of
+-- type `f a`.
+-- The intention is that `pure` creates some sort of container for embedding
+-- values in a default, "effect free" context.
 
 -- ∨ -------------------------------- ∨ ---------------------------------- ∨ --
 
