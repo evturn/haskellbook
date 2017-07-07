@@ -28,7 +28,7 @@ class Functor f => Applicative f where
 -- ∧ -------------------------------- ∧ ---------------------------------- ∧ --
 
 -- List Applicative typeclass methods
-(<*>) ::  f  (a -> b)  -> f   a ->  f  b
+(<*>) ::  f  (a -> b)  ->  f  a ->  f  b
 (<*>) :: [ ] (a -> b)  -> [ ] a -> [ ] b
 
 -- more syntactically typical
