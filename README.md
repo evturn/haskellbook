@@ -213,8 +213,8 @@
 - [x] Defining Applicative
 - [x] Functor vs. Applicative
 - [x] Applicative functors are monoidal functors
-- [ ] Applicative in use
-- [ ] Applicative laws
+- [x] Applicative in use
+- [x] Applicative laws
 - [ ] You knew this was coming
 - [ ] ZipList Monoid
 - ###### Chapter Exercises
