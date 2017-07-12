@@ -215,7 +215,7 @@
 - [x] Applicative functors are monoidal functors
 - [x] Applicative in use
 - [x] Applicative laws
-- [ ] You knew this was coming
+- [x] You knew this was coming
 - [ ] ZipList Monoid
 - ###### Chapter Exercises
 
