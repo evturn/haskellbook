@@ -32,11 +32,11 @@ instance Applicative List where
   pure x           = Cons x Nil
   _ <*> Nil        = Nil
   Nil <*> _        = Nil
-  Cons f xs <*> ys = append (fmap f ys) (fs <*> ys)
+  Cons f fs <*> xs = append (fmap f xs) (fs <*> xs)
 
 
 take' :: Int -> List a -> List a
-take' 0 _     Nil
+take' 0 _   = Nil
 take' _ Nil = Nil
 take' n (Cons x xs) = Cons x (take' (n - 1) xs)
 
