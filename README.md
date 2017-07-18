@@ -216,8 +216,8 @@
 - [x] Applicative in use
 - [x] Applicative laws
 - [x] You knew this was coming
-- [ ] ZipList Monoid
-- ###### Chapter Exercises
+- [x] ZipList Monoid
+- ###### [Chapter Exercises](https://github.com/evturn/haskellbook/blob/master/17/chapter-exercises.hs)
 
 ##### 18 Monad
 - [ ] Monad
