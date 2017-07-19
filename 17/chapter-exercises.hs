@@ -15,3 +15,9 @@ pure :: a -> IO a
 
 pure :: Monoid a => b -> (a, b)
 (<*>) :: Monoid c => (c, a -> b) -> (c, a) -> (c, b)
+
+-- 4.
+-- (->) e
+
+pure :: a -> ((->) e) a
+(<*>) :: ((->) e)  (a -> b) -> ((->) e) a -> ((->) e) b
