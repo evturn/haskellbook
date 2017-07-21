@@ -61,7 +61,27 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
 instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
   (=-=) = eq
 
+-- 8.
+data Three' a b = Three' a b b deriving (Eq, Show)
+
+instance Functor (Three' a) where
+  fmap f (Three' x y z) = Three' x (f y) (f z)
+
+instance Monoid a => Applicative (Three' a) where
+  pure x = Three' mempty x x
+  Three' a f g <*> Three' x y z = Three' (a <> x) (f y) (g z)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return (Three' x y y)
+
+instance (Eq a, Eq b) => EqProp (Three' a b) where
+  (=-=) = eq
+
 main = do
   quickBatch $ applicative $ (Pair (1, 2, "uh") (3, 4, "oh") :: Pair (Int, Int, String))
   quickBatch $ applicative (Two ("sure", "dude") ("cool", "man", "why do I need a third one here?"))
   quickBatch $ applicative (Three ("one", "more", "guess") ("on", "how", "to") ("make", "this", "work"))
+  quickBatch $ applicative (Three' ("please", "work", "and") ("don't", "break", "while") ("this", "tries", "compiling"))
