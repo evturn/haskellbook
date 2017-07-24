@@ -220,7 +220,7 @@
 - ###### [Chapter Exercises](https://github.com/evturn/haskellbook/blob/master/17/chapter-exercises)
 
 ##### 18 Monad
-- [ ] Monad
+- [x] Monad
 - [ ] Sorry - Monad is not a burrito
 - [ ] Do syntax and monads
 - [ ] Examples of Monad use
