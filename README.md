@@ -208,7 +208,7 @@
 - [x] Functors are unique to a datatype
 - ###### [Chapter Exercises](https://github.com/evturn/haskellbook/blob/master/16/chapter-exercises)
 
-##### 17 Applicitive
+##### [17 Applicitive](https://github.com/evturn/haskellbook/tree/master/17)
 - [x] Applicative
 - [x] Defining Applicative
 - [x] Functor vs. Applicative
@@ -221,8 +221,8 @@
 
 ##### 18 Monad
 - [x] Monad
-- [ ] Sorry - Monad is not a burrito
-- [ ] Do syntax and monads
+- [x] Sorry - Monad is not a burrito
+- [x] Do syntax and monads
 - [ ] Examples of Monad use
 - [ ] Monad laws
 - [ ] Application and composition
