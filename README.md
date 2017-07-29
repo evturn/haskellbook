@@ -223,7 +223,7 @@
 - [x] Monad
 - [x] Sorry - Monad is not a burrito
 - [x] Do syntax and monads
-- [ ] Examples of Monad use
+- [x] Examples of Monad use
 - [ ] Monad laws
 - [ ] Application and composition
 - ###### Chapter Exercises
