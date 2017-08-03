@@ -224,7 +224,7 @@
 - [x] Sorry - Monad is not a burrito
 - [x] Do syntax and monads
 - [x] Examples of Monad use
-- [ ] Monad laws
+- [x] Monad laws
 - [ ] Application and composition
 - ###### Chapter Exercises
 
