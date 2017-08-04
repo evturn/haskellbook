@@ -225,7 +225,7 @@
 - [x] Do syntax and monads
 - [x] Examples of Monad use
 - [x] Monad laws
-- [ ] Application and composition
+- [x] Application and composition
 - ###### Chapter Exercises
 
 ##### 19 Applying structure
