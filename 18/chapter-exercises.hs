@@ -26,8 +26,47 @@ instance Arbitrary a => Arbitrary (Nope a) where
 instance Eq a => EqProp (Nope a) where
   (=-=) = eq
 
+
+-- 2.
+data Peither e a =
+    L e
+  | R a
+  deriving (Eq, Show)
+
+instance Functor (Peither e) where
+  fmap _ (L e)   = L e
+  fmap f (R x)  = R (f x)
+
+instance Applicative (Peither e) where
+  pure = R
+  R f <*> R x = R (f x)
+  L e <*> _        = L e
+  _ <*> L e        = L e
+
+instance Monad (Peither e) where
+  return = pure
+  R x >>= f = f x
+  L e >>= _ = L e
+
+instance (Arbitrary a, Arbitrary e) => Arbitrary (Peither e a) where
+  arbitrary = do
+    e <- arbitrary
+    x <- arbitrary
+    elements [R x, L e]
+
+
+instance (Eq a, Eq e) => EqProp (Peither e a) where
+  (=-=) = eq
+
+
+nope = NopeDotJpg :: Nope (Int, Int, Int)
+peither = L "sup" :: Peither String (Int, Int, Int)
+
 main = do
-  let trigger = undefined :: Nope (Int, Int, Int)
-  quickBatch $ functor trigger
-  quickBatch $ applicative trigger
-  quickBatch $ monad trigger
+  quickBatch $ functor $ nope
+  quickBatch $ applicative $ nope
+  quickBatch $ monad $ nope
+
+  quickBatch $ functor $ peither
+  quickBatch $ applicative $ peither
+  quickBatch $ monad $ peither
