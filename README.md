@@ -226,7 +226,7 @@
 - [x] Examples of Monad use
 - [x] Monad laws
 - [x] Application and composition
-- ###### Chapter Exercises
+- ###### [Chapter Exercises](https://github.com/evturn/haskellbook/blob/master/18/chapter-exercises.hs)
 
 ##### 19 Applying structure
 - [ ] Applied structure
