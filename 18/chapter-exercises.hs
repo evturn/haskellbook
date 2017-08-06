@@ -54,13 +54,37 @@ instance (Arbitrary a, Arbitrary e) => Arbitrary (Peither e a) where
     x <- arbitrary
     elements [R x, L e]
 
-
 instance (Eq a, Eq e) => EqProp (Peither e a) where
+  (=-=) = eq
+
+-- 3.
+
+newtype Identity a = Identity a
+  deriving (Eq, Ord, Show)
+
+instance Functor Identity where
+  fmap f (Identity x) = Identity $ f x
+
+instance Applicative Identity where
+  pure = Identity
+  Identity f <*> Identity x = Identity $ f x
+
+instance Monad Identity where
+  return = pure
+  Identity x >>= f = f x
+
+instance Arbitrary a => Arbitrary (Identity a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Identity x
+
+instance Eq a => EqProp (Identity a) where
   (=-=) = eq
 
 
 nope = NopeDotJpg :: Nope (Int, Int, Int)
 peither = L "sup" :: Peither String (Int, Int, Int)
+identity' = Identity $ ("dog", "cat", "surgeon") :: Identity (String, String, String)
 
 main = do
   quickBatch $ functor $ nope
@@ -70,3 +94,7 @@ main = do
   quickBatch $ functor $ peither
   quickBatch $ applicative $ peither
   quickBatch $ monad $ peither
+
+  quickBatch $ functor $ identity'
+  quickBatch $ applicative $ identity'
+  quickBatch $ monad $ identity'
