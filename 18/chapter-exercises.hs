@@ -136,3 +136,27 @@ main = do
   quickBatch $ functor $ list'
   quickBatch $ applicative $ list'
   quickBatch $ monad $ list'
+
+
+-- 6.
+j :: Monad m => m (m a) -> m a
+j = join
+
+-- 7.
+l1 :: Monad m => (a -> b) -> m a -> m b
+l1 f x = fmap f x
+
+-- 8.
+l2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+l2 f x y = f <$> x <*> y
+
+-- 9.
+a :: Monad m => m a -> m (a -> b) -> m b
+a mx mf = mf <*> mx
+
+-- 10.
+meh :: (Functor m, Monad m) => [a] -> (a -> m b) -> m [b]
+meh [] _ = return []
+meh (x:xs) f = do
+  x' <- f x
+  fmap ((:) x') (meh xs f)
