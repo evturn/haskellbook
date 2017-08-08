@@ -160,3 +160,7 @@ meh [] _ = return []
 meh (x:xs) f = do
   x' <- f x
   fmap ((:) x') (meh xs f)
+
+-- 11.
+flipType :: (Functor m, Monad m) => [m a] -> m [a]
+flipType = flip meh $ id

@@ -219,7 +219,7 @@
 - [x] ZipList Monoid
 - ###### [Chapter Exercises](https://github.com/evturn/haskellbook/blob/master/17/chapter-exercises)
 
-##### 18 Monad
+##### 18 [Monad](https://github.com/evturn/haskellbook/tree/master/18)
 - [x] Monad
 - [x] Sorry - Monad is not a burrito
 - [x] Do syntax and monads
