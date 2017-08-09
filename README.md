@@ -119,7 +119,7 @@
 - [x] [How to write fold functions](https://github.com/evturn/haskellbook/tree/master/10/database-processing.hs)
 - [x] Folding and evaluation
 - [x] Scans
-- ###### [Chapter Exercises](https://github.com/evturn/haskellbook/tree/master/10/chapter-exercises.hs)
+- ###### [Chapter Exercises](https://github.com/evturn/haskellbook/tree/master/10/chapter-exercises)
 
 ##### [11 Algebraic datatypes](https://github.com/evturn/haskellbook/tree/master/11)
 - [x] Algebraic datatypes
