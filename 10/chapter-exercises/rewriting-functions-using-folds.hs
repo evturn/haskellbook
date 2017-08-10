@@ -25,3 +25,19 @@ myMap f xs = foldr ((:) . f) [] xs
 -- 6.
 myFilter :: (a -> Bool) -> [a] -> [a]
 myFilter f xs = foldr (\x -> bool ((++) []) ((:) x) (f x)) [] xs
+
+-- 7.
+squish :: [[a]] -> [a]
+squish xs = foldr (++) [] xs
+
+-- 8.
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f xs = foldr ((++) . (map f)) [] xs
+
+-- 9.
+squishAgain :: [[a]] -> [a]
+squishAgain = squishMap id
+
+-- 10.
+myMaximum :: (a -> a -> Ordering) -> [a] -> a
+myMaximum xs = foldr (\x y -> bool x y (x < y)) 0 xs
