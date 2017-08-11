@@ -39,5 +39,9 @@ squishAgain :: [[a]] -> [a]
 squishAgain = squishMap id
 
 -- 10.
-myMaximum :: (a -> a -> Ordering) -> [a] -> a
-myMaximum xs = foldr (\x y -> bool x y (x < y)) 0 xs
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy xs = foldr (\x y -> bool x y (x < y)) 0 xs
+
+-- 11.
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy xs = foldl1 (\x y -> bool x y (x > y)) xs
