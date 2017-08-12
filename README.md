@@ -108,7 +108,7 @@
 - [x] Transforming lists of values
 - [x] Filtering lists of values
 - [x] [Zipping lists](https://github.com/evturn/haskellbook/tree/master/09/zipping-lists.hs)
-- ###### [Chapter Exercises](https://github.com/evturn/haskellbook/tree/master/09/chapter-exercises.hs)
+- ###### [Chapter Exercises](https://github.com/evturn/haskellbook/tree/master/09/chapter-exercises)
 
 ##### [10 Folding lists](https://github.com/evturn/haskellbook/tree/master/10)
 - [x] Folds
