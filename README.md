@@ -229,7 +229,7 @@
 - ###### [Chapter Exercises](https://github.com/evturn/haskellbook/blob/master/18/chapter-exercises.hs)
 
 ##### 19 Applying structure
-- [ ] Applied structure
+- [x] Applied structure
 - [ ] Monoid
 - [ ] Functor
 - [ ] Applicative
@@ -239,7 +239,7 @@
 - ###### Chapter Exercises
 
 ##### 20 Foldable
-- [ ] Foldable
+- [x] Foldable
 - [ ] The Foldable class
 - [ ] Revenge of the monoids
 - [ ] Demonstrating Foldable instances
