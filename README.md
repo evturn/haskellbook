@@ -240,9 +240,9 @@
 
 ##### 20 Foldable
 - [x] Foldable
-- [ ] The Foldable class
-- [ ] Revenge of the monoids
-- [ ] Demonstrating Foldable instances
+- [x] The Foldable class
+- [x] Revenge of the monoids
+- [x] Demonstrating Foldable instances
 - [ ] Some basic derived operations
 - ###### Chapter Exercises
 
