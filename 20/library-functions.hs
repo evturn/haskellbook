@@ -37,3 +37,11 @@ minimum' xs = getMin $ foldMap (Min . Just) xs
 -- 5.
 maximum' :: (Foldable t, Ord a) => t a -> Maybe a
 maximum' xs = getMax $ foldMap (Max . Just) xs
+
+-- 6.
+null' :: (Foldable t) => t a -> Bool
+null' = foldr (\_ _ -> False) True
+
+-- 7.
+length' :: (Foldable t) => t a -> Int
+length' = foldr (\_ y -> y + 1) 0
