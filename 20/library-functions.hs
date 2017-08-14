@@ -33,3 +33,7 @@ instance Ord a => Monoid (Min a) where
 
 minimum' :: (Foldable t, Ord a) => t a -> Maybe a
 minimum' xs = getMin $ foldMap (Min . Just) xs
+
+-- 5.
+maximum' :: (Foldable t, Ord a) => t a -> Maybe a
+maximum' xs = getMax $ foldMap (Max . Just) xs
