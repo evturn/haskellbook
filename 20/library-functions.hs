@@ -45,3 +45,7 @@ null' = foldr (\_ _ -> False) True
 -- 7.
 length' :: (Foldable t) => t a -> Int
 length' = foldr (\_ y -> y + 1) 0
+
+-- 8.
+toList' :: (Foldable t) => t a -> [a]
+toList' = foldr (:) []
