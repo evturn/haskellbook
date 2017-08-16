@@ -243,7 +243,7 @@
 - [x] The Foldable class
 - [x] Revenge of the monoids
 - [x] Demonstrating Foldable instances
-- [ ] Some basic derived operations
+- [x] Some basic derived operations
 - ###### Chapter Exercises
 
 ##### 21 Traversable

@@ -53,3 +53,7 @@ toList' = foldr (:) []
 -- 9.
 fold' :: (Foldable t, Monoid m) => t m -> m
 fold' = foldMap id
+
+-- 10.
+foldMap' :: (Foldable t, Monoid m) => (a -> m) -> t a -> m
+foldMap' f = foldr ((<>) . f) mempty
