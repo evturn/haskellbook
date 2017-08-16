@@ -49,3 +49,7 @@ length' = foldr (\_ y -> y + 1) 0
 -- 8.
 toList' :: (Foldable t) => t a -> [a]
 toList' = foldr (:) []
+
+-- 9.
+fold' :: (Foldable t, Monoid m) => t m -> m
+fold' = foldMap id
