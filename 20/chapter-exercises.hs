@@ -36,3 +36,7 @@ data Four' a b =
 
 instance Foldable (Four' a) where
   foldMap f (Four' x y y' y'') = (f y) <> (f y') <> (f y'')
+
+filterF :: (Applicative f, Foldable t, Monoid (f a))
+        => (a -> Bool) -> t a -> f a
+filterF f = foldMap (\x -> if f x then pure x else mempty)
