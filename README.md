@@ -86,7 +86,7 @@
 - [x] Function composition
 - [x] Point freestyle
 - [x] Demonstrating composition
-- ###### Chapter Exercises
+- ###### [Chapter Exercises](https://github.com/evturn/haskellbook/tree/master/07/chapter-exercises.hs)
 
 ##### [08 Recursion](https://github.com/evturn/haskellbook/tree/master/08)
 - [x] Recursion
