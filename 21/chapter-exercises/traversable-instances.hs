@@ -45,11 +45,38 @@ instance Arbitrary a => Arbitrary (Constant a b) where
 instance (Eq a, Eq b) => EqProp (Constant a b) where
   (=-=) = eq
 
+-- Maybe
+data Optional a =
+    Nada
+  | Yep a
+  deriving (Eq, Show, Ord)
+
+instance Functor Optional where
+  fmap _ Nada = Nada
+  fmap f (Yep x) = Yep (f x)
+
+instance Foldable Optional where
+  foldr _ x Nada = x 
+  foldr f x (Yep y) = f y x
+
+instance Traversable Optional where
+  traverse _ Nada = pure Nada
+  traverse f (Yep x) = Yep <$> f x 
+
+instance Arbitrary a => Arbitrary (Optional a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Yep x
+
+instance Eq a => EqProp (Optional a) where
+  (=-=) = eq
+
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
 
-idTrigger = undefined :: Identity TupleOfStuff 
-constantTrigger = undefined :: Constant Int TupleOfStuff
+idTrigger       = undefined :: Identity TupleOfStuff 
+constantTrigger = undefined :: Constant OneThing TupleOfStuff
+optionalTrigger = undefined :: Optional TupleOfStuff
 
 main = do
   putStrLn "\n=============== Identity ===================="
@@ -57,3 +84,6 @@ main = do
 
   putStrLn "\n=============== Constant ===================="
   quickBatch (traversable constantTrigger)
+
+  putStrLn "\n=============== Optional ===================="
+  quickBatch (traversable optionalTrigger)
