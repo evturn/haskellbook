@@ -71,12 +71,35 @@ instance Arbitrary a => Arbitrary (Optional a) where
 instance Eq a => EqProp (Optional a) where
   (=-=) = eq
 
+-- List
+data List a =
+    Nil
+  | Cons a (List a)
+  deriving (Eq, Show, Ord)
+
+instance Functor List where
+  fmap _ Nil = Nil
+  fmap f (Cons x x') = Cons (f x) (fmap f x') 
+
+instance Foldable List where
+  foldr _ x Nil = x
+  foldr f x (Cons y y') = f y (foldr f x y') 
+
+instance Arbitrary a => Arbitrary (List a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Cons x Nil
+
+instance Eq a => EqProp (List a) where
+  (=-=) = eq
+
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
 
 idTrigger       = undefined :: Identity TupleOfStuff 
 constantTrigger = undefined :: Constant OneThing TupleOfStuff
 optionalTrigger = undefined :: Optional TupleOfStuff
+listTrigger     = undefined :: List TupleOfStuff
 
 main = do
   putStrLn "\n=============== Identity ===================="
