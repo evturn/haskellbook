@@ -2,8 +2,8 @@
 
 module DetermineTheType where
 
-
-example = 1
+-- 1.
+-- example = 1
 
 a1 = (* 9) 6                                     -- a1 :: Num a => a
 
@@ -17,25 +17,23 @@ e' = length [1, 2, 3, 4, 5]                      -- e' :: Int
 
 f1 = (length [1, 2, 3, 4]) > (length "TACOCAT")  -- f1 :: Bool
 
-
+-- 2.
 x' = 5
 y' = x' + 5
-
 w' = y' * 10                                     -- w' :: Num a => a
 
+-- 3.
 z' y' = y' + 10                                  -- z' :: Num a => a -> a
 
+-- 4.
 f2 = 4 / y'                                      -- f2 :: Fractional a => a
 
-
+-- 5.
 x = "Julie"
 y = " <3 "
 z = "Haskell"
-
 f3 = x ++ y ++ z                                  -- f3 :: [Char]
 
-bigNum = (^) 5
-wahoo = bigNum $ 10
 
 
 -- Choices for the following are:
