@@ -31,3 +31,11 @@ jackal "keyboard" :: Eq b => b -> [Char]
 kessel :: (Ord a, Num b) => a -> b -> a
 -- Answer d. 
 kessel 1 2 :: (Ord a, Num a) => a
+
+-- 8.
+kessel 1 (2 :: Integer) :: (Ord a , Num a) => a
+-- Answer a.
+
+-- 9.
+kessel (1 :: Integer) 2 :: Integer 
+-- Answer c.
