@@ -48,29 +48,3 @@ z' = "Haskell"
 f1 = x' ++ y' ++ z'
 f1 :: [Char]
 
-
-
-
-i1 :: a -> a
-i1 a = id a
-
-c2 :: a -> b -> a
-c2 a b = a
-
-c3 :: b -> a -> b
-c3 a b = a
-
-c4 :: a -> b -> b
-c4 a b = b
-
-r :: [a] -> [a]
-r xs = reverse xs
-
-co :: (b -> c) -> (a -> b) -> a -> c
-co bToC aToB a = (bToC (aToB a))
-
-a2 :: (a -> c) -> a -> a
-a2 _ a = id a
-
-a3 :: (a -> b) -> a -> b
-a3 aToB a = aToB a
