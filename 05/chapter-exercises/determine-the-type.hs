@@ -28,21 +28,25 @@ length [1, 2, 3, 4, 5]
 False :: Bool
 
 -- 2.
-x' = 5
-y' = x' + 5
-w' = y' * 10                                     -- w' :: Num a => a
+x = 5
+y = x + 5
+w = y * 10
+w :: Num a => a
 
 -- 3.
-z' y' = y' + 10                                  -- z' :: Num a => a -> a
+z y = y * 10
+z :: Num a => a -> a
 
 -- 4.
-f2 = 4 / y'                                      -- f2 :: Fractional a => a
+f0 = 4 / y
+f0 :: Fractional a => a
 
 -- 5.
-x = "Julie"
-y = " <3 "
-z = "Haskell"
-f3 = x ++ y ++ z                                  -- f3 :: [Char]
+x' = "Julie"
+y' = " <3 "
+z' = "Haskell"
+f1 = x' ++ y' ++ z'
+f1 :: [Char]
 
 
 -- functionH :: [a] => a
