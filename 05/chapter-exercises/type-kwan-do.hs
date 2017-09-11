@@ -1,5 +1,4 @@
-module TypeChecking where
-
+-- 1.
 f :: Int -> String
 f = undefined
 
@@ -7,10 +6,9 @@ g :: String -> Char
 g = undefined
 
 h :: Int -> Char
-h a = (g (f a))
+h n = g . f $ n 
 
-
-
+-- 2.
 data A
 data B
 data C
@@ -22,10 +20,9 @@ w :: B -> C
 w = undefined
 
 e :: A -> C
-e x = (w (q x))
+e a = w . q $ a
 
-
-
+-- 3.
 data X
 data Y
 data Z
@@ -39,5 +36,9 @@ yz = undefined
 xform :: (X, Y) -> (Z, Z)
 xform (x, y) = (xz x, yz y)
 
-munge :: (x -> y) -> (y -> (w, z)) -> x -> w
-munge xY yWZ x = fst (yWZ (xY x))
+-- 4.
+munge :: (x -> y) 
+      -> (y -> (w, z)) 
+      -> x 
+      -> w
+munge xY yWZ x = fst . yWZ $ xY x
