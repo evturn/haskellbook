@@ -20,4 +20,21 @@
 
 -- Does it typecheck?
 -- 1.
+-- No, needed to derive Show.
+data Person = 
+  Person Bool
+  deriving (Show)
 
+printPerson :: Person -> IO ()
+printPerson person = putStrLn (show person)
+
+-- 2.
+-- No, needed to derive Eq.
+data Mood =
+    Blah
+  | Woot
+  deriving (Eq, Show)
+
+settleDown x = if x == Woot
+                  then Blah
+                  else x
