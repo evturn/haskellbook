@@ -38,3 +38,52 @@ data Mood =
 settleDown x = if x == Woot
                   then Blah
                   else x
+
+-- 3.
+-- a. Acceptable inputs must be of type Mood
+-- b. Error. Cannot compare type Mood to type Num
+-- c. Error. Needs instance of Ord.
+
+-- 4.
+-- Typechecks, although s1 hasn't applied an argument for Object constructor 
+type Subject = String
+type Verb = String
+type Object = String
+
+data Sentence =
+  Sentence Subject Verb Object
+  deriving (Eq, Show)
+
+s1 = Sentence "dogs" "drool"
+s2 = Sentence "Julie" "loves" "dogs"
+
+
+-- Given a datatype declaration, what can we do?
+
+data Rocks =
+  Rocks String deriving (Eq, Show)
+
+data Yeah =
+  Yeah Bool deriving (Eq, Show)
+
+data Papu =
+  Papu Rocks Yeah deriving (Eq, Show)
+
+-- 1.
+-- No, concrete values were provided for Papu datatype
+-- phew = Papu "chases" True
+phew = Papu (Rocks "chases") (Yeah True)
+
+-- 2.
+-- Typechecks.
+truth = Papu (Rocks "chomskydoz") (Yeah True)
+
+-- 3.
+-- Typechecks.
+equalityForall :: Papu -> Papu -> Bool
+equalityForall p p' = p == p'
+
+--4. 
+-- No, does not has an instance of Ord
+comparePapus :: Papu -> Papu -> Bool
+comparePapus p p' = p > p'
