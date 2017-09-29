@@ -87,3 +87,38 @@ equalityForall p p' = p == p'
 -- No, does not has an instance of Ord
 comparePapus :: Papu -> Papu -> Bool
 comparePapus p p' = p > p'
+
+
+-- Match the types
+-- 1.
+-- No, literal 1 does not have an instance of Num
+
+-- 2.
+-- No, f already has the type Float
+
+-- 3.
+-- Yes, Fractional is superclass of Float
+
+-- 4.
+-- Yes, RealFrac is superclass of Float
+
+-- 5.
+-- Yes, the identity function leaves everything unchanged
+ 
+-- 6.
+-- Yes, the identity function
+
+-- 7.
+-- No, myX cannot be made more polymorphic from Int -> a
+
+-- 8.
+-- No, myX cannot be made more polymorphic from Int -> Num
+
+-- 9.
+-- Yes, Int has an instance of Ord
+
+-- 10.
+-- Yes, both signatures will work
+
+-- 11.
+-- No, use for the typeclass method calls for more specific type constraints
