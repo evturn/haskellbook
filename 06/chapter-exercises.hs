@@ -85,8 +85,8 @@ equalityForall p p' = p == p'
 
 --4. 
 -- No, does not has an instance of Ord
-comparePapus :: Papu -> Papu -> Bool
-comparePapus p p' = p > p'
+-- comparePapus :: Papu -> Papu -> Bool
+-- comparePapus p p' = p > p'
 
 
 -- Match the types
@@ -122,3 +122,13 @@ comparePapus p p' = p > p'
 
 -- 11.
 -- No, use for the typeclass method calls for more specific type constraints
+
+-- Type-Kwon-Do Two
+
+-- 1.
+chk :: Eq b => (a -> b) -> a -> b -> Bool
+chk f x y = f x ==  y
+
+-- 2.
+arith :: Num b => (a -> b) -> Integer -> a -> b
+arith f i x = (f x) * (fromInteger i) 
