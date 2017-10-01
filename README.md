@@ -247,21 +247,21 @@
 - ###### Chapter Exercises
 
 ##### 21 Traversable
-- [ ] The Traversable
-- [ ] The Traversable typeclass definition
-- [ ] sequenceA
-- [ ] traverse
-- [ ] So, what's traversable for?
-- [ ] Morse code revisited
-- [ ] Axing tedious code
-- [ ] Do all the things
-- [ ] Traversable instances
-- [ ] Traversable Laws
-- [ ] Quality Control
+- [x] The Traversable
+- [x] The Traversable typeclass definition
+- [x] sequenceA
+- [x] traverse
+- [x] So, what's traversable for?
+- [x] Morse code revisited
+- [x] Axing tedious code
+- [x] Do all the things
+- [x] Traversable instances
+- [x] Traversable Laws
+- [x] Quality Control
 - ###### Chapter Exercises
 
 ##### 22 Reader
-- [ ] Reader
+- [x] Reader
 - [ ] A new beginning
 - [ ] This is Reader
 - [ ] Breaking down the Functor of functions
