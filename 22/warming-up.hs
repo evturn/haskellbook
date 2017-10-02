@@ -13,4 +13,13 @@ fmapped :: [Char] -> [Char]
 fmapped = cap <$> rev
 
 tupled :: [Char] -> ([Char], [Char])
-tupled xs = (cap xs, rev xs) 
+tupled = (,) <$> cap <*> rev
+
+monadic :: [Char] -> ([Char], [Char])
+monadic = do
+  x <- cap
+  y <- rev
+  return (x, y)
+
+monadic' :: [Char] -> ([Char], [Char])
+monadic' = cap >>= \x -> rev >>= \y -> return (x, y)
