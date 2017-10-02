@@ -262,10 +262,10 @@
 
 ##### 22 Reader
 - [x] Reader
-- [ ] A new beginning
-- [ ] This is Reader
-- [ ] Breaking down the Functor of functions
-- [ ] But uh, Reader?
+- [x] A new beginning
+- [x] This is Reader
+- [x] Breaking down the Functor of functions
+- [x] But uh, Reader?
 - [ ] Functions have an Applicative too
 - [ ] The Monad of functions
 - [ ] Reader Monad by itself is kinda boring
