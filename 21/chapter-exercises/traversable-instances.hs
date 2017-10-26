@@ -81,9 +81,25 @@ instance Functor List where
   fmap _ Nil = Nil
   fmap f (Cons x x') = Cons (f x) (fmap f x') 
 
+instance Monoid (List a) where
+  mempty                = Nil
+  mappend x Nil         = x
+  mappend Nil x         = x
+  mappend (Cons x xs) y = Cons x (mappend xs y)
+
+instance Applicative List where
+  pure x = Cons x Nil
+  Nil <*> _ = Nil
+  _ <*> Nil = Nil
+  (Cons f fs) <*> (Cons x xs) = Cons (f x) ((pure f <*> xs) `mappend` (fs <*> pure x))
+
 instance Foldable List where
   foldr _ x Nil = x
   foldr f x (Cons y y') = f y (foldr f x y') 
+
+instance Traversable List where
+  traverse _ Nil = pure Nil
+  traverse f (Cons x xs) = Cons <$> f x <*> traverse f xs
 
 instance Arbitrary a => Arbitrary (List a) where
   arbitrary = do
@@ -129,7 +145,7 @@ main = do
   quickBatch (traversable optionalTrigger)
   
   putStrLn "\n=============== List ========================"
-  putStrLn "Skipping..." 
+  quickBatch (traversable listTrigger)
 
   putStrLn "\n=============== Three ======================="
   quickBatch (functor threeTrigger)
