@@ -137,6 +137,12 @@ data Pair a b = Pair a b deriving (Eq, Show)
 instance Functor (Pair a) where
   fmap f (Pair x y) = Pair x (f y)
 
+instance Foldable (Pair a) where
+  foldr f z (Pair x y) = f y z
+
+instance Traversable (Pair a) where
+  traverse f (Pair x y) = Pair x <$> f y
+
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Pair a b) where
   arbitrary = do
     x <- arbitrary
@@ -145,7 +151,6 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Pair a b) where
 
 instance (Eq a, Eq b) => EqProp (Pair a b) where
   (=-=) = eq
-
 
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
@@ -158,23 +163,23 @@ threeTrigger    = undefined :: Three OneThing OneThing TupleOfStuff
 pairTrigger     = undefined :: Pair OneThing TupleOfStuff
 
 main = do
-  putStrLn $ title "Identity"
+  putStr $ title "Identity"
   quickBatch (traversable idTrigger)
 
-  putStrLn $ title "Constant"
+  putStr $ title "Constant"
   quickBatch (traversable constantTrigger)
 
-  putStrLn $ title "Optional"
+  putStr $ title "Optional"
   quickBatch (traversable optionalTrigger)
   
-  putStrLn $ title "List"
+  putStr $ title "List"
   quickBatch (traversable listTrigger)
 
-  putStrLn $ title "Three"
+  putStr $ title "Three"
   quickBatch (traversable threeTrigger)
 
-  putStrLn $ title "Pair"
-  quickBatch (functor pairTrigger)
+  putStr $ title "Pair"
+  quickBatch (traversable pairTrigger)
 
 title :: String -> String
 title xs = "\n=============== " ++ xs
