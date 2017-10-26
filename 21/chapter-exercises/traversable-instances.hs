@@ -121,7 +121,7 @@ instance Foldable (Three a b) where
 instance Traversable (Three a b) where
   traverse f (Three x y z) = Three x y <$> f z
 
-instance (Arbitrary a, Arbitrary b, Arbitrary c)  => Arbitrary (Three a b c) where
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
   arbitrary = do
     x <- arbitrary
     y <- arbitrary
@@ -131,6 +131,22 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c)  => Arbitrary (Three a b c) whe
 instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
   (=-=) = eq
 
+-- Pair
+data Pair a b = Pair a b deriving (Eq, Show)
+
+instance Functor (Pair a) where
+  fmap f (Pair x y) = Pair x (f y)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Pair a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Pair x y
+
+instance (Eq a, Eq b) => EqProp (Pair a b) where
+  (=-=) = eq
+
+
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
 
@@ -139,20 +155,27 @@ constantTrigger = undefined :: Constant OneThing TupleOfStuff
 optionalTrigger = undefined :: Optional TupleOfStuff
 listTrigger     = undefined :: List TupleOfStuff
 threeTrigger    = undefined :: Three OneThing OneThing TupleOfStuff
+pairTrigger     = undefined :: Pair OneThing TupleOfStuff
 
 main = do
-  putStrLn "\n=============== Identity ===================="
+  putStrLn $ title "Identity"
   quickBatch (traversable idTrigger)
 
-  putStrLn "\n=============== Constant ===================="
+  putStrLn $ title "Constant"
   quickBatch (traversable constantTrigger)
 
-  putStrLn "\n=============== Optional ===================="
+  putStrLn $ title "Optional"
   quickBatch (traversable optionalTrigger)
   
-  putStrLn "\n=============== List ========================"
+  putStrLn $ title "List"
   quickBatch (traversable listTrigger)
 
-  putStrLn "\n=============== Three ======================="
+  putStrLn $ title "Three"
   quickBatch (traversable threeTrigger)
+
+  putStrLn $ title "Pair"
+  quickBatch (functor pairTrigger)
+
+title :: String -> String
+title xs = "\n=============== " ++ xs
 
