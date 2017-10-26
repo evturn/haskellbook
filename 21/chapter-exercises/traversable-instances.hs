@@ -115,6 +115,12 @@ data Three a b c = Three a b c deriving (Eq, Show)
 instance Functor (Three a b) where
   fmap f (Three x y z) = Three x y (f z)
 
+instance Foldable (Three a b) where
+  foldr f z (Three w x y) = f y z
+
+instance Traversable (Three a b) where
+  traverse f (Three x y z) = Three x y <$> f z
+
 instance (Arbitrary a, Arbitrary b, Arbitrary c)  => Arbitrary (Three a b c) where
   arbitrary = do
     x <- arbitrary
@@ -148,5 +154,5 @@ main = do
   quickBatch (traversable listTrigger)
 
   putStrLn "\n=============== Three ======================="
-  quickBatch (functor threeTrigger)
+  quickBatch (traversable threeTrigger)
 
