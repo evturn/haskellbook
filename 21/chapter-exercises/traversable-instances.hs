@@ -93,6 +93,22 @@ instance Arbitrary a => Arbitrary (List a) where
 instance Eq a => EqProp (List a) where
   (=-=) = eq
 
+-- Three
+data Three a b c = Three a b c deriving (Eq, Show)
+
+instance Functor (Three a b) where
+  fmap f (Three x y z) = Three x y (f z)
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c)  => Arbitrary (Three a b c) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Three x y z
+
+instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
+  (=-=) = eq
+
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
 
@@ -100,6 +116,7 @@ idTrigger       = undefined :: Identity TupleOfStuff
 constantTrigger = undefined :: Constant OneThing TupleOfStuff
 optionalTrigger = undefined :: Optional TupleOfStuff
 listTrigger     = undefined :: List TupleOfStuff
+threeTrigger    = undefined :: Three OneThing OneThing TupleOfStuff
 
 main = do
   putStrLn "\n=============== Identity ===================="
@@ -110,3 +127,10 @@ main = do
 
   putStrLn "\n=============== Optional ===================="
   quickBatch (traversable optionalTrigger)
+  
+  putStrLn "\n=============== List ========================"
+  putStrLn "Skipping..." 
+
+  putStrLn "\n=============== Three ======================="
+  quickBatch (functor threeTrigger)
+
