@@ -1,5 +1,7 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 import Data.Traversable
-import Test.QuickCheck (Arbitrary, arbitrary)
+import Test.QuickCheck (Arbitrary, Gen, Testable, Property, arbitrary, property, sample')
 import Test.QuickCheck.Classes
 import Test.QuickCheck.Checkers
 
@@ -228,6 +230,31 @@ instance (Eq a, Eq b) => EqProp (Bigger a b) where
   (=-=) = eq
 
 -----------------------------------------------------------------------------
+--
+-- S
+--
+-----------------------------------------------------------------------------
+data S n a = S (n a) a deriving (Eq, Show)
+
+instance (Functor n, Arbitrary (n a), Arbitrary a) => Arbitrary (S n a) where
+  arbitrary = S <$> arbitrary <*> arbitrary
+
+instance (Applicative n, Testable (n Property), EqProp a) => EqProp (S n a) where
+  (S x y) =-= (S p q) = (property $ (=-=) <$> x <*> p) .&. (y =-= q)
+
+instance Functor n => Functor (S n) where
+  fmap f (S fs x) = S (fmap f fs) (f x)
+
+-- instance (Arbitrary (n a), Arbitrary a) => Arbitrary (S n a) where
+--   arbitrary = S <$> arbitrary <*> arbitrary
+
+-- instance (Eq (n a), Eq a) => EqProp (S n a) where
+--   (=-=) = eq
+
+-- instance Traversable n => Traversable (S n) where
+--   traverse f (S n a) = S <$> traverse f n <*> f a
+
+---------------------------------------------------------------------------
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
 
@@ -239,6 +266,7 @@ threeTrigger    = undefined :: Three OneThing OneThing TupleOfStuff
 pairTrigger     = undefined :: Pair OneThing TupleOfStuff
 bigTrigger      = undefined :: Big OneThing TupleOfStuff
 biggerTrigger   = undefined :: Bigger OneThing TupleOfStuff
+sTrigger        = undefined :: S [] TupleOfStuff
 
 main = do
   putStr $ title "Identity"
@@ -264,6 +292,11 @@ main = do
 
   putStr $ title "Bigger"
   quickBatch $ traversable biggerTrigger
+
+  putStr $ title "S"
+  quickBatch $ functor sTrigger
+
+  -- sample' (arbitrary :: Gen (S [] Int))
 
 title :: String -> String
 title xs = "\n----> " ++ xs
