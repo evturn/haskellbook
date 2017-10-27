@@ -3,7 +3,12 @@ import Test.QuickCheck (Arbitrary, arbitrary)
 import Test.QuickCheck.Classes
 import Test.QuickCheck.Checkers
 
+-----------------------------------------------------------------------------
+--
 -- Identity
+--
+-----------------------------------------------------------------------------
+
 newtype Identity a = Identity a
   deriving (Eq, Ord, Show)
 
@@ -24,7 +29,11 @@ instance Arbitrary a => Arbitrary (Identity a) where
 instance Eq a => EqProp (Identity a) where
   (=-=) = eq
 
+-----------------------------------------------------------------------------
+--
 -- Constant
+--
+-----------------------------------------------------------------------------
 newtype Constant a b =
   Constant { getConstant :: a } deriving (Eq, Show, Ord)
 
@@ -45,7 +54,11 @@ instance Arbitrary a => Arbitrary (Constant a b) where
 instance (Eq a, Eq b) => EqProp (Constant a b) where
   (=-=) = eq
 
+-----------------------------------------------------------------------------
+--
 -- Maybe
+--
+-----------------------------------------------------------------------------
 data Optional a =
     Nada
   | Yep a
@@ -71,7 +84,11 @@ instance Arbitrary a => Arbitrary (Optional a) where
 instance Eq a => EqProp (Optional a) where
   (=-=) = eq
 
+-----------------------------------------------------------------------------
+--
 -- List
+--
+-----------------------------------------------------------------------------
 data List a =
     Nil
   | Cons a (List a)
@@ -109,7 +126,11 @@ instance Arbitrary a => Arbitrary (List a) where
 instance Eq a => EqProp (List a) where
   (=-=) = eq
 
+-----------------------------------------------------------------------------
+--
 -- Three
+--
+-----------------------------------------------------------------------------
 data Three a b c = Three a b c deriving (Eq, Show)
 
 instance Functor (Three a b) where
@@ -131,7 +152,11 @@ instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) wher
 instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
   (=-=) = eq
 
+-----------------------------------------------------------------------------
+--
 -- Pair
+--
+-----------------------------------------------------------------------------
 data Pair a b = Pair a b deriving (Eq, Show)
 
 instance Functor (Pair a) where
@@ -152,6 +177,26 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Pair a b) where
 instance (Eq a, Eq b) => EqProp (Pair a b) where
   (=-=) = eq
 
+-----------------------------------------------------------------------------
+--
+-- Big
+--
+-----------------------------------------------------------------------------
+data Big a b = Big a b b deriving (Eq, Show)
+
+instance Functor (Big a) where
+  fmap f (Big x y y') = Big x (f y) (f y')
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Big a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Big x y y
+
+instance (Eq a, Eq b) => EqProp (Big a b) where
+  (=-=) = eq
+
+-----------------------------------------------------------------------------
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
 
@@ -161,6 +206,7 @@ optionalTrigger = undefined :: Optional TupleOfStuff
 listTrigger     = undefined :: List TupleOfStuff
 threeTrigger    = undefined :: Three OneThing OneThing TupleOfStuff
 pairTrigger     = undefined :: Pair OneThing TupleOfStuff
+bigTrigger      = undefined :: Big OneThing TupleOfStuff
 
 main = do
   putStr $ title "Identity"
@@ -180,7 +226,10 @@ main = do
 
   putStr $ title "Pair"
   quickBatch (traversable pairTrigger)
+  
+  putStr $ title "Big"
+  quickBatch $ functor bigTrigger
 
 title :: String -> String
-title xs = "\n=============== " ++ xs
+title xs = "\n======" ++ xs
 
