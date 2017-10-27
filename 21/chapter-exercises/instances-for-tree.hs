@@ -1,3 +1,8 @@
+import Data.Traversable
+import Test.QuickCheck (Arbitrary, arbitrary, oneof)
+import Test.QuickCheck.Classes
+import Test.QuickCheck.Checkers
+
 data Tree a =
     Empty
   | Leaf a
@@ -14,3 +19,19 @@ instance Foldable Tree where
 
 instance Traversable Tree where
   traverse = undefined
+
+instance Arbitrary a => Arbitrary (Tree a) where
+  arbitrary = 
+    oneof [ return $ Empty
+          , Leaf <$> arbitrary
+          , Node <$> arbitrary <*> arbitrary <*> arbitrary 
+          ]
+
+instance Eq a => EqProp (Tree a) where
+  (=-=) = eq
+
+treeTrigger = undefined :: Tree (Int, Int, [Int])
+
+main :: IO ()
+main = do
+  quickBatch $ functor treeTrigger
