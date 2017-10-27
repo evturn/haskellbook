@@ -212,6 +212,12 @@ data Bigger a b = Bigger a b b b deriving (Eq, Show)
 instance Functor (Bigger a) where
   fmap f (Bigger x y y' y'') = Bigger x (f y) (f y') (f y'')
 
+instance Foldable (Bigger a) where
+  foldr f z (Bigger x y y' y'') = f y $ f y' $ f y'' z
+
+instance Traversable (Bigger a) where
+  traverse f (Bigger x y y' y'') = Bigger x <$> f y <*> f y' <*> f y''
+
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Bigger a b) where
   arbitrary = do
     x <- arbitrary
@@ -257,8 +263,8 @@ main = do
   quickBatch $ traversable bigTrigger
 
   putStr $ title "Bigger"
-  quickBatch $ functor biggerTrigger
+  quickBatch $ traversable biggerTrigger
 
 title :: String -> String
-title xs = "\n======" ++ xs
+title xs = "\n----> " ++ xs
 
