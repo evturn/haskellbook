@@ -203,6 +203,25 @@ instance (Eq a, Eq b) => EqProp (Big a b) where
   (=-=) = eq
 
 -----------------------------------------------------------------------------
+--
+-- Bigger
+--
+-----------------------------------------------------------------------------
+data Bigger a b = Bigger a b b b deriving (Eq, Show)
+
+instance Functor (Bigger a) where
+  fmap f (Bigger x y y' y'') = Bigger x (f y) (f y') (f y'')
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Bigger a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Bigger x y y y
+
+instance (Eq a, Eq b) => EqProp (Bigger a b) where
+  (=-=) = eq
+
+-----------------------------------------------------------------------------
 type TupleOfStuff = (Int, Int, [Int])
 type OneThing = Int
 
@@ -213,6 +232,7 @@ listTrigger     = undefined :: List TupleOfStuff
 threeTrigger    = undefined :: Three OneThing OneThing TupleOfStuff
 pairTrigger     = undefined :: Pair OneThing TupleOfStuff
 bigTrigger      = undefined :: Big OneThing TupleOfStuff
+biggerTrigger   = undefined :: Bigger OneThing TupleOfStuff
 
 main = do
   putStr $ title "Identity"
@@ -235,6 +255,9 @@ main = do
   
   putStr $ title "Big"
   quickBatch $ traversable bigTrigger
+
+  putStr $ title "Bigger"
+  quickBatch $ functor biggerTrigger
 
 title :: String -> String
 title xs = "\n======" ++ xs
