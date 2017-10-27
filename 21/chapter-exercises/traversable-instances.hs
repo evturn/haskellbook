@@ -187,6 +187,12 @@ data Big a b = Big a b b deriving (Eq, Show)
 instance Functor (Big a) where
   fmap f (Big x y y') = Big x (f y) (f y')
 
+instance Foldable (Big a) where
+  foldr f z (Big x y y') = f y $ f y' z 
+
+instance Traversable (Big a) where
+  traverse f (Big x y y') = Big x <$> f y <*> f y'
+
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Big a b) where
   arbitrary = do
     x <- arbitrary
@@ -228,7 +234,7 @@ main = do
   quickBatch (traversable pairTrigger)
   
   putStr $ title "Big"
-  quickBatch $ functor bigTrigger
+  quickBatch $ traversable bigTrigger
 
 title :: String -> String
 title xs = "\n======" ++ xs
