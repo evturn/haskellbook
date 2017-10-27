@@ -15,10 +15,14 @@ instance Functor Tree where
   fmap f (Node l x r) = Node (fmap f l) (f x) (fmap f r)
 
 instance Foldable Tree where
-  foldMap = undefined
+  foldMap _ Empty        = mempty
+  foldMap f (Leaf x)     = f x
+  foldMap f (Node l x r) = foldMap f l `mappend` f x `mappend` foldMap f r
 
 instance Traversable Tree where
-  traverse = undefined
+  traverse _ Empty        = pure Empty
+  traverse f (Leaf x)     = Leaf <$> f x
+  traverse f (Node l x r) = Node <$> traverse f l <*> f x <*> traverse f r
 
 instance Arbitrary a => Arbitrary (Tree a) where
   arbitrary = 
@@ -34,4 +38,4 @@ treeTrigger = undefined :: Tree (Int, Int, [Int])
 
 main :: IO ()
 main = do
-  quickBatch $ functor treeTrigger
+  quickBatch $ traversable treeTrigger
