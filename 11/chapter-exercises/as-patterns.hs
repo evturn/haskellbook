@@ -1,5 +1,4 @@
 import Data.Char (toUpper)
-import Data.List (intercalate)
 
 isSubsequenceOf :: (Eq a) => [a] -> [a] -> Bool
 isSubsequenceOf [] _ = True
@@ -10,11 +9,6 @@ isSubsequenceOf (x:xs) (y:ys) = case x == y of
 
 capitalizeWords :: String -> [(String, String)]
 capitalizeWords xs = map f $ words xs
-  where f word@(y:ys) = (word, toUpper y : ys)
+  where
+    f word@(y:ys) = (word, toUpper y : ys)
 
-capitalizeWord :: String -> String
-capitalizeWord [] = []
-capitalizeWord (x:xs) = toUpper x : xs
-
-capitalizeParagraph :: String -> String
-capitalizeParagraph xs = concatMap capitalizeWord $ groupBy ((==) `on` (=='.')) xs
