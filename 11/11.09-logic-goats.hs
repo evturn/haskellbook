@@ -27,3 +27,10 @@ data IntInt = IntInt (Int, Int) deriving (Eq, Show)
 
 instance TooMany IntInt where
   tooMany (IntInt (n, n')) = tooMany (n + n')
+
+-- 3.
+-- Write another `TooMany` instance for (Num a, TooMany a) => (a, a).
+data NumTooMany = NumTooMany IntInt deriving (Eq, Show)
+
+instance TooMany NumTooMany where
+  tooMany (NumTooMany (IntInt (n, n'))) = tooMany (n * n')
