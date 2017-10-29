@@ -1,14 +1,12 @@
 import Data.Char (isUpper, toLower, toUpper)
 
-type Digit      = Char
-type PressCount = Int
-
-data Button = Button (Digit, String)
-            deriving (Eq, Show)
-
-data Keypad = Keypad [Button]
-            deriving (Eq, Show)
-
+-- Translate sequences of button presses into strings and vice versa.
+--
+-- * gives you capitalization of the letter. 
+-- 0 is spacebar.
+-- Pressing a button one more than the letters it represents.
+-- Pressing a button once more after the digit wraps back to the first letter.
+--
 -- -----------------------------------------
 -- |   1        |    2 ABC    |   3 DEF    |
 -- _________________________________________
@@ -18,6 +16,17 @@ data Keypad = Keypad [Button]
 -- -----------------------------------------
 -- |   * ^      |    0 + _    |   # .,     |
 -- -----------------------------------------
+
+-- 1.
+-- Create a data structure that captures the phone layout and behavior.
+type Digit      = Char
+type PressCount = Int
+
+data Button = Button (Digit, String)
+            deriving (Eq, Show)
+
+data Keypad = Keypad [Button]
+            deriving (Eq, Show)
 
 buttonDigits :: String
 buttonDigits = ['0'..'9'] ++ "*#"
@@ -38,6 +47,8 @@ phoneKeypad =
 -- 2222  -> '2'
 -- 22222 -> 'A'
 
+-- 2.
+-- Convert the conversations into keypresses required to express them.
 convo :: [String]
 convo =
   ["We shoild play a 36 hour game of tackle football",
