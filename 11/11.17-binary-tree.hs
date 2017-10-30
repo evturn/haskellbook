@@ -67,3 +67,11 @@ main = do
     testInorder
     testPostorder
 
+-----------------------------------------------------------------------------
+--
+-- Write foldr for BinaryTree
+--
+-----------------------------------------------------------------------------
+foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
+foldTree f a Leaf         = a
+foldTree f a (Node l x r) = foldTree f (foldTree f (f x a) l) r
