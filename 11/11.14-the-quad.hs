@@ -41,3 +41,21 @@ prodTBool = undefined
 --
 -- There are 8 different possible implementations.
 
+-- 5.
+gTwo :: Bool -> Bool -> Bool
+gTwo = undefined
+-- Answer:
+-- Bool 2 -> Bool 2 -> Bool 2
+-- 16 = 2 ^       2 ^       2
+--
+-- There are 16 different possible implementations.
+
+fTwo :: Bool -> Quad -> Quad
+fTwo = undefined
+-- Answer:
+-- Bool 2 -> Quad 4 -> Quad 4
+-- 65536 = (2 ^      4) ^     4
+--
+-- There are 65536 different possible implementations.
+
+
