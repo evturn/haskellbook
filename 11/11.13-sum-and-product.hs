@@ -53,3 +53,52 @@ data Animal = Cow   CowInfo
             deriving (Eq, Show)
 
 type Animal' = Sum CowInfo (Sum PigInfo SheepInfo)
+
+-----------------------------------------------------------------------------
+--
+-- Constructing values
+--
+-----------------------------------------------------------------------------
+trivialValue :: GuessWhat
+trivialValue = Chickenbutt
+
+idInt :: Id Integer
+idInt = MkId 10
+
+idIdentity :: Id (a -> a)
+idIdentity = MkId $ \x -> x
+
+type Awesome = Bool
+
+person :: Product Name Awesome
+person = Product "Simon" True
+
+-- data Twitter = Twitter
+--   deriving (Eq, Show)
+
+-- data AskFm = AskFm
+--   deriving (Eq, Show)
+
+-- socialNetwork :: Sum Twitter AskFm
+-- socialNetwork = First Twitter
+
+-- data SocialNetwork = Twitter
+--                    | AskFm
+--                    deriving (Eq, Show)
+
+type Twitter = String
+type AskFm   = String
+
+twitter :: Sum Twitter AskFm
+twitter = First "Twitter"
+
+askFm :: Sum Twitter AskFm
+askFm = First "AskFm"
+
+myRecord :: RecordProduct Integer Float
+myRecord = RecordProduct 42 0.00001
+
+myRecord' :: RecordProduct Integer Float
+myRecord' = RecordProduct
+          { pfirst = 42
+          , psecond = 0.00001 }
