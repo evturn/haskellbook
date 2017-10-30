@@ -1,18 +1,3 @@
--- Function type is the exponent operator in arithmetic of calculating inhabitants of types.
--- Given a function a -> b, we can calculate the inhabitants with the formula b^a
-
--- If b and a are both Bool, then 2^2 is how you could express the number of inhabitants in a
--- function Bool -> Bool.
-
--- The function Bool to something of 3 inhabitants would be 3^2
--- thus having nine possible implementations
-
--- a -> b -> c
--- (c ^ b) ^ a
--- can be rewritten to be
--- c ^ (b * a)
-
-
 data Quantum =
     Yes
   | No
@@ -200,3 +185,22 @@ fTwo :: Bool -> Quad -> Quad
 -- (4 ^ 4) ^ 2
 -- 4 ^ (4 * 2)
 -- 65536 different forms
+
+-----------------------------------------------------------------------------
+--
+-- Deconstructing values
+--
+-----------------------------------------------------------------------------
+newtype Name = Name String
+  deriving Show
+
+newtype Acres = Acres Int 
+  deriving Show
+
+data FarmerType = DairyFarmer
+                | WheatFarmer
+                | SoybeanFarmer
+                deriving Show
+
+data Farmer = Farmer Name Acres FarmerType
+  deriving Show
