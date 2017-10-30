@@ -1,3 +1,4 @@
+-- Write a function that generates all possible values of `Programmer`.
 data OperatingSystem = GnuPlusLinux
                      | OpenBSDPlusNevermindJustBSDStill
                      | Mac
@@ -10,13 +11,18 @@ data ProgrammingLanguage = Haskell
                          | PureScript
                          deriving (Eq, Show)
 
-data Programmer = Programmer { os :: OperatingSystem
-                             , lang :: ProgrammingLanguage }
-                            deriving (Eq, Show)
+data Programmer = Programmer
+    { os   :: OperatingSystem 
+    , lang :: ProgrammingLanguage 
+    } deriving (Eq, Show)
 
 nineToFive :: Programmer
-nineToFive = Programmer { os = Mac
+nineToFive = Programmer { os   = Mac 
                         , lang = Haskell }
+
+feelingWizardly :: Programmer
+feelingWizardly = Programmer { lang = Agda
+                             , os   = GnuPlusLinux }
 
 allOperatingSystems :: [OperatingSystem]
 allOperatingSystems =
@@ -27,7 +33,13 @@ allOperatingSystems =
   ]
 
 allLanguages :: [ProgrammingLanguage]
-allLanguages = [Haskell, Agda, Idris, PureScript]
+allLanguages =
+  [ Haskell
+  , Agda
+  , Idris
+  , PureScript 
+  ]
 
 allProgrammers :: [Programmer]
-allProgrammers = [ Programmer x y | x <- allOperatingSystems, y <- allLanguages ]
+allProgrammers = [Programmer { lang = x, os = y } | x <- allLanguages,
+                                                    y <- allOperatingSystems]
