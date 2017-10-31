@@ -87,14 +87,18 @@ charAtKey x xs = elem (toUpper x) xs
 locateKey :: Char -> DaPhone -> (Digit, String)
 locateKey c (DaPhone keys) = head [(d, chs) | (d, chs) <- keys, charAtKey c chs]
 
-pressTillMatch :: Char -> Maybe Int
-pressTillMatch c = fmap (+1) (elemIndex (toUpper c) $ snd $ locateKey c phone)
+pressesTillMatch :: Char -> Maybe Int
+pressesTillMatch c = fmap (+1) (elemIndex (toUpper c) $ snd $ locateKey c phone)
 
 charToPresses :: Char -> Maybe Int -> Int
 charToPresses c (Just n) = charCase c + n
 charToPresses _ Nothing  = 0
 
+charPresses :: Char -> Int
+charPresses c = charToPresses c $ pressesTillMatch c
 
+pressesPerMessage :: String -> Int
+pressesPerMessage xs = foldl (\x y -> x + charPresses y) 0 xs
 
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTaps = undefined
