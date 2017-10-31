@@ -49,6 +49,9 @@ chars = foldl (++) [] keypadChars
 allChars :: String
 allChars = digits ++ chars
 
+alphaNumChars :: String
+alphaNumChars = filter isAlphaNum allChars
+
 phone :: DaPhone
 phone = DaPhone 
     [ ('1', "1")
@@ -120,19 +123,22 @@ listOfCharPresses = foldl (\x y -> charPresses y : x) []
 -- 4.
 -- What was the most popular letter for each message? 
 mostPopularLetter :: String -> Char
-mostPopularLetter xs = fst $ foldl compareCount (' ', 0) $ breakUp xs
-  where
-    breakUp xs = occurencesByChar $ filter isAlphaNum xs
-    compareCount = (\x y -> if snd x <= snd y
-                            then y
-                            else x)
+mostPopularLetter xs = fst $ mostPopularOccurence xs
+
+mostPopularOccurence :: String -> (Char, Int)
+mostPopularOccurence xs = foldl maxFromPair (' ', 0) $ occurencesByChar xs
 
 occurencesByChar :: String -> [(Char, Int)]
-occurencesByChar xs = [(x, (length . filter (==x)) xs) | x <- allChars]
+occurencesByChar xs = [(x, (length . filter (==x)) xs) | x <- alphaNumChars]
+
+maxFromPair :: (Char, Int) -> (Char, Int) -> (Char, Int)
+maxFromPair  x y = if snd x <= snd y
+                   then y
+                   else x
 -- 5.
 -- What was the most popular letter overall and the most popular word?
 coolestLtr :: [String] -> Char
-coolestLtr = undefined
+coolestLtr xs = undefined
 
 coolestWord :: [String] -> String
 coolestWord = undefined
