@@ -46,6 +46,9 @@ digits = foldl (++) [] keypadDigits
 chars :: String
 chars = foldl (++) [] keypadChars
 
+allChars :: String
+allChars = digits ++ chars
+
 phone :: DaPhone
 phone = DaPhone 
     [ ('1', "1")
@@ -97,10 +100,11 @@ charToPresses _ Nothing  = 0
 charPresses :: Char -> Int
 charPresses c = charToPresses c $ pressesTillMatch c
 
+accumulateCharPresses :: Int -> Char -> Int
+accumulateCharPresses x y = x + charPresses y
+
 pressesPerMessage :: String -> Int
-pressesPerMessage = foldl combinePresses 0
-  where
-    combinePresses = (\x y -> x + charPresses y)
+pressesPerMessage = foldl accumulateCharPresses 0
 
 pressesPerConvo :: [String] -> Int
 pressesPerConvo [] = 0
@@ -108,25 +112,23 @@ pressesPerConvo xs = foldl combinePresses 0 xs
   where
     combinePresses = (\x y -> x + pressesPerMessage y)
 
-reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTaps = undefined
-
-cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
-cellPhonesDead = undefined
-
 -- 3.
 -- How many times do digits need to be pressed for each message?
-fingerTaps :: [(Digit, Presses)] -> Presses
-fingerTaps = undefined
+listOfCharPresses :: String -> [Int]
+listOfCharPresses = foldl (\x y -> charPresses y : x) []
 
 -- 4.
 -- What was the most popular letter for each message? 
--- Combine `reverseTaps` and `fingerTaps` to figure out what it cost in taps. 
--- `reverseTaps` is a list because you need to press a different button in 
---  order to get capitals.
 mostPopularLetter :: String -> Char
-mostPopularLetter = undefined
+mostPopularLetter xs = fst $ foldl compareCount (' ', 0) $ breakUp xs
+  where
+    breakUp xs = occurencesByChar $ filter isAlphaNum xs
+    compareCount = (\x y -> if snd x <= snd y
+                            then y
+                            else x)
 
+occurencesByChar :: String -> [(Char, Int)]
+occurencesByChar xs = [(x, (length . filter (==x)) xs) | x <- allChars]
 -- 5.
 -- What was the most popular letter overall and the most popular word?
 coolestLtr :: [String] -> Char
