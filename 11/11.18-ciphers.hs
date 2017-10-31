@@ -26,3 +26,7 @@ caesar n xs = fmap (shiftChar n) xs
 uncaesar :: Int -> String -> String
 uncaesar _ [] = []
 uncaesar n xs = fmap (unshiftChar n) xs
+
+table :: [(Char, Int)]
+table = zip ['a'..'z'] [0..]
+
