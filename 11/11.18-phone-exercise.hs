@@ -1,4 +1,5 @@
 import Data.Char
+import Data.List
 
 -- Translate sequences of button presses into strings and vice versa.
 --
@@ -74,6 +75,25 @@ convo = [ "Wanna play 20 questions"
         , "Lol ya"
         , "Just making sure rofl ur turn"
         ]
+
+charCase :: Char -> Int
+charCase c = if isUpper c
+             then 1
+             else 0
+
+charAtKey :: Char -> String -> Bool
+charAtKey x xs = elem (toUpper x) xs
+
+locateKey :: Char -> DaPhone -> (Digit, String)
+locateKey c (DaPhone keys) = head [(d, chs) | (d, chs) <- keys, charAtKey c chs]
+
+pressTillMatch :: Char -> Maybe Int
+pressTillMatch c = fmap (+1) (elemIndex (toUpper c) $ snd $ locateKey c phone)
+
+charToPresses :: Char -> Maybe Int -> Int
+charToPresses c (Just n) = charCase c + n
+charToPresses _ Nothing  = 0
+
 
 
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
