@@ -48,18 +48,18 @@ chars = foldl (++) [] keypadChars
 
 phone :: DaPhone
 phone = DaPhone 
-    [ ('1', "")
-    , ('2', "ABC")
-    , ('3', "DEF")
-    , ('4', "GHI")
-    , ('5', "JKL")
-    , ('6', "MNO")
-    , ('7', "PQRS")
-    , ('8', "TUV")
-    , ('9', "WXYZ")
-    , ('*', "")
-    , ('0', " ")
-    , ('#', ".,") 
+    [ ('1', "1")
+    , ('2', "ABC2")
+    , ('3', "DEF3")
+    , ('4', "GHI4")
+    , ('5', "JKL5")
+    , ('6', "MNO6")
+    , ('7', "PQRS7")
+    , ('8', "TUV8")
+    , ('9', "WXYZ9")
+    , ('*', "^*")
+    , ('0', " +0")
+    , ('#', ".,#") 
     ]
 
 -- 2.
@@ -98,7 +98,15 @@ charPresses :: Char -> Int
 charPresses c = charToPresses c $ pressesTillMatch c
 
 pressesPerMessage :: String -> Int
-pressesPerMessage xs = foldl (\x y -> x + charPresses y) 0 xs
+pressesPerMessage = foldl combinePresses 0
+  where
+    combinePresses = (\x y -> x + charPresses y)
+
+pressesPerConvo :: [String] -> Int
+pressesPerConvo [] = 0
+pressesPerConvo xs = foldl combinePresses 0 xs
+  where
+    combinePresses = (\x y -> x + pressesPerMessage y)
 
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTaps = undefined
