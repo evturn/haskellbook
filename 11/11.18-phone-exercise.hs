@@ -2,11 +2,6 @@ import Data.Char
 
 -- Translate sequences of button presses into strings and vice versa.
 --
--- * gives you capitalization of the letter. 
--- 0 is spacebar.
--- Pressing a button one more than the letters it represents.
--- Pressing a button once more after the digit wraps back to the first letter.
---
 -- -----------------------------------------
 -- |   1        |    2 ABC    |   3 DEF    |
 -- _________________________________________
@@ -16,39 +11,55 @@ import Data.Char
 -- -----------------------------------------
 -- |   * ^      |    0 + _    |   # .,     |
 -- -----------------------------------------
+--
+-- * gives you capitalization of the letter. 
+-- 0 is spacebar.
+-- Pressing a button one more than the letters it represents.
+-- Pressing a button once more after the digit wraps back to the first letter.
 
 -- 1.
 -- Create a data structure that captures the phone layout and behavior.
+keypadDigits :: [String]
+keypadDigits = [ ['0'..'9'] 
+               , ['*']
+               , ['#']
+               ]
+
+keypadChars :: [String]
+keypadChars = [ ['a'..'z']
+              , ['A'..'Z']
+              , ['0'..'9']
+              , [' ']
+              , ['.', ',']
+              ]
+
 type Digit   = Char
 type Presses = Int
 
-data Button = Button (Digit, [Digit])
+data DaPhone = DaPhone [(Digit, String)]
   deriving (Eq, Show)
 
-data Keypad = Keypad [Button]
-  deriving (Eq, Show)
+digits :: String
+digits = foldl (++) [] keypadDigits
 
-buttonDigits :: String
-buttonDigits = ['0'..'9'] ++ "*#"
+chars :: String
+chars = foldl (++) [] keypadChars
 
-buttonChars :: String
-buttonChars = ['a'..'z'] ++ ['A'..'Z'] ++ ['0'..'9'] ++ " ."
-
-phoneKeypad :: [Button]
-
-phoneKeypad = [ Button ('1', "1")
-              , Button ('2', "ABC")
-              , Button ('3', "DEF")
-              , Button ('4', "GHI")
-              , Button ('5', "JKL")
-              , Button ('6', "MNO")
-              , Button ('7', "PQRS")
-              , Button ('8', "TUV")
-              , Button ('9', "WXYZ")
-              , Button ('*', "")
-              , Button ('0', " ")
-              , Button ('#', ".," ) 
-              ]
+phone :: DaPhone
+phone = DaPhone 
+    [ ('1', "")
+    , ('2', "ABC")
+    , ('3', "DEF")
+    , ('4', "GHI")
+    , ('5', "JKL")
+    , ('6', "MNO")
+    , ('7', "PQRS")
+    , ('8', "TUV")
+    , ('9', "WXYZ")
+    , ('*', "")
+    , ('0', " ")
+    , ('#', ".,") 
+    ]
 
 -- 2.
 -- Convert the conversations into keypresses required to express them.
@@ -77,9 +88,10 @@ fingerTaps :: [(Digit, Presses)] -> Presses
 fingerTaps = undefined
 
 -- 4.
--- What was the most popular letter for each message? Combine `reverseTaps`
--- and `fingerTaps` to figure out what it cost in taps. `reverseTaps` is a
--- list because you need to press a different button in order to get capitals.
+-- What was the most popular letter for each message? 
+-- Combine `reverseTaps` and `fingerTaps` to figure out what it cost in taps. 
+-- `reverseTaps` is a list because you need to press a different button in 
+--  order to get capitals.
 mostPopularLetter :: String -> Char
 mostPopularLetter = undefined
 
@@ -90,16 +102,3 @@ coolestLtr = undefined
 
 coolestWord :: [String] -> String
 coolestWord = undefined
-
-testChar :: Char -> String -> Bool
-testChar c s = elem (toUpper c) s
-
-charInButtonChars :: Char -> Button -> [Char]
-charInButtonChars char (Button (d, c)) = if testChar char c then [d] else []
-
-matchButton :: [Button] -> Char -> [Char]
-matchButton [] _ = ['0']
-matchButton (x:xs) c = (charInButtonChars c x) ++ (matchButton xs c)
-
-reverseTaps :: [Button] -> Char -> [(Digit, Presses)]
-reverseTaps keypad char = [((head $ matchButton keypad char), 2)]
