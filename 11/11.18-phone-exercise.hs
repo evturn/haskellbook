@@ -138,7 +138,10 @@ maxFromPair  x y = if snd x <= snd y
 -- 5.
 -- What was the most popular letter overall and the most popular word?
 coolestLtr :: [String] -> Char
-coolestLtr xs = undefined
+coolestLtr xs = fst $ foldl maxFromPair (' ', 0) $ popularOccurences xs
+
+popularOccurences :: [String] -> [(Char, Int)]
+popularOccurences xss = [mostPopularOccurence xs | xs <- xss]
 
 coolestWord :: [String] -> String
 coolestWord = undefined
