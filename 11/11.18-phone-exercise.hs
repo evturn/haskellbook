@@ -1,3 +1,5 @@
+import Data.Char
+
 -- Translate sequences of button presses into strings and vice versa.
 --
 -- * gives you capitalization of the letter. 
@@ -17,13 +19,41 @@
 
 -- 1.
 -- Create a data structure that captures the phone layout and behavior.
-data DaPhone = DaPhone
+type Digit   = Char
+type Presses = Int
+
+data Button = Button (Digit, [Digit])
+  deriving (Eq, Show)
+
+data Keypad = Keypad [Button]
+  deriving (Eq, Show)
+
+buttonDigits :: String
+buttonDigits = ['0'..'9'] ++ "*#"
+
+buttonChars :: String
+buttonChars = ['a'..'z'] ++ ['A'..'Z'] ++ ['0'..'9'] ++ " ."
+
+phoneKeypad :: [Button]
+
+phoneKeypad = [ Button ('1', "1")
+              , Button ('2', "ABC")
+              , Button ('3', "DEF")
+              , Button ('4', "GHI")
+              , Button ('5', "JKL")
+              , Button ('6', "MNO")
+              , Button ('7', "PQRS")
+              , Button ('8', "TUV")
+              , Button ('9', "WXYZ")
+              , Button ('*', "")
+              , Button ('0', " ")
+              , Button ('#', ".," ) 
+              ]
 
 -- 2.
 -- Convert the conversations into keypresses required to express them.
 convo :: [String]
-convo = [
-          "Wanna play 20 questions"
+convo = [ "Wanna play 20 questions"
         , "Ya"
         , "U 1st haha"
         , "Lol ok. Have u ever tasted alcohol"
@@ -34,13 +64,11 @@ convo = [
         , "Just making sure rofl ur turn"
         ]
 
-type Digit = Char
-type Presses = Int
 
 reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
 reverseTaps = undefined
 
-cellPhonesDead :: DaPhone -> String -> [(Digit, Press)]
+cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
 cellPhonesDead = undefined
 
 -- 3.
@@ -56,9 +84,22 @@ mostPopularLetter :: String -> Char
 mostPopularLetter = undefined
 
 -- 5.
--- What was the most popular letter overall and the most populat word?
+-- What was the most popular letter overall and the most popular word?
 coolestLtr :: [String] -> Char
 coolestLtr = undefined
 
 coolestWord :: [String] -> String
 coolestWord = undefined
+
+testChar :: Char -> String -> Bool
+testChar c s = elem (toUpper c) s
+
+charInButtonChars :: Char -> Button -> [Char]
+charInButtonChars char (Button (d, c)) = if testChar char c then [d] else []
+
+matchButton :: [Button] -> Char -> [Char]
+matchButton [] _ = ['0']
+matchButton (x:xs) c = (charInButtonChars c x) ++ (matchButton xs c)
+
+reverseTaps :: [Button] -> Char -> [(Digit, Presses)]
+reverseTaps keypad char = [((head $ matchButton keypad char), 2)]
