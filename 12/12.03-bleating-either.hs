@@ -1,15 +1,13 @@
-module EqCaseGuard where
-
-type Name = String
-type Age = Integer
-type ValidatePerson a = Either [PersonInvalid] a
-
 data Person = Person Name Age
-            deriving Show
+  deriving Show
 
 data PersonInvalid = NameEmpty
                    | AgeTooLow
                    deriving (Eq, Show)
+
+type Name = String
+type Age = Integer
+type ValidatePerson a = Either [PersonInvalid] a
 
 ageOkay :: Age -> Either [PersonInvalid] Age
 ageOkay age = case age >= 0 of
