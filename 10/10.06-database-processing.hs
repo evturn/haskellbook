@@ -22,3 +22,20 @@ filterDbDate = go
     go []              = []
     go ((DbDate y):ys) = y : go ys
     go (_:ys)          = go ys
+
+-- 2.
+-- Write a function that filters for `DbNumber` values and returns a list
+-- of the `Integer` values inside them.
+filterDbNumber :: [DatabaseItem] -> [Integer]
+filterDbNumber = go
+  where
+    go []                = []
+    go ((DbNumber x):xs) = x : go xs
+    go (_:xs)            = go xs
+
+-- 3.
+-- Write a function that gets the most recent date.
+mostRecent :: [DatabaseItem] -> UTCTime
+mostRecent dbs = go $ filterDbDate dbs
+  where
+    go (x:xs) = foldl (\a b -> max a b) x xs
