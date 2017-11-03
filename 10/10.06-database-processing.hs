@@ -39,3 +39,15 @@ mostRecent :: [DatabaseItem] -> UTCTime
 mostRecent dbs = go $ filterDbDate dbs
   where
     go (x:xs) = foldl (\a b -> max a b) x xs
+
+-- 4.
+-- Write a function that sums all of the DbNumber values.
+sumDb :: [DatabaseItem] -> Integer
+sumDb dbs = foldl (+) 0 $ filterDbNumber dbs
+
+-- 5.
+-- Write a function that gets the average of the `DbNumber` values.
+avgDb :: [DatabaseItem] -> Double
+avgDb dbs = go $ fmap fromIntegral $ filterDbNumber dbs
+  where
+    go xs = fromIntegral $ div (foldl (\a b -> a + b) 0 xs) (length xs)
