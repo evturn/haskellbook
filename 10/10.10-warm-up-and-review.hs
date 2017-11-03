@@ -37,3 +37,17 @@ verbs = [ "slap"
 
 nounVerbNoun :: [(String, String, String)]
 nounVerbNoun = [(n, v, n') | n <- nouns, v <- verbs, n' <- nouns]
+
+-- 2.
+-- What does the following function do and what is its type?
+seekritFunc :: String -> Int
+seekritFunc x = div (sum (map length (words x))) (length (words x))
+-- Answer:
+-- Gets the average word length of a sentence.
+
+-- 3.
+-- Rewrite the function above using fractional division.
+seekritFunc' :: Fractional a => String -> a
+seekritFunc' x =
+  fromIntegral (sum $ map length $ words x) /
+  fromIntegral (length $ words x)
