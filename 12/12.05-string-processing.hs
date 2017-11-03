@@ -30,3 +30,13 @@ countTheBeforeVowel str = doIt (wordsToMaybes str)
     doIt (Nothing : Just x : xs) = if elem (head x) "aeiou"
                                    then 1 + doIt xs
                                    else doIt xs
+
+-- 3.
+-- Return the number of letters that are vowels in a word.
+addOneIfVowel :: Integer -> Char -> Integer
+addOneIfVowel acc x = if elem x "aeiou"
+                      then acc + 1
+                      else acc
+
+countVowels :: String -> Integer
+countVowels xs = foldl addOneIfVowel 0 xs
