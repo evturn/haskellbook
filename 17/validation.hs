@@ -1,10 +1,10 @@
 module Validation where
 
-import Control.Applicative
-import Data.Monoid
-import Test.QuickCheck hiding (Failure, Success)
-import Test.QuickCheck.Checkers
-import Test.QuickCheck.Classes
+import           Control.Applicative
+import           Data.Monoid
+import           Test.QuickCheck          hiding (Failure, Success)
+import           Test.QuickCheck.Checkers
+import           Test.QuickCheck.Classes
 
 data Validation e a = Failure e
                     | Success a
