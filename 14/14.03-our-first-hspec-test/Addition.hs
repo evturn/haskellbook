@@ -1,7 +1,7 @@
 module Addition where
 
-import Test.Hspec
-import Test.QuickCheck
+import           Test.Hspec
+import           Test.QuickCheck
 
 main :: IO ()
 main = hspec $ do
@@ -25,27 +25,37 @@ genEither :: (Arbitrary a, Arbitrary b) => Gen (Either a b)
 genEither = do
   a <- arbitrary
   b <- arbitrary
-  elements [Left a, Right b]
+  elements [ Left a
+           , Right b
+           ]
 
 genMaybe :: Arbitrary a => Gen (Maybe a)
 genMaybe = do
   a <- arbitrary
-  elements [Nothing, Just a]
+  elements [ Nothing
+           , Just a
+           ]
 
 genMaybe' :: Arbitrary a => Gen (Maybe a)
 genMaybe' = do
   a <- arbitrary
   frequency [ (1, return Nothing)
-            , (3, return (Just a))]
+            , (3, return (Just a))
+            ]
 
 genBool :: Gen Bool
 genBool = choose (False, True)
 
 genBool' :: Gen Bool
-genBool' = elements [False, True]
+genBool' = elements [ False
+                    , True
+                    ]
 
 genOrdering :: Gen Ordering
-genOrdering = elements [LT, EQ, GT]
+genOrdering = elements [ LT
+                       , EQ
+                       , GT
+                       ]
 
 genChar :: Gen Char
 genChar = elements ['a'..'z']
@@ -71,15 +81,17 @@ oneThroughThree = elements [1, 2, 3]
 
 dividedBy :: Integral a => a -> a -> (a, a)
 dividedBy num denom = go num denom 0
-  where go n   d count
-         | n < d = (count, n)
-         | otherwise = go (n - d) d (count + 1)
+  where
+    go n d count
+        | n < d = (count, n)
+        | otherwise = go (n - d) d (count + 1)
 
 multiplyWithAddition :: (Eq a, Num a) => a -> a -> a
 multiplyWithAddition x y = go x y 0
-    where go a b acc
-            | b == 0 = acc
-            | otherwise = go a (b - 1) (acc + a)
+  where
+    go a b acc
+        | b == 0 = acc
+        | otherwise = go a (b - 1) (acc + a)
 
 sayHello :: IO ()
 sayHello = putStrLn "No."
