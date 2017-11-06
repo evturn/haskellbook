@@ -16,19 +16,47 @@ mult x y
     | x < 0     = (negate y) + mult (x + 1) y
     | otherwise = 0
 
+genBool :: Gen Bool
+genBool = choose (False, True)
+
+genBool' :: Gen Bool
+genBool' = elements [False, True]
+
+genOrdering :: Gen Ordering
+genOrdering = elements [LT, EQ, GT]
+
+genChar :: Gen Char
+genChar = elements ['a'..'z']
+
+genTuple :: (Arbitrary a, Arbitrary b) => Gen (a, b)
+genTuple = do
+  a <- arbitrary
+  b <- arbitrary
+  return (a, b)
+
+genThreeple :: (Arbitrary a, Arbitrary b, Arbitrary c) => Gen (a, b, c)
+genThreeple = do
+  a <- arbitrary
+  b <- arbitrary
+  c <- arbitrary
+  return (a, b, c)
+
 main :: IO ()
 main = hspec $ do
   describe "Addition" $ do
     it "1 + 1 is greater than 1" $ do
-      (1 + 1) > 1 `shouldBe` True
+      ((1 + 1) :: Integer) > (1 :: Integer) `shouldBe` True
+
     it "x + 1 is always greater than x" $ do
       property $ \x -> x + 1 > (x :: Int)
+
   describe "Division" $ do
     it "15 divided by 3 is 5" $ do
-      dividedBy 15 3 `shouldBe` (5, 0)
+      dividedBy (15 :: Integer) (3 :: Integer) `shouldBe` (5, 0)
+
     it "22 divided by 5 is 4 remainer 2" $ do
-      dividedBy 22 5 `shouldBe` (4, 2)
+      dividedBy (22 :: Integer) (5 :: Integer) `shouldBe` (4, 2)
+
   describe "Multiplication" $ do
     it "2 multiplied by 10 using recursive summation is 20" $ do
-      mult 2 10 `shouldBe` 20
-
+      mult (2 :: Integer) (10 :: Integer) `shouldBe` 20
