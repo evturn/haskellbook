@@ -2,12 +2,12 @@
 
 module CoArbitrary where
 
-import GHC.Generics
-import Test.QuickCheck
+import           GHC.Generics
+import           Test.QuickCheck
 
 data Bool' = True'
            | False'
-             deriving (Generic)
+           deriving Generic
 
 instance CoArbitrary Bool'
 
