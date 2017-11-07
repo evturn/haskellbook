@@ -76,6 +76,15 @@ prop_apply = property $ \x -> (+1) x == ((+1) $ (x :: Int))
 prop_compose :: Property
 prop_compose = property $ \x -> ((+1) . (+1) $ x) == ((+1) $ (+1) (x :: Int))
 
+-----------------------------------------------------------------------------
+-- 9.
+prop_combineLists :: [Int] -> [Int] -> Bool
+prop_combineLists xs ys = foldr (:) xs ys == (++) xs ys
+
+prop_combineLists' :: [String] -> Bool
+prop_combineLists' xs = foldr (++) [] xs == concat xs
+
+
 main :: IO ()
 main = do
   putStrLn "1. halfIdentity"
@@ -104,3 +113,7 @@ main = do
   quickCheck prop_apply
   putStrLn "8. (.)"
   quickCheck prop_compose
+  putStrLn "9. combineLists"
+  quickCheck prop_combineLists
+  putStrLn "9. combineLists'"
+  quickCheck prop_combineLists'
