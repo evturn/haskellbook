@@ -85,6 +85,16 @@ prop_combineLists' :: [String] -> Bool
 prop_combineLists' xs = foldr (++) [] xs == concat xs
 
 
+-----------------------------------------------------------------------------
+-- .10
+prop_lengthTake :: Positive Int -> NonEmptyList [Int] -> Bool
+prop_lengthTake (Positive n) (NonEmpty xs) = length (take n xs) == n
+
+-----------------------------------------------------------------------------
+-- .11
+prop_showRead :: Property
+prop_showRead = forAll orderedListGen (\x -> (read (show x)) == x)
+
 main :: IO ()
 main = do
   putStrLn "1. halfIdentity"
@@ -117,3 +127,7 @@ main = do
   quickCheck prop_combineLists
   putStrLn "9. combineLists'"
   quickCheck prop_combineLists'
+  putStrLn "10. lengthTake"
+  quickCheck prop_lengthTake
+  putStrLn "11. showRead"
+  quickCheck prop_showRead
