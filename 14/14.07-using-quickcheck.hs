@@ -42,11 +42,22 @@ multCommutative x y = x * y == y * x
 
 -----------------------------------------------------------------------------
 -- 5.
+-- | NonZero defined in Test.QuickCheck.Modifiers
 prop_quotRem :: NonZero Int -> NonZero Int -> Bool
 prop_quotRem (NonZero x) (NonZero y) = (quot x y) * y + (rem x y) == x
 
 prop_divMod :: NonZero Int -> NonZero Int -> Bool
 prop_divMod (NonZero x) (NonZero y) = (div x y) * y + (mod x y) == x
+
+-----------------------------------------------------------------------------
+-- 6.
+expoAssociative :: Int -> Int -> Int -> Bool
+expoAssociative x y z = x ^ (y ^ z) == (x ^ y) ^ z
+
+expoCommutative :: Int -> Int -> Bool
+expoCommutative x y = x ^ y == y ^ x
+
+-----------------------------------------------------------------------------
 
 
 main :: IO ()
@@ -67,3 +78,8 @@ main = do
   quickCheck prop_quotRem
   putStrLn "5. divMod"
   quickCheck prop_divMod
+  putStrLn "6. expoAssociative"
+  quickCheck expoAssociative
+  putStrLn "6. expoCommutative"
+  quickCheck expoCommutative
+
