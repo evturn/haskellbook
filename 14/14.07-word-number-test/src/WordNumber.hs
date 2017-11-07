@@ -1,4 +1,8 @@
-module WordNumber where
+module WordNumber
+    ( digitToWord
+    , digits
+    , wordNumber
+    ) where
 
 import           Data.List (intersperse)
 
