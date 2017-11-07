@@ -58,6 +58,15 @@ expoCommutative :: Int -> Int -> Bool
 expoCommutative x y = x ^ y == y ^ x
 
 -----------------------------------------------------------------------------
+-- 7.
+rereverse :: [a] -> [a]
+rereverse = reverse . reverse
+
+orderedListGen :: Gen [Int]
+orderedListGen = listOf (arbitrary :: Gen Int)
+
+prop_reverseId :: Property
+prop_reverseId = forAll orderedListGen (\xs -> rereverse xs == id xs)
 
 
 main :: IO ()
@@ -78,8 +87,9 @@ main = do
   quickCheck prop_quotRem
   putStrLn "5. divMod"
   quickCheck prop_divMod
-  putStrLn "6. expoAssociative"
+  putStrLn "6. Should fail -- expoAssociative"
   quickCheck expoAssociative
-  putStrLn "6. expoCommutative"
+  putStrLn "6. Should fail -- expoCommutative"
   quickCheck expoCommutative
-
+  putStrLn "7. reverseId"
+  quickCheck prop_reverseId
