@@ -68,6 +68,13 @@ orderedListGen = listOf (arbitrary :: Gen Int)
 prop_reverseId :: Property
 prop_reverseId = forAll orderedListGen (\xs -> rereverse xs == id xs)
 
+-----------------------------------------------------------------------------
+-- 8.
+prop_apply :: Property
+prop_apply = property $ \x -> (+1) x == ((+1) $ (x :: Int))
+
+prop_compose :: Property
+prop_compose = property $ \x -> ((+1) . (+1) $ x) == ((+1) $ (+1) (x :: Int))
 
 main :: IO ()
 main = do
@@ -93,3 +100,7 @@ main = do
   quickCheck expoCommutative
   putStrLn "7. reverseId"
   quickCheck prop_reverseId
+  putStrLn "8. ($)"
+  quickCheck prop_apply
+  putStrLn "8. (.)"
+  quickCheck prop_compose
