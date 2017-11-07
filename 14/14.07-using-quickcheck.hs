@@ -40,6 +40,15 @@ multAssociative x y z = x * (y * z) == (x * y) * z
 multCommutative :: Int -> Int -> Bool
 multCommutative x y = x * y == y * x
 
+-----------------------------------------------------------------------------
+-- 5.
+prop_quotRem :: NonZero Int -> NonZero Int -> Bool
+prop_quotRem (NonZero x) (NonZero y) = (quot x y) * y + (rem x y) == x
+
+prop_divMod :: NonZero Int -> NonZero Int -> Bool
+prop_divMod (NonZero x) (NonZero y) = (div x y) * y + (mod x y) == x
+
+
 main :: IO ()
 main = do
   putStrLn "1. halfIdentity"
@@ -54,4 +63,7 @@ main = do
   quickCheck multAssociative
   putStrLn "4. multCommutative"
   quickCheck multCommutative
-
+  putStrLn "5. quotRem"
+  quickCheck prop_quotRem
+  putStrLn "5. divMod"
+  quickCheck prop_divMod
