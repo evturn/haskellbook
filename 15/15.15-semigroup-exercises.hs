@@ -32,7 +32,27 @@ instance Arbitrary a => Arbitrary (Identity a) where
 
 type IdAssoc = Identity Trivial -> Identity Trivial -> Identity Trivial -> Bool
 
+-----------------------------------------------------------------------------
+-- 3.
+data Two a b = Two a b
+  deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
+  Two x y <> Two x' y' = Two (x <> x') (y <> y')
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Two x y
+
+type TwoAssoc = Two Trivial Trivial
+             -> Two Trivial Trivial
+             -> Two Trivial Trivial
+             -> Bool
+
 main :: IO ()
 main = do
   quickCheck (semigroupAssoc :: TrivAssoc)
   quickCheck (semigroupAssoc :: IdAssoc)
+  quickCheck (semigroupAssoc :: TwoAssoc)
