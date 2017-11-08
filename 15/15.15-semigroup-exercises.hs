@@ -97,6 +97,26 @@ type FourAssoc = Four Trivial Trivial Trivial Trivial
               -> Four Trivial Trivial Trivial Trivial
               -> Bool
 
+-----------------------------------------------------------------------------
+-- 6.
+newtype BoolConj = BoolConj Bool
+  deriving (Eq, Show)
+
+instance Semigroup BoolConj where
+  BoolConj True  <> BoolConj True  = BoolConj True
+  BoolConj False <> BoolConj _     = BoolConj False
+  BoolConj True  <> BoolConj False = BoolConj False
+
+instance Arbitrary BoolConj where
+  arbitrary = elements [ BoolConj True
+                       , BoolConj False
+                       ]
+
+type BoolConjAssoc = BoolConj
+                  -> BoolConj
+                  -> BoolConj
+                  -> Bool
+
 main :: IO ()
 main = do
   quickCheck (semigroupAssoc :: TrivAssoc)
@@ -104,3 +124,4 @@ main = do
   quickCheck (semigroupAssoc :: TwoAssoc)
   quickCheck (semigroupAssoc :: ThreeAssoc)
   quickCheck (semigroupAssoc :: FourAssoc)
+  quickCheck (semigroupAssoc :: BoolConjAssoc)
