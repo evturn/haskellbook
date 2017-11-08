@@ -51,8 +51,31 @@ type TwoAssoc = Two Trivial Trivial
              -> Two Trivial Trivial
              -> Bool
 
+-----------------------------------------------------------------------------
+-- 4.
+data Three a b c = Three a b c
+  deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c)
+  where
+    Three x y z <> Three x' y' z' = Three (x <> x') (y <> y') (z <> z')
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c)
+  where
+    arbitrary = do
+      x <- arbitrary
+      y <- arbitrary
+      z <- arbitrary
+      return $ Three x y z
+
+type ThreeAssoc = Three Trivial Trivial Trivial
+               -> Three Trivial Trivial Trivial
+               -> Three Trivial Trivial Trivial
+               -> Bool
+
 main :: IO ()
 main = do
   quickCheck (semigroupAssoc :: TrivAssoc)
   quickCheck (semigroupAssoc :: IdAssoc)
   quickCheck (semigroupAssoc :: TwoAssoc)
+  quickCheck (semigroupAssoc :: ThreeAssoc)
