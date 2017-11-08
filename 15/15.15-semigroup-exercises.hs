@@ -56,22 +56,46 @@ type TwoAssoc = Two Trivial Trivial
 data Three a b c = Three a b c
   deriving (Eq, Show)
 
-instance (Semigroup a, Semigroup b, Semigroup c) => Semigroup (Three a b c)
-  where
-    Three x y z <> Three x' y' z' = Three (x <> x') (y <> y') (z <> z')
+instance (Semigroup a, Semigroup b, Semigroup c)
+      => Semigroup (Three a b c) where
+  Three x y z <> Three x' y' z' = Three (x <> x') (y <> y') (z <> z')
 
-instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c)
-  where
-    arbitrary = do
-      x <- arbitrary
-      y <- arbitrary
-      z <- arbitrary
-      return $ Three x y z
+instance (Arbitrary a, Arbitrary b, Arbitrary c)
+      => Arbitrary (Three a b c) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Three x y z
 
 type ThreeAssoc = Three Trivial Trivial Trivial
                -> Three Trivial Trivial Trivial
                -> Three Trivial Trivial Trivial
                -> Bool
+
+-----------------------------------------------------------------------------
+-- 5.
+data Four a b c d = Four a b c d
+  deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c, Semigroup d)
+      => Semigroup (Four a b c d) where
+  Four w x y z <> Four w' x' y' z' =
+    Four (w <> w') (x <> x') (y <> y') (z <> z')
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c, Arbitrary d)
+      => Arbitrary (Four a b c d) where
+  arbitrary = do
+    w <- arbitrary
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Four w x y z
+
+type FourAssoc = Four Trivial Trivial Trivial Trivial
+              -> Four Trivial Trivial Trivial Trivial
+              -> Four Trivial Trivial Trivial Trivial
+              -> Bool
 
 main :: IO ()
 main = do
@@ -79,3 +103,4 @@ main = do
   quickCheck (semigroupAssoc :: IdAssoc)
   quickCheck (semigroupAssoc :: TwoAssoc)
   quickCheck (semigroupAssoc :: ThreeAssoc)
+  quickCheck (semigroupAssoc :: FourAssoc)
