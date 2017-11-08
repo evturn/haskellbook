@@ -138,6 +138,30 @@ type BoolDisjAssoc = BoolDisj
                   -> BoolDisj
                   -> Bool
 
+-----------------------------------------------------------------------------
+-- 8.
+data Or a b = Fst a
+            | Snd b
+            deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b) => Semigroup (Or a b) where
+  Fst x <> Fst y = Fst y
+  Fst x <> Snd y = Snd y
+  Snd x <> Snd y = Snd x
+  Snd x <> Fst y = Snd x
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    elements [ Fst x
+             , Snd y
+             ]
+
+type OrAssoc = Or Trivial Trivial
+            -> Or Trivial Trivial
+            -> Or Trivial Trivial
+            -> Bool
 
 main :: IO ()
 main = do
@@ -148,3 +172,4 @@ main = do
   quickCheck (semigroupAssoc :: FourAssoc)
   quickCheck (semigroupAssoc :: BoolConjAssoc)
   quickCheck (semigroupAssoc :: BoolDisjAssoc)
+  quickCheck (semigroupAssoc :: OrAssoc)
