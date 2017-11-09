@@ -201,6 +201,36 @@ type BoolDisjAssoc = BoolDisj
                   -> Bool
 type BoolDisjId    = BoolDisj -> Bool
 
+-----------------------------------------------------------------------------
+-- Skipping 6 and 7.
+--
+-- 8.
+newtype Mem s a = Mem
+                { runMem :: s -> (a, s) }
+
+instance Semigroup a => Semigroup (Mem s a) where
+  Mem f <> Mem g = Mem $ \s ->
+    ( fst (f s) <> fst (g (snd (f s)))
+    , snd $ g $ snd (f s)
+    )
+
+instance (Semigroup a, Monoid a) => Monoid (Mem s a) where
+  mempty  = Mem (\x -> (mempty, x))
+  mappend = (<>)
+
+f' :: Mem Int String
+f' = Mem $ \s -> ("hi", s + 1)
+
+qcMem :: IO ()
+qcMem = do
+  print $ runMem (f' <> mempty) 0
+  print $ runMem (mempty <> f') 0
+  print $ (runMem mempty 0 :: (String, Int))
+  print $ runMem (f' <> mempty) 0 == (runMem f' 0 :: (String, Int))
+  -- print $ runMem (mempty <> f') 0 === runMem f' 0
+
+-----------------------------------------------------------------------------
+
 main :: IO ()
 main = do
   putStrLn "1. Trivial"
