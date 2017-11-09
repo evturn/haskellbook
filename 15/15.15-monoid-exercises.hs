@@ -59,7 +59,9 @@ data Two a b = Two a b
 instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
   Two x y <> Two x' y' = Two (x <> x') (y <> y')
 
-instance (Semigroup a, Semigroup b, Monoid a, Monoid b)
+instance ( Semigroup a, Monoid a
+         , Semigroup b, Monoid b
+         )
       => Monoid (Two a b) where
   mempty  = Two mempty mempty
   mappend = (<>)
@@ -81,17 +83,26 @@ type TwoId   = Two String String -> Bool
 data Three a b c = Three a b c
   deriving (Eq, Show)
 
-instance (Semigroup a, Semigroup b, Semigroup c)
+instance ( Semigroup a
+         , Semigroup b
+         , Semigroup c
+         )
       => Semigroup (Three a b c) where
   Three x y z <> Three x' y' z' = Three (x <> x') (y <> y') (z <> z')
 
 
-instance (Semigroup a, Monoid a, Semigroup b, Monoid b, Semigroup c, Monoid c)
+instance ( Semigroup a, Monoid a
+         , Semigroup b, Monoid b
+         , Semigroup c, Monoid c
+         )
       => Monoid (Three a b c) where
   mempty  = Three mempty mempty mempty
   mappend = (<>)
 
-instance (Arbitrary a, Arbitrary b, Arbitrary c)
+instance ( Arbitrary a
+         , Arbitrary b
+         , Arbitrary c
+         )
       => Arbitrary (Three a b c) where
   arbitrary = do
     x <- arbitrary
@@ -106,6 +117,46 @@ type ThreeAssoc = Three Trivial Trivial Trivial
 type ThreeId    = Three String String String -> Bool
 
 -----------------------------------------------------------------------------
+-- 5.
+data Four a b c d = Four a b c d
+  deriving (Eq, Show)
+
+instance ( Semigroup a
+         , Semigroup b
+         , Semigroup c
+         , Semigroup d
+         )
+      => Semigroup (Four a b c d) where
+  Four w x y z <> Four w' x' y' z' =
+    Four (w <> w') (x <> x') (y <> y') (z <> z')
+
+instance ( Semigroup a, Monoid a
+         , Semigroup b, Monoid b
+         , Semigroup c, Monoid c
+         , Semigroup d, Monoid d
+         )
+      => Monoid (Four a b c d) where
+  mempty  = Four mempty mempty mempty mempty
+  mappend = (<>)
+
+instance ( Arbitrary a
+         , Arbitrary b
+         , Arbitrary c
+         , Arbitrary d
+         )
+      => Arbitrary (Four a b c d) where
+  arbitrary = do
+    w <- arbitrary
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Four w x y z
+
+type FourAssoc = Four Trivial Trivial Trivial Trivial
+              -> Four Trivial Trivial Trivial Trivial
+              -> Four Trivial Trivial Trivial Trivial
+              -> Bool
+type FourId    = Four String String String String -> Bool
 
 main :: IO ()
 main = do
@@ -125,3 +176,7 @@ main = do
   quickCheck (semigroupAssoc      :: ThreeAssoc)
   quickCheck (monoidLeftIdentity  :: ThreeId)
   quickCheck (monoidRightIdentity :: ThreeId)
+  putStrLn "5. Four"
+  quickCheck (semigroupAssoc      :: FourAssoc)
+  quickCheck (monoidLeftIdentity  :: FourId)
+  quickCheck (monoidRightIdentity :: FourId)
