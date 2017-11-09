@@ -76,6 +76,37 @@ type TwoAssoc = Two Trivial Trivial
              -> Bool
 type TwoId   = Two String String -> Bool
 
+-----------------------------------------------------------------------------
+-- 4.
+data Three a b c = Three a b c
+  deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b, Semigroup c)
+      => Semigroup (Three a b c) where
+  Three x y z <> Three x' y' z' = Three (x <> x') (y <> y') (z <> z')
+
+
+instance (Semigroup a, Monoid a, Semigroup b, Monoid b, Semigroup c, Monoid c)
+      => Monoid (Three a b c) where
+  mempty  = Three mempty mempty mempty
+  mappend = (<>)
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c)
+      => Arbitrary (Three a b c) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Three x y z
+
+type ThreeAssoc = Three Trivial Trivial Trivial
+               -> Three Trivial Trivial Trivial
+               -> Three Trivial Trivial Trivial
+               -> Bool
+type ThreeId    = Three String String String -> Bool
+
+-----------------------------------------------------------------------------
+
 main :: IO ()
 main = do
   putStrLn "1. Trivial"
@@ -86,7 +117,11 @@ main = do
   quickCheck (semigroupAssoc      :: IdAssoc)
   quickCheck (monoidLeftIdentity  :: IdId)
   quickCheck (monoidRightIdentity :: IdId)
-  putStrLn "2. Two"
+  putStrLn "3. Two"
   quickCheck (semigroupAssoc      :: TwoAssoc)
   quickCheck (monoidLeftIdentity  :: TwoId)
   quickCheck (monoidRightIdentity :: TwoId)
+  putStrLn "4. Three"
+  quickCheck (semigroupAssoc      :: ThreeAssoc)
+  quickCheck (monoidLeftIdentity  :: ThreeId)
+  quickCheck (monoidRightIdentity :: ThreeId)
