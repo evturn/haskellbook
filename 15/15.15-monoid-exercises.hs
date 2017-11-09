@@ -61,8 +61,7 @@ instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
 
 instance ( Semigroup a, Monoid a
          , Semigroup b, Monoid b
-         )
-      => Monoid (Two a b) where
+         ) => Monoid (Two a b) where
   mempty  = Two mempty mempty
   mappend = (<>)
 
@@ -86,24 +85,21 @@ data Three a b c = Three a b c
 instance ( Semigroup a
          , Semigroup b
          , Semigroup c
-         )
-      => Semigroup (Three a b c) where
+         ) => Semigroup (Three a b c) where
   Three x y z <> Three x' y' z' = Three (x <> x') (y <> y') (z <> z')
 
 
 instance ( Semigroup a, Monoid a
          , Semigroup b, Monoid b
          , Semigroup c, Monoid c
-         )
-      => Monoid (Three a b c) where
+         ) => Monoid (Three a b c) where
   mempty  = Three mempty mempty mempty
   mappend = (<>)
 
 instance ( Arbitrary a
          , Arbitrary b
          , Arbitrary c
-         )
-      => Arbitrary (Three a b c) where
+         ) => Arbitrary (Three a b c) where
   arbitrary = do
     x <- arbitrary
     y <- arbitrary
@@ -117,7 +113,7 @@ type ThreeAssoc = Three Trivial Trivial Trivial
 type ThreeId    = Three String String String -> Bool
 
 -----------------------------------------------------------------------------
--- 5.
+-- 4b.
 data Four a b c d = Four a b c d
   deriving (Eq, Show)
 
@@ -125,8 +121,7 @@ instance ( Semigroup a
          , Semigroup b
          , Semigroup c
          , Semigroup d
-         )
-      => Semigroup (Four a b c d) where
+         ) => Semigroup (Four a b c d) where
   Four w x y z <> Four w' x' y' z' =
     Four (w <> w') (x <> x') (y <> y') (z <> z')
 
@@ -134,8 +129,7 @@ instance ( Semigroup a, Monoid a
          , Semigroup b, Monoid b
          , Semigroup c, Monoid c
          , Semigroup d, Monoid d
-         )
-      => Monoid (Four a b c d) where
+         ) => Monoid (Four a b c d) where
   mempty  = Four mempty mempty mempty mempty
   mappend = (<>)
 
@@ -143,8 +137,7 @@ instance ( Arbitrary a
          , Arbitrary b
          , Arbitrary c
          , Arbitrary d
-         )
-      => Arbitrary (Four a b c d) where
+         ) => Arbitrary (Four a b c d) where
   arbitrary = do
     w <- arbitrary
     x <- arbitrary
@@ -157,6 +150,31 @@ type FourAssoc = Four Trivial Trivial Trivial Trivial
               -> Four Trivial Trivial Trivial Trivial
               -> Bool
 type FourId    = Four String String String String -> Bool
+
+-----------------------------------------------------------------------------
+-- 5.
+newtype BoolConj = BoolConj Bool
+  deriving (Eq, Show)
+
+instance Semigroup BoolConj where
+  BoolConj True  <> BoolConj True  = BoolConj True
+  BoolConj False <> BoolConj _     = BoolConj False
+  BoolConj True  <> BoolConj False = BoolConj False
+
+instance Monoid BoolConj where
+  mempty  = BoolConj True
+  mappend = (<>)
+
+instance Arbitrary BoolConj where
+  arbitrary = elements [ BoolConj True
+                       , BoolConj False
+                       ]
+
+type BoolConjAssoc = BoolConj
+                  -> BoolConj
+                  -> BoolConj
+                  -> Bool
+type BoolConjId    = BoolConj -> Bool
 
 main :: IO ()
 main = do
@@ -176,7 +194,11 @@ main = do
   quickCheck (semigroupAssoc      :: ThreeAssoc)
   quickCheck (monoidLeftIdentity  :: ThreeId)
   quickCheck (monoidRightIdentity :: ThreeId)
-  putStrLn "5. Four"
+  putStrLn "4.1. Four"
   quickCheck (semigroupAssoc      :: FourAssoc)
   quickCheck (monoidLeftIdentity  :: FourId)
   quickCheck (monoidRightIdentity :: FourId)
+  putStrLn "5. BoolConj"
+  quickCheck (semigroupAssoc      :: BoolConjAssoc)
+  quickCheck (monoidLeftIdentity  :: BoolConjId)
+  quickCheck (monoidRightIdentity :: BoolConjId)
