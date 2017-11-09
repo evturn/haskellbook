@@ -52,6 +52,29 @@ type IdAssoc = Identity String -> Identity String -> Identity String -> Bool
 type IdId    = Identity String -> Bool
 
 -----------------------------------------------------------------------------
+-- 3.
+data Two a b = Two a b
+  deriving (Eq, Show)
+
+instance (Semigroup a, Semigroup b) => Semigroup (Two a b) where
+  Two x y <> Two x' y' = Two (x <> x') (y <> y')
+
+instance (Semigroup a, Semigroup b, Monoid a, Monoid b)
+      => Monoid (Two a b) where
+  mempty  = Two mempty mempty
+  mappend = (<>)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Two x y
+
+type TwoAssoc = Two Trivial Trivial
+             -> Two Trivial Trivial
+             -> Two Trivial Trivial
+             -> Bool
+type TwoId   = Two String String -> Bool
 
 main :: IO ()
 main = do
@@ -60,6 +83,10 @@ main = do
   quickCheck (monoidLeftIdentity  :: TrivId)
   quickCheck (monoidRightIdentity :: TrivId)
   putStrLn "2. Identity"
-  quickCheck (semigroupAssoc :: IdAssoc)
-  quickCheck (monoidLeftIdentity :: IdId)
+  quickCheck (semigroupAssoc      :: IdAssoc)
+  quickCheck (monoidLeftIdentity  :: IdId)
   quickCheck (monoidRightIdentity :: IdId)
+  putStrLn "2. Two"
+  quickCheck (semigroupAssoc      :: TwoAssoc)
+  quickCheck (monoidLeftIdentity  :: TwoId)
+  quickCheck (monoidRightIdentity :: TwoId)
