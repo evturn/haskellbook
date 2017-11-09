@@ -78,7 +78,7 @@ type TwoAssoc = Two Trivial Trivial
 type TwoId   = Two String String -> Bool
 
 -----------------------------------------------------------------------------
--- 4.
+-- 3.1.
 data Three a b c = Three a b c
   deriving (Eq, Show)
 
@@ -113,7 +113,7 @@ type ThreeAssoc = Three Trivial Trivial Trivial
 type ThreeId    = Three String String String -> Bool
 
 -----------------------------------------------------------------------------
--- 4b.
+-- 3.2.
 data Four a b c d = Four a b c d
   deriving (Eq, Show)
 
@@ -176,6 +176,31 @@ type BoolConjAssoc = BoolConj
                   -> Bool
 type BoolConjId    = BoolConj -> Bool
 
+-----------------------------------------------------------------------------
+-- 5.
+newtype BoolDisj = BoolDisj Bool
+  deriving (Eq, Show)
+
+instance Semigroup BoolDisj where
+  BoolDisj True  <> BoolDisj _     = BoolDisj True
+  BoolDisj False <> BoolDisj True  = BoolDisj True
+  BoolDisj False <> BoolDisj False = BoolDisj False
+
+instance Monoid BoolDisj where
+  mempty  = BoolDisj False
+  mappend = (<>)
+
+instance Arbitrary BoolDisj where
+  arbitrary = elements [ BoolDisj True
+                       , BoolDisj False
+                       ]
+
+type BoolDisjAssoc = BoolDisj
+                  -> BoolDisj
+                  -> BoolDisj
+                  -> Bool
+type BoolDisjId    = BoolDisj -> Bool
+
 main :: IO ()
 main = do
   putStrLn "1. Trivial"
@@ -190,15 +215,19 @@ main = do
   quickCheck (semigroupAssoc      :: TwoAssoc)
   quickCheck (monoidLeftIdentity  :: TwoId)
   quickCheck (monoidRightIdentity :: TwoId)
-  putStrLn "4. Three"
+  putStrLn "3.1. Three"
   quickCheck (semigroupAssoc      :: ThreeAssoc)
   quickCheck (monoidLeftIdentity  :: ThreeId)
   quickCheck (monoidRightIdentity :: ThreeId)
-  putStrLn "4.1. Four"
+  putStrLn "3.2. Four"
   quickCheck (semigroupAssoc      :: FourAssoc)
   quickCheck (monoidLeftIdentity  :: FourId)
   quickCheck (monoidRightIdentity :: FourId)
-  putStrLn "5. BoolConj"
+  putStrLn "4. BoolConj"
   quickCheck (semigroupAssoc      :: BoolConjAssoc)
   quickCheck (monoidLeftIdentity  :: BoolConjId)
   quickCheck (monoidRightIdentity :: BoolConjId)
+  putStrLn "5. BoolDisj"
+  quickCheck (semigroupAssoc      :: BoolDisjAssoc)
+  quickCheck (monoidLeftIdentity  :: BoolDisjId)
+  quickCheck (monoidRightIdentity :: BoolDisjId)
