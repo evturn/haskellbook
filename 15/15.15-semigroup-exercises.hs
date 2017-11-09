@@ -1,5 +1,6 @@
+import           Data.Monoid     hiding ((<>))
 import           Data.Semigroup
-import           Test.QuickCheck
+import           Test.QuickCheck hiding (Failure, Success)
 
 -----------------------------------------------------------------------------
 -- 1.
@@ -163,6 +164,86 @@ type OrAssoc = Or Trivial Trivial
             -> Or Trivial Trivial
             -> Bool
 
+
+-----------------------------------------------------------------------------
+-- 9.
+-- This does not work.
+newtype Combine a b = Combine
+                    { unCombine :: (a -> b) }
+
+instance Show (Combine a b) where
+  show (Combine f) = "Combine (a -> b)"
+
+instance Semigroup b => Semigroup (Combine a b) where
+  Combine f <> Combine g = Combine (\x -> f x <> g x)
+
+instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
+  arbitrary = do
+    f <- arbitrary
+    return $ Combine f
+
+type CombAssoc = Combine Int (String -> String)
+              -> Combine Int (String -> String)
+              -> Combine Int (String -> String)
+              -> Bool
+
+-----------------------------------------------------------------------------
+-- 10.
+-- This does not work.
+newtype Comp a = Comp
+               { unComp :: (a -> a) }
+
+instance Semigroup a => Semigroup (Comp a) where
+  Comp f <> Comp g = Comp (f . g)
+
+instance (CoArbitrary a, Arbitrary a) => Arbitrary (Comp a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Comp x
+
+type CompAssoc = Comp Int
+              -> Comp Int
+              -> Comp Int
+              -> Bool
+
+-----------------------------------------------------------------------------
+-- 11.
+data Validation a b = Failure a
+                    | Success b
+                    deriving (Eq, Show)
+
+instance Semigroup a => Semigroup (Validation a b) where
+  Success x <> Failure y = Success x
+  Failure x <> Failure y = Failure (x <> y)
+  Success x <> Success y = Success x
+  Failure x <> Success y = Success y
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Validation a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    elements [ Failure x
+             , Success y
+             ]
+
+type ValidAssoc = Validation String Int
+               -> Validation String Int
+               -> Validation String Int
+               -> Bool
+
+runValidation :: IO ()
+runValidation = do
+  let failure :: String -> Validation String Int
+      failure = Failure
+      success :: Int -> Validation String Int
+      success = Success
+  print $ success 1      <> failure "blah"
+  print $ failure "woot" <> failure "blah"
+  print $ success 1      <> success 2
+  print $ failure "woot" <> success 2
+
+-----------------------------------------------------------------------------
+
 main :: IO ()
 main = do
   quickCheck (semigroupAssoc :: TrivAssoc)
@@ -173,3 +254,6 @@ main = do
   quickCheck (semigroupAssoc :: BoolConjAssoc)
   quickCheck (semigroupAssoc :: BoolDisjAssoc)
   quickCheck (semigroupAssoc :: OrAssoc)
+  -- quickCheck (semigroupAssoc :: CombAssoc) ?
+  -- quickCheck (semigroupAssoc :: CompAssoc) ?
+  quickCheck (semigroupAssoc :: ValidAssoc)
