@@ -1,4 +1,4 @@
-import           Data.Semigroup
+import           Data.Semigroup  (Semigroup, (<>))
 import           Test.QuickCheck hiding (Failure, Success)
 
 semigroupAssoc :: (Eq m, Semigroup m) => m -> m -> m -> Bool
@@ -32,12 +32,34 @@ type TrivAssoc = Trivial -> Trivial -> Trivial -> Bool
 type TrivId    = Trivial -> Bool
 
 -----------------------------------------------------------------------------
+-- 2.
+newtype Identity a = Identity a
+  deriving (Eq, Show)
+
+instance Semigroup a => Semigroup (Identity a) where
+  Identity x <> Identity y = Identity (x <> y)
+
+instance (Semigroup a, Monoid a) => Monoid (Identity a) where
+  mempty = Identity mempty
+  mappend = (<>)
+
+instance Arbitrary a => Arbitrary (Identity a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Identity x
+
+type IdAssoc = Identity String -> Identity String -> Identity String -> Bool
+type IdId    = Identity String -> Bool
+
+-----------------------------------------------------------------------------
 
 main :: IO ()
 main = do
-  let sa = semigroupAssoc
-      ml = monoidLeftIdentity
-      mr = monoidRightIdentity
-  quickCheck (sa :: TrivAssoc)
-  quickCheck (ml :: TrivId)
-  quickCheck (mr :: TrivId)
+  putStrLn "1. Trivial"
+  quickCheck (semigroupAssoc      :: TrivAssoc)
+  quickCheck (monoidLeftIdentity  :: TrivId)
+  quickCheck (monoidRightIdentity :: TrivId)
+  putStrLn "2. Identity"
+  quickCheck (semigroupAssoc :: IdAssoc)
+  quickCheck (monoidLeftIdentity :: IdId)
+  quickCheck (monoidRightIdentity :: IdId)
