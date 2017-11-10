@@ -55,3 +55,10 @@ data IgnoreOne f g a b = IgnoringSomething (f a) (g b)
 
 instance Functor g => Functor (IgnoreOne f g a) where
   fmap f (IgnoringSomething fa gb) = IgnoringSomething fa (fmap f gb)
+
+-----------------------------------------------------------------------------
+-- 8.
+data Notorious g o a t = Notorious (g o) (g a) (g t)
+
+instance Functor f => Functor (Notorious f a b) where
+  fmap f (Notorious fx fy fz) = Notorious fx fy (fmap f fz)
