@@ -41,3 +41,10 @@ data LiftItOut f a = LiftItOut (f a)
 
 instance Functor f => Functor (LiftItOut f) where
   fmap f (LiftItOut fa) = LiftItOut (fmap f fa)
+
+-----------------------------------------------------------------------------
+-- 6.
+data Parappa f g a = DaWrappa (f a) (g a)
+
+instance (Functor f, Functor f1) => Functor (Parappa f f1) where
+  fmap f (DaWrappa fa ga) = DaWrappa (fmap f fa) (fmap f ga)
