@@ -45,11 +45,35 @@ instance Arbitrary a => Arbitrary (BoolAndSomethingElse a) where
 type BoolEtcId = BoolAndSomethingElse Int -> Bool
 type BoolEtcFC = BoolAndSomethingElse Int -> IntToInt -> IntToInt -> Bool
 
+-----------------------------------------------------------------------------
+-- 3.
+data BoolAndMaybeSomethingElse a = Falsish
+                                 | Truish a
+                                 deriving (Eq, Show)
 
+instance Functor BoolAndMaybeSomethingElse where
+  fmap _ Falsish    = Falsish
+  fmap f (Truish x) = Truish (f x)
+
+instance Arbitrary a => Arbitrary (BoolAndMaybeSomethingElse a) where
+  arbitrary = do
+    x <- arbitrary
+    elements [ Falsish
+             , Truish x
+             ]
+
+type BoolMaybeEtcId = BoolAndMaybeSomethingElse Int -> Bool
+type BoolMaybeEtcFC = BoolAndMaybeSomethingElse Int
+                   -> IntToInt
+                   -> IntToInt
+                   -> Bool
 
 main :: IO ()
 main = do
   putStrLn "\n    BoolAndSomethingElse"
   quickCheck (functorIdentity :: BoolEtcId)
   quickCheck (functorCompose  :: BoolEtcFC)
+  putStrLn "\n    BoolAndMaybeSomethingElse"
+  quickCheck (functorIdentity :: BoolMaybeEtcId)
+  quickCheck (functorCompose  :: BoolMaybeEtcFC)
 
