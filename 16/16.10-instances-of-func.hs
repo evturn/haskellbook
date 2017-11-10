@@ -135,6 +135,24 @@ instance ( Arbitrary a
 type FourId = Four Int Int Int Int -> Bool
 type FourFC = Four Int Int Int Int -> IntToInt -> IntToInt -> Bool
 
+-----------------------------------------------------------------------------
+-- 7.
+data Four' a b = Four' a a a b
+  deriving (Eq, Show)
+
+instance Functor (Four' a) where
+  fmap f (Four' x x' x'' y) = Four' x x' x'' (f y)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Four' x x x y
+
+type Four'Id = Four' Int Int -> Bool
+type Four'FC = Four' Int Int -> IntToInt -> IntToInt -> Bool
+
+
 main :: IO ()
 main = do
   putStrLn "\n 1. Identity"
@@ -155,3 +173,6 @@ main = do
   putStrLn "\n 6. Four"
   quickCheck (functorIdentity :: FourId)
   quickCheck (functorCompose' :: FourFC)
+  putStrLn "\n 7. Four'"
+  quickCheck (functorIdentity :: Four'Id)
+  quickCheck (functorCompose' :: Four'FC)
