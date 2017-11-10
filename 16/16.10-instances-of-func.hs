@@ -152,6 +152,16 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
 type Four'Id = Four' Int Int -> Bool
 type Four'FC = Four' Int Int -> IntToInt -> IntToInt -> Bool
 
+-----------------------------------------------------------------------------
+-- 8.
+-- Can you implement one for this type?
+data Trivial = Trivial
+
+-- Answer:
+-- `Trivial` is type constant with the kind `*`
+-- `Functor` requires an instance has kind `* -> *`
+
+-----------------------------------------------------------------------------
 
 main :: IO ()
 main = do
