@@ -27,3 +27,11 @@ newtype Flip f a b = Flip (f b a)
 
 instance Functor (Flip K a) where
   fmap f (Flip (K a)) = Flip $ K (f a)
+
+-----------------------------------------------------------------------------
+-- 4.
+data EvilGoateeConst a b = GoatyConst b
+
+instance Functor (EvilGoateeConst a) where
+  fmap f (GoatyConst y) = GoatyConst (f y)
+
