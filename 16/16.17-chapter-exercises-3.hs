@@ -62,3 +62,12 @@ data Notorious g o a t = Notorious (g o) (g a) (g t)
 
 instance Functor f => Functor (Notorious f a b) where
   fmap f (Notorious fx fy fz) = Notorious fx fy (fmap f fz)
+
+-----------------------------------------------------------------------------
+-- 9.
+data List a = Nil
+            | Cons a (List a)
+
+instance Functor List where
+  fmap _ Nil         = Nil
+  fmap f (Cons x lx) = Cons (f x) (fmap f lx)
