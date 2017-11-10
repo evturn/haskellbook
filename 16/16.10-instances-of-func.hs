@@ -113,6 +113,27 @@ type Three'FC = Three' Int Int -> IntToInt -> IntToInt -> Bool
 
 
 -----------------------------------------------------------------------------
+-- 6.
+data Four a b c d = Four a b c d
+  deriving (Eq, Show)
+
+instance Functor (Four a b c) where
+  fmap f (Four w x y z) = Four w x y (f z)
+
+instance ( Arbitrary a
+         , Arbitrary b
+         , Arbitrary c
+         , Arbitrary d
+         ) => Arbitrary (Four a b c d) where
+  arbitrary = do
+    w <- arbitrary
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Four w x y z
+
+type FourId = Four Int Int Int Int -> Bool
+type FourFC = Four Int Int Int Int -> IntToInt -> IntToInt -> Bool
 
 main :: IO ()
 main = do
@@ -131,3 +152,6 @@ main = do
   putStrLn "\n 5. Three'"
   quickCheck (functorIdentity :: Three'Id)
   quickCheck (functorCompose' :: Three'FC)
+  putStrLn "\n 6. Four"
+  quickCheck (functorIdentity :: FourId)
+  quickCheck (functorCompose' :: FourFC)
