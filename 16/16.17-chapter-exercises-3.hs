@@ -48,3 +48,10 @@ data Parappa f g a = DaWrappa (f a) (g a)
 
 instance (Functor f, Functor f1) => Functor (Parappa f f1) where
   fmap f (DaWrappa fa ga) = DaWrappa (fmap f fa) (fmap f ga)
+
+-----------------------------------------------------------------------------
+-- 7.
+data IgnoreOne f g a b = IgnoringSomething (f a) (g b)
+
+instance Functor g => Functor (IgnoreOne f g a) where
+  fmap f (IgnoringSomething fa gb) = IgnoringSomething fa (fmap f gb)
