@@ -94,7 +94,25 @@ instance ( Arbitrary a
 type ThreeId = Three Int Int Int -> Bool
 type ThreeFC = Three Int Int Int -> IntToInt -> IntToInt -> Bool
 
+-----------------------------------------------------------------------------
+-- 5.
+data Three' a b = Three' a b b
+  deriving (Eq, Show)
 
+instance Functor (Three' a) where
+  fmap f (Three' x y y') = Three' x (f y) (f y')
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Three' x y y
+
+type Three'Id = Three' Int Int -> Bool
+type Three'FC = Three' Int Int -> IntToInt -> IntToInt -> Bool
+
+
+-----------------------------------------------------------------------------
 
 main :: IO ()
 main = do
@@ -110,3 +128,6 @@ main = do
   putStrLn "\n 4. Three"
   quickCheck (functorIdentity :: ThreeId)
   quickCheck (functorCompose' :: ThreeFC)
+  putStrLn "\n 5. Three'"
+  quickCheck (functorIdentity :: Three'Id)
+  quickCheck (functorCompose' :: Three'FC)
