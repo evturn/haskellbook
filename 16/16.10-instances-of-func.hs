@@ -61,7 +61,7 @@ type PairFC = Pair Int -> IntToInt -> IntToInt -> Bool
 data Two a b = Two a b
   deriving (Eq, Show)
 
-instance Functor (Two f) where
+instance Functor (Two a) where
   fmap f (Two x y) = Two x (f y)
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
@@ -73,14 +73,40 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 type TwoId = Two Int Int -> Bool
 type TwoFC = Two Int Int -> IntToInt -> IntToInt -> Bool
 
+-----------------------------------------------------------------------------
+-- 4.
+data Three a b c = Three a b c
+  deriving (Eq, Show)
+
+instance Functor (Three a b) where
+  fmap f (Three x y z) = Three x y (f z)
+
+instance ( Arbitrary a
+         , Arbitrary b
+         , Arbitrary c
+         ) => Arbitrary (Three a b c) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Three x y z
+
+type ThreeId = Three Int Int Int -> Bool
+type ThreeFC = Three Int Int Int -> IntToInt -> IntToInt -> Bool
+
+
+
 main :: IO ()
 main = do
   putStrLn "\n 1. Identity"
   quickCheck (functorIdentity :: IdId)
   quickCheck (functorCompose' :: IdFC)
-  putStrLn "\n 1. Pair"
+  putStrLn "\n 2. Pair"
   quickCheck (functorIdentity :: PairId)
   quickCheck (functorCompose' :: PairFC)
-  putStrLn "\n 1. Two"
+  putStrLn "\n 3. Two"
   quickCheck (functorIdentity :: TwoId)
   quickCheck (functorCompose' :: TwoFC)
+  putStrLn "\n 4. Three"
+  quickCheck (functorIdentity :: ThreeId)
+  quickCheck (functorCompose' :: ThreeFC)
