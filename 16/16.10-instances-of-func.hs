@@ -56,6 +56,23 @@ instance Arbitrary a => Arbitrary (Pair a) where
 type PairId = Pair Int -> Bool
 type PairFC = Pair Int -> IntToInt -> IntToInt -> Bool
 
+-----------------------------------------------------------------------------
+-- 3.
+data Two a b = Two a b
+  deriving (Eq, Show)
+
+instance Functor (Two f) where
+  fmap f (Two x y) = Two x (f y)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Two x y
+
+type TwoId = Two Int Int -> Bool
+type TwoFC = Two Int Int -> IntToInt -> IntToInt -> Bool
+
 main :: IO ()
 main = do
   putStrLn "\n 1. Identity"
@@ -64,3 +81,6 @@ main = do
   putStrLn "\n 1. Pair"
   quickCheck (functorIdentity :: PairId)
   quickCheck (functorCompose' :: PairFC)
+  putStrLn "\n 1. Two"
+  quickCheck (functorIdentity :: TwoId)
+  quickCheck (functorCompose' :: TwoFC)
