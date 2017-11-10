@@ -1,3 +1,4 @@
+import           GHC.Arr
 import           Test.QuickCheck
 import           Test.QuickCheck.Function
 
@@ -67,6 +68,25 @@ type BoolMaybeEtcFC = BoolAndMaybeSomethingElse Int
                    -> IntToInt
                    -> IntToInt
                    -> Bool
+
+
+-----------------------------------------------------------------------------
+-- 4.
+newtype Mu f = InF
+             { outF :: f (Mu f) }
+
+-- Answer:
+-- Mu has type `(* -> *) -> *` with `f` being a higher kinded type.
+
+
+-----------------------------------------------------------------------------
+-- 5.
+data D = D (Array Word Word) Int Int
+  deriving (Eq, Show)
+
+-- Answer:
+-- No
+
 
 main :: IO ()
 main = do
