@@ -35,3 +35,9 @@ data EvilGoateeConst a b = GoatyConst b
 instance Functor (EvilGoateeConst a) where
   fmap f (GoatyConst y) = GoatyConst (f y)
 
+-----------------------------------------------------------------------------
+-- 5.
+data LiftItOut f a = LiftItOut (f a)
+
+instance Functor f => Functor (LiftItOut f) where
+  fmap f (LiftItOut fa) = LiftItOut (fmap f fa)
