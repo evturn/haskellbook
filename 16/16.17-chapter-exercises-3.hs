@@ -83,3 +83,13 @@ instance Functor GoatLord where
   fmap f (OneGoat x)       = OneGoat (f x)
   fmap f (MoreGoats x y z) = MoreGoats (fmap f x) (fmap f y) (fmap f z)
 
+-----------------------------------------------------------------------------
+-- 11.
+data TalkToMe a = Halt
+                | Print  String a
+                | Read  (String -> a)
+
+instance Functor TalkToMe where
+  fmap _ Halt        = Halt
+  fmap f (Print x y) = Print x (f y)
+  fmap f (Read f2a)  = Read (fmap f f2a)
