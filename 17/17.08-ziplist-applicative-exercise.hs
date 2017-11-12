@@ -46,5 +46,27 @@ instance Functor ZipList' where
   fmap f (ZipList' xs) = ZipList' $ fmap f xs
 
 instance Applicative ZipList' where
-  pure  = undefined
-  (<*>) = undefined
+  pure x                        = ZipList' $ repeat' x
+  _            <*> ZipList' Nil = ZipList' Nil
+  ZipList' Nil <*> _            = ZipList' Nil
+  ZipList' fs  <*> ZipList' xs  = ZipList' $ zipWith' id fs xs
+
+instance Arbitrary a => Arbitrary (ZipList' a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ ZipList' $ Cons x Nil
+
+repeat' :: a -> (List a)
+repeat' x = xs
+  where
+    xs = Cons x xs
+
+zipWith' :: (a -> b -> c) -> List a -> List b -> List c
+zipWith' _ Nil _                   = Nil
+zipWith' _ _ Nil                   = Nil
+zipWith' f (Cons x xs) (Cons y ys) = Cons (f x y) (zipWith' f xs ys)
+
+main :: IO ()
+main = do
+  putStrLn "Here we go."
+  quickBatch $ applicative $ ZipList' $ Cons ('a', 'b', 'c') Nil
