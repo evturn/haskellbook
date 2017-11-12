@@ -47,4 +47,4 @@ concat' :: List (List a) -> List a
 concat' = fold append Nil
 
 flatMap :: (a -> List b) -> List a -> List b
-flatMap f as = undefined
+flatMap f as = fold (\a b -> append (f a) b) Nil as
