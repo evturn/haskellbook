@@ -7,7 +7,7 @@ import           Test.QuickCheck.Checkers
 import           Test.QuickCheck.Classes
 
 instance Monoid a => Monoid (ZipList a) where
-  mempty  = ZipList []
+  mempty  = pure mempty
   mappend = liftA2 mappend
 
 instance Arbitrary a => Arbitrary (ZipList a) where
