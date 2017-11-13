@@ -1,4 +1,4 @@
-import Control.Applicative (liftA3)
+import           Control.Applicative (liftA3)
 
 stops :: String
 stops = "pbtdkg"
