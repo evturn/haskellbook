@@ -25,8 +25,7 @@ instance Arbitrary a => Arbitrary (Pair a) where
 instance Eq a => EqProp (Pair a) where
   (=-=) = eq
 
-pair :: Pair SSI
-pair = undefined
+pair = undefined :: Pair SSI
 
 -----------------------------------------------------------------------------
 -- 2.
@@ -49,8 +48,7 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 instance (Eq a, Eq b) => EqProp (Two a b) where
   (=-=) = eq
 
-two :: Two String SSI
-two = undefined
+two = undefined :: Two String SSI
 
 -----------------------------------------------------------------------------
 -- 3.
@@ -77,8 +75,7 @@ instance ( Arbitrary a
 instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
   (=-=) = eq
 
-three :: Three String String SSI
-three = undefined
+three = undefined :: Three String String SSI
 
 -----------------------------------------------------------------------------
 -- 4.
@@ -88,9 +85,9 @@ data Three' a b = Three' a b b
 instance Functor (Three' a) where
   fmap f (Three' x y y') = Three' x (f y) (f y')
 
-instance Applicative (Three' a) where
-  pure = undefined
-  (<*>) = undefined
+instance Monoid a => Applicative (Three' a) where
+  pure x                           = Three' mempty x x
+  Three' x f f' <*> Three' x' y y' = Three' (x <> x') (f y) (f' y')
 
 instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
   arbitrary = do
@@ -101,8 +98,7 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
 instance (Eq a, Eq b) => EqProp (Three' a b) where
   (=-=) = eq
 
-three' :: Three' String SSI
-three' = undefined
+three' = undefined :: Three' String SSI
 
 -----------------------------------------------------------------------------
 main :: IO ()
@@ -118,3 +114,4 @@ main = do
   quickBatch $ applicative three
   putStrLn "\n4. Three'"
   quickBatch $ functor     three'
+  quickBatch $ applicative three'
