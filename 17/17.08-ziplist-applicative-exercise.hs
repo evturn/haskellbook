@@ -7,7 +7,9 @@ data List a = Nil
             deriving (Eq, Show)
 
 take' :: Int -> List a -> List a
-take' = undefined
+take' _ Nil         = Nil
+take' 0 _           = Nil
+take' n (Cons x xs) = Cons x (take' (n - 1) xs)
 
 instance Functor List where
   fmap _ Nil         = Nil
@@ -46,27 +48,15 @@ instance Functor ZipList' where
   fmap f (ZipList' xs) = ZipList' $ fmap f xs
 
 instance Applicative ZipList' where
-  pure x                        = ZipList' $ repeat' x
-  _            <*> ZipList' Nil = ZipList' Nil
-  ZipList' Nil <*> _            = ZipList' Nil
-  ZipList' fs  <*> ZipList' xs  = ZipList' $ zipWith' id fs xs
+  pure x                        = ZipList' $ pure x
+  ZipList' _   <*> ZipList' Nil = ZipList' Nil
+  ZipList' Nil <*> ZipList' _   = ZipList' Nil
+  ZipList' fs  <*> ZipList' xs  = ZipList' $ fs <*> xs
 
 instance Arbitrary a => Arbitrary (ZipList' a) where
-  arbitrary = do
-    x <- arbitrary
-    return $ ZipList' $ Cons x Nil
-
-repeat' :: a -> (List a)
-repeat' x = xs
-  where
-    xs = Cons x xs
-
-zipWith' :: (a -> b -> c) -> List a -> List b -> List c
-zipWith' _ Nil _                   = Nil
-zipWith' _ _ Nil                   = Nil
-zipWith' f (Cons x xs) (Cons y ys) = Cons (f x y) (zipWith' f xs ys)
+  arbitrary = ZipList' <$> arbitrary
 
 main :: IO ()
 main = do
-  putStrLn "Here we go."
+  putStrLn "\n- ZipList'"
   quickBatch $ applicative $ ZipList' $ Cons ('a', 'b', 'c') Nil
