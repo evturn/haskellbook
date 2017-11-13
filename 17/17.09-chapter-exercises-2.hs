@@ -81,6 +81,30 @@ three :: Three String String SSI
 three = undefined
 
 -----------------------------------------------------------------------------
+-- 4.
+data Three' a b = Three' a b b
+  deriving (Eq, Show)
+
+instance Functor (Three' a) where
+  fmap f (Three' x y y') = Three' x (f y) (f y')
+
+instance Applicative (Three' a) where
+  pure = undefined
+  (<*>) = undefined
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Three' x y y
+
+instance (Eq a, Eq b) => EqProp (Three' a b) where
+  (=-=) = eq
+
+three' :: Three' String SSI
+three' = undefined
+
+-----------------------------------------------------------------------------
 main :: IO ()
 main = do
   putStrLn "\n1. Pair"
@@ -89,6 +113,8 @@ main = do
   putStrLn "\n2. Two"
   quickBatch $ functor     two
   quickBatch $ applicative two
-  putStrLn "\n2. Three"
+  putStrLn "\n3. Three"
   quickBatch $ functor     three
   quickBatch $ applicative three
+  putStrLn "\n4. Three'"
+  quickBatch $ functor     three'
