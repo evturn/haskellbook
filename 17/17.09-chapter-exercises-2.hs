@@ -130,6 +130,30 @@ instance (Eq a, Eq b, Eq c, Eq d) => EqProp (Four a b c d) where
 four = undefined :: Four String String String SSI
 
 -----------------------------------------------------------------------------
+-- 6.
+data Four' a b = Four' a a a b
+  deriving (Eq, Show)
+
+instance Functor (Four' a) where
+  fmap f (Four' x x' x'' y) = Four' x x' x'' (f y)
+
+instance Monoid a => Applicative (Four' a) where
+  pure x = Four' mempty mempty mempty x
+  Four' x x' x'' f <*> Four' y y' y'' z =
+    Four' (x <> y) (x' <> y') (x'' <> y'') (f z)
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Four' a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Four' x x x y
+
+instance (Eq a, Eq b) => EqProp (Four' a b) where
+  (=-=) = eq
+
+four' = undefined :: Four' String SSI
+
+-----------------------------------------------------------------------------
 main :: IO ()
 main = do
   putStrLn "\n1. Pair"
@@ -147,3 +171,6 @@ main = do
   putStrLn "\n5. Four"
   quickBatch $ functor     four
   quickBatch $ applicative four
+  putStrLn "\n6. Four'"
+  quickBatch $ functor     four'
+  quickBatch $ applicative four'
