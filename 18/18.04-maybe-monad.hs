@@ -1,13 +1,8 @@
--- ∨ -------------------------------- ∨ ---------------------------------- ∨ --
--- (>>=) :: Monad m => m a -> (a ->     m b) ->     m b
--- (>>=) ::        Maybe a -> (a -> Maybe b) -> Maybe b
--- ∧ -------------------------------- ∧ ---------------------------------- ∧ --
-
-data Cow = Cow {
-      name   :: String
+data Cow = Cow
+    { name   :: String
     , age    :: Int
     , weight :: Int
-   } deriving (Eq, Show)
+    } deriving (Eq, Show)
 
 noEmpty :: String -> Maybe String
 noEmpty ""  = Nothing
@@ -18,25 +13,23 @@ noNegative n | n >= 0    = Just n
              | otherwise = Nothing
 
 weightCheck :: Cow -> Maybe Cow
-weightCheck c =
-  let w = weight c
-      n = name c
-  in if n == "Bess" && w > 499
-     then Nothing
-     else Just c
+weightCheck c = let w = weight c
+                    n = name c
+                in if n == "Bess" && w > 499
+                   then Nothing
+                   else Just c
 
 mkSphericalCow :: String -> Int -> Int -> Maybe Cow
 mkSphericalCow name' age' weight' =
   case noEmpty name' of
-    Nothing -> Nothing
+    Nothing    -> Nothing
     Just nammy ->
       case noNegative age' of
-        Nothing -> Nothing
+        Nothing   -> Nothing
         Just agey ->
           case noNegative weight' of
-            Nothing -> Nothing
-            Just weighty ->
-              weightCheck (Cow nammy agey weighty)
+            Nothing      -> Nothing
+            Just weighty -> weightCheck (Cow nammy agey weighty)
 
 mkSphericalCow' :: String -> Int -> Int -> Maybe Cow
 mkSphericalCow' name' age' weight' = do
@@ -45,14 +38,23 @@ mkSphericalCow' name' age' weight' = do
   weighty <- noNegative weight'
   weightCheck (Cow nammy agey weighty)
 
+{- | https://github.com/ghc/ghc/blob/master/libraries/base/GHC/Base.hs
+
+  instance Monad Maybe where
+    return x            = Just x
+
+    (Just x) >>= k      = k x
+    Nothing  >>= _      = Nothing
+
+    (>>) = (*>)
+
+-}
+
 mkSphericalCow'' :: String -> Int -> Int -> Maybe Cow
 mkSphericalCow'' name' age' weight' =
-  noEmpty name' >>=
-  \ nammy ->
-  noNegative age' >>=
-  \ agey ->
-  noNegative weight' >>=
-  \ weighty ->
+  noEmpty name' >>= \nammy ->
+  noNegative age' >>= \agey ->
+  noNegative weight' >>= \weighty ->
   weightCheck (Cow nammy agey weighty)
 
 f :: Integer -> Maybe Integer
@@ -60,14 +62,14 @@ f 0 = Nothing
 f n = Just n
 
 g :: Integer -> Maybe Integer
-g i =
-  if even i
-  then Just (i + 1)
-  else Nothing
+g i = if even i
+      then Just (i + 1)
+      else Nothing
 
 h :: Integer -> Maybe String
 h i = Just ("10191" ++ show i)
 
+doSomething' :: Integer -> Maybe (Integer, Integer, String)
 doSomething' n = do
   a <- f n
   b <- g a
