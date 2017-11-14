@@ -1,11 +1,10 @@
 module BadMonad where
 
-import Test.QuickCheck
-import Test.QuickCheck.Checkers
-import Test.QuickCheck.Classes
+import           Test.QuickCheck
+import           Test.QuickCheck.Checkers
+import           Test.QuickCheck.Classes
 
-data CountMe a =
-  CountMe Integer a
+data CountMe a = CountMe Integer a
   deriving (Eq, Show)
 
 instance Functor CountMe where
@@ -17,17 +16,20 @@ instance Applicative CountMe where
 
 instance Monad CountMe where
   return = pure
-  CountMe n a >>= f =
-    let CountMe n' b = f a
-    in CountMe (n + n') b
+  CountMe n a >>= f = let CountMe n' b = f a
+                       in CountMe (n + n') b
 
 instance Arbitrary a => Arbitrary (CountMe a) where
   arbitrary = CountMe <$> arbitrary <*> arbitrary
 
-instance Eq a => EqProp (CountMe a) where (=-=) = eq
+instance Eq a => EqProp (CountMe a) where
+  (=-=) = eq
+
+trigger :: CountMe (Int, String, Int)
+trigger = undefined
 
 main = do
-  let trigger = undefined :: CountMe (Int, String, Int)
   quickBatch $ functor trigger
   quickBatch $ applicative trigger
   quickBatch $ monad trigger
+
