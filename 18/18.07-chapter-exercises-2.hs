@@ -25,3 +25,8 @@ a ma mf = ma >>= (\a -> fmap (\f -> f a) mf)
 meh :: Monad m => [a] -> (a -> m b) -> m [b]
 meh [] _     = return []
 meh (x:xs) f = f x >>= (\b -> ((:) b) <$> (meh xs f))
+
+-----------------------------------------------------------------------------
+-- 6.
+flipType :: Monad m => [m a] -> m [a]
+flipType = flip meh $ id
