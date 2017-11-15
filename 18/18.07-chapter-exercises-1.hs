@@ -62,6 +62,31 @@ instance (Eq b, Eq a) => EqProp (PhhhbbtttEither b a) where
 
 peither = undefined :: PhhhbbtttEither String SSI
 
+-----------------------------------------------------------------------------
+-- 3.
+newtype Identity a = Identity a
+  deriving (Eq, Ord, Show)
+
+instance Functor Identity where
+  fmap f (Identity x) = Identity (f x)
+
+instance Applicative Identity where
+  pure = Identity
+  Identity f <*> Identity x = Identity (f x)
+
+instance Monad Identity where
+  return = pure
+  Identity x >>= f = f x
+
+instance Arbitrary a => Arbitrary (Identity a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Identity x
+
+instance Eq a => EqProp (Identity a) where
+  (=-=) = eq
+
+identity = undefined :: Identity SSI
 
 main :: IO ()
 main = do
@@ -73,3 +98,7 @@ main = do
   quickBatch $ functor     peither
   quickBatch $ applicative peither
   quickBatch $ monad       peither
+  putStrLn "\n3. Identity"
+  quickBatch $ functor     identity
+  quickBatch $ applicative identity
+  quickBatch $ monad       identity
