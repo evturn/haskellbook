@@ -88,6 +88,44 @@ instance Eq a => EqProp (Identity a) where
 
 identity = undefined :: Identity SSI
 
+-----------------------------------------------------------------------------
+-- 4.
+data List a = Nil
+            | Cons a (List a)
+            deriving (Eq, Show)
+
+instance Functor List where
+  fmap _ Nil         = Nil
+  fmap f (Cons x xs) = Cons (f x) (fmap f xs)
+
+instance Monoid (List a) where
+  mempty = Nil
+  mappend Nil ys         = ys
+  mappend (Cons x xs) ys = Cons x (xs `mappend` ys)
+
+instance Applicative List where
+  pure x = Cons x Nil
+  _         <*> Nil = Nil
+  Nil       <*> _   = Nil
+  Cons f fs <*> ys  = mappend (f <$> ys) (fs <*> ys)
+
+instance Monad List where
+  return = pure
+  Nil >>= _ = Nil
+  Cons x xs >>= f = f x `mappend` (xs >>= f)
+
+instance Arbitrary a => Arbitrary (List a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Cons x Nil
+
+instance Eq a => EqProp (List a) where
+  (=-=) = eq
+
+list = undefined :: List SSI
+
+-----------------------------------------------------------------------------
+
 main :: IO ()
 main = do
   putStrLn "\n1. Nope"
@@ -102,3 +140,8 @@ main = do
   quickBatch $ functor     identity
   quickBatch $ applicative identity
   quickBatch $ monad       identity
+  putStrLn "\n4. List"
+  quickBatch $ functor     list
+  quickBatch $ monoid      list
+  quickBatch $ applicative list
+  quickBatch $ monad       list
