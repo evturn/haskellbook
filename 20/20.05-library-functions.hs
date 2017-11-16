@@ -48,3 +48,10 @@ length' = foldr go 0
   where
     go _ b = b + 1
 
+-----------------------------------------------------------------------------
+-- 8.
+toList' :: (Foldable t) => t a -> [a]
+toList' = foldr go []
+  where
+    go a b = a : b
+
