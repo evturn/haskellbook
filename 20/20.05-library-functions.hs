@@ -33,3 +33,10 @@ maximum' = foldr go Nothing
   where
     go x Nothing  = Just x
     go x (Just y) = Just (max x y)
+
+-----------------------------------------------------------------------------
+-- 6.
+null' :: (Foldable t) => t a -> Bool
+null' = foldr go True
+  where
+    go _ _ = False
