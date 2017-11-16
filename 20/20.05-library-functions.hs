@@ -25,3 +25,11 @@ minimum' = foldr go Nothing
   where
     go x Nothing  = Just x
     go x (Just y) = Just (min x y)
+
+-----------------------------------------------------------------------------
+-- 5.
+maximum' :: (Foldable t, Ord a) => t a -> Maybe a
+maximum' = foldr go Nothing
+  where
+    go x Nothing  = Just x
+    go x (Just y) = Just (max x y)
