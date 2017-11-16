@@ -17,3 +17,11 @@ elem' :: (Foldable t, Eq a) => a -> t a -> Bool
 elem' x = foldr go False
   where
     go a b = b || x == a
+
+-----------------------------------------------------------------------------
+-- 4.
+minimum' :: (Foldable t, Ord a) => t a -> Maybe a
+minimum' = foldr go Nothing
+  where
+    go x Nothing  = Just x
+    go x (Just y) = Just (min x y)
