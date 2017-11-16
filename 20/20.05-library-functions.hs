@@ -40,3 +40,11 @@ null' :: (Foldable t) => t a -> Bool
 null' = foldr go True
   where
     go _ _ = False
+
+-----------------------------------------------------------------------------
+-- 7.
+length' :: (Foldable t) => t a -> Int
+length' = foldr go 0
+  where
+    go _ b = b + 1
+
