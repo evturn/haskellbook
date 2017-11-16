@@ -40,3 +40,16 @@ data Four' a b = Four' a b b b
 
 instance Foldable (Four' a) where
   foldMap f (Four' x y y' y'') = f y `mappend` f y' `mappend` f y''
+
+-----------------------------------------------------------------------------
+-- Write a filter function for `Foldable` types using `FoldMap`.
+--
+filterF :: ( Applicative f
+           , Foldable t
+           , Monoid (f a)
+           ) => (a -> Bool) -> t a -> f a
+filterF f = foldMap go
+  where
+    go x = if   f x
+           then pure x
+           else mempty
