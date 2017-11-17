@@ -174,6 +174,33 @@ instance (Eq a, Eq b) => EqProp (Pair a b) where
 pairTraversable :: Pair Int IIIs
 pairTraversable = undefined
 
+-----------------------------------------------------------------------------
+-- Big
+data Big a b = Big a b b
+  deriving (Eq, Show)
+
+instance Functor (Big a) where
+  fmap f (Big x y y') = Big x (f y) (f y')
+
+instance Foldable (Big a) where
+  foldMap f (Big _ y y') = f y `mappend` f y'
+
+instance Traversable (Big a) where
+  traverse f (Big x y y') = Big x <$> f y <*> f y'
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Big a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Big x y y
+
+instance (Eq a, Eq b) => EqProp (Big a b) where
+  (=-=) = eq
+
+bigTraversable :: Big Int IIIs
+bigTraversable = undefined
+
+
 main :: IO ()
 main = do
   putStrLn "\n-- Identity"
@@ -193,3 +220,6 @@ main = do
   putStrLn "\n-- Pair"
   quickBatch $ functor     pairTraversable
   quickBatch $ traversable pairTraversable
+  putStrLn "\n-- Big"
+  quickBatch $ functor     bigTraversable
+  quickBatch $ traversable bigTraversable
