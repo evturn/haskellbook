@@ -148,6 +148,31 @@ instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
 threeTraversable :: Three Int Int IIIs
 threeTraversable = undefined
 
+-----------------------------------------------------------------------------
+-- Pair
+data Pair a b = Pair a b
+  deriving (Eq, Show)
+
+instance Functor (Pair a) where
+  fmap f (Pair x y) = Pair x (f y)
+
+instance Foldable (Pair a) where
+  foldMap f (Pair _ y) = f y
+
+instance Traversable (Pair a) where
+  traverse f (Pair x y) = Pair x <$> f y
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Pair a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Pair x y
+
+instance (Eq a, Eq b) => EqProp (Pair a b) where
+  (=-=) = eq
+
+pairTraversable :: Pair Int IIIs
+pairTraversable = undefined
 
 main :: IO ()
 main = do
@@ -165,4 +190,6 @@ main = do
   quickBatch $ traversable listTraversable
   putStrLn "\n-- Three"
   quickBatch $ functor     threeTraversable
-  quickBatch $ traversable threeTraversable
+  putStrLn "\n-- Pair"
+  quickBatch $ functor     pairTraversable
+  quickBatch $ traversable pairTraversable
