@@ -1,13 +1,11 @@
-import Data.Traversable
-import Test.QuickCheck (Arbitrary, arbitrary, oneof)
-import Test.QuickCheck.Classes
-import Test.QuickCheck.Checkers
+import           Test.QuickCheck
+import           Test.QuickCheck.Checkers
+import           Test.QuickCheck.Classes
 
-data Tree a =
-    Empty
-  | Leaf a
-  | Node (Tree a) a (Tree a)
-  deriving (Eq, Show)
+data Tree a = Empty
+            | Leaf a
+            | Node (Tree a) a (Tree a)
+            deriving (Eq, Show)
 
 instance Functor Tree where
   fmap _ Empty        = Empty
@@ -25,17 +23,19 @@ instance Traversable Tree where
   traverse f (Node l x r) = Node <$> traverse f l <*> f x <*> traverse f r
 
 instance Arbitrary a => Arbitrary (Tree a) where
-  arbitrary = 
-    oneof [ return $ Empty
-          , Leaf <$> arbitrary
-          , Node <$> arbitrary <*> arbitrary <*> arbitrary 
-          ]
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    z <- arbitrary
+    return $ Node (Leaf x) y (Leaf z)
 
 instance Eq a => EqProp (Tree a) where
   (=-=) = eq
 
-treeTrigger = undefined :: Tree (Int, Int, [Int])
+tree :: Tree (Int, Int, [Int])
+tree = undefined
 
 main :: IO ()
 main = do
-  quickBatch $ traversable treeTrigger
+  quickBatch $ functor     tree
+  quickBatch $ traversable tree
