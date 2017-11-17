@@ -89,6 +89,36 @@ instance Eq a => EqProp (Optional a) where
 maybeTraversable :: Optional IIIs
 maybeTraversable = undefined
 
+-----------------------------------------------------------------------------
+-- List
+data List a = Nil
+            | Cons a (List a)
+            deriving (Eq, Show)
+
+instance Functor List where
+  fmap _ Nil        = Nil
+  fmap f (Cons x y) = Cons (f x) (fmap f y)
+
+instance Foldable List where
+  foldMap _ Nil        = mempty
+  foldMap f (Cons x y) = f x `mappend` foldMap f y
+
+instance Traversable List where
+  traverse _ Nil        = pure Nil
+  traverse f (Cons x y) = Cons <$> f x <*> traverse f y
+
+instance Arbitrary a => Arbitrary (List a) where
+  arbitrary = do
+    x <- arbitrary
+    return $ Cons x Nil
+
+instance Eq a => EqProp (List a) where
+  (=-=) = eq
+
+listTraversable :: List IIIs
+listTraversable = undefined
+
+
 main :: IO ()
 main = do
   putStrLn "\n-- Identity"
@@ -100,3 +130,6 @@ main = do
   putStrLn "\n-- Maybe"
   quickBatch $ functor     maybeTraversable
   quickBatch $ traversable maybeTraversable
+  putStrLn "\n-- List"
+  quickBatch $ functor     listTraversable
+  quickBatch $ traversable listTraversable
