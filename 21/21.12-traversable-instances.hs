@@ -200,6 +200,33 @@ instance (Eq a, Eq b) => EqProp (Big a b) where
 bigTraversable :: Big Int IIIs
 bigTraversable = undefined
 
+-----------------------------------------------------------------------------
+-- Bigger
+data Bigger a b = Bigger a b b b
+  deriving (Eq, Show)
+
+instance Functor (Bigger a) where
+  fmap f (Bigger x y y' y'') = Bigger x (f y) (f y') (f y'')
+
+instance Foldable (Bigger a) where
+  foldMap f (Bigger _ y y' y'') = f y `mappend` f y' `mappend` f y''
+
+instance Traversable (Bigger a) where
+  traverse f (Bigger x y y' y'')= Bigger x <$> f y <*> f y' <*> f y''
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Bigger a b) where
+  arbitrary = do
+    x <- arbitrary
+    y <- arbitrary
+    return $ Bigger x y y y
+
+instance (Eq a, Eq b) => EqProp (Bigger a b) where
+  (=-=) = eq
+
+biggerTraversable :: Bigger Int IIIs
+biggerTraversable = undefined
+
+-----------------------------------------------------------------------------
 
 main :: IO ()
 main = do
@@ -223,3 +250,6 @@ main = do
   putStrLn "\n-- Big"
   quickBatch $ functor     bigTraversable
   quickBatch $ traversable bigTraversable
+  putStrLn "\n-- Bigger"
+  quickBatch $ functor     biggerTraversable
+  quickBatch $ traversable biggerTraversable
