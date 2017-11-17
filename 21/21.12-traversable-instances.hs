@@ -57,6 +57,38 @@ instance (Eq a, Eq b) => EqProp (Constant a b) where
 constantTraversable :: Constant Int IIIs
 constantTraversable = undefined
 
+-----------------------------------------------------------------------------
+-- Maybe
+--
+data Optional a = Nada
+                | Yep a
+                deriving (Eq, Show)
+
+instance Functor Optional where
+  fmap _ Nada    = Nada
+  fmap f (Yep x) = Yep (f x)
+
+instance Foldable Optional where
+  foldMap _ Nada    = mempty
+  foldMap f (Yep x) = f x
+
+instance Traversable Optional where
+  traverse _ Nada    = pure Nada
+  traverse f (Yep x) = Yep <$> f x
+
+instance Arbitrary a => Arbitrary (Optional a) where
+  arbitrary = do
+    x <- arbitrary
+    elements [ Nada
+             , Yep x
+             ]
+
+instance Eq a => EqProp (Optional a) where
+  (=-=) = eq
+
+maybeTraversable :: Optional IIIs
+maybeTraversable = undefined
+
 main :: IO ()
 main = do
   putStrLn "\n-- Identity"
@@ -65,3 +97,6 @@ main = do
   putStrLn "\n-- Constant"
   quickBatch $ functor     constantTraversable
   quickBatch $ traversable constantTraversable
+  putStrLn "\n-- Maybe"
+  quickBatch $ functor     maybeTraversable
+  quickBatch $ traversable maybeTraversable
