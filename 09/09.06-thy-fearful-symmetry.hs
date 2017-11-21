@@ -30,5 +30,18 @@ shouldEqual = [ "Tyger Tyger, burning bright"
               , "Could frame thy fearful symmetry?"
               ]
 
+-----------------------------------------------------------------------------
+-- 3.
+breakOnChar :: Char -> String -> [String]
+breakOnChar c []     = []
+breakOnChar c (x:xs) = if c == x then breakOnChar c xs else breakOnChar c (x:xs)
+breakOnChar c xs     = takeWhile (/=c) xs : (breakOnChar c $ dropWhile (/=c) xs)
+
+myWords' :: String -> [String]
+myWords' xs = breakOnChar ' ' xs
+
+myLines' :: String -> [String]
+myLines' xs = breakOnChar '\n' xs
+
 main :: IO ()
 main = print $ "Are they equal? " ++ show (myLines sentences == shouldEqual)
