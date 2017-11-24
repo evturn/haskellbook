@@ -39,12 +39,30 @@ summed = uncurry (+)
 bolt :: Integer -> Bool
 bolt = (&&) <$> (>3) <*> (<8)
 
+sequA :: Integral a => a -> [Bool]
+sequA m = sequenceA [(>3), (<8), even] m
+
+s' :: Maybe Integer
+s' = summed <$> ((,) <$> xs <*> ys)
+
+-----------------------------------------------------------------------------
+-- 1.
+sequenceAll :: Integer -> Bool
+sequenceAll n = foldr (&&) True $ sequA n
+
+-----------------------------------------------------------------------------
+-- 2.
+sequenceSum :: [Bool]
+sequenceSum = sequA $ fromMaybe 0 s'
+
+-----------------------------------------------------------------------------
+-- 3.
+liftAll :: Bool
+liftAll = bolt $ fromMaybe 0 ys
+
+
 main :: IO ()
 main = do
-  print $ sequenceA [Just 3, Just 2, Just 1]
-  print $ sequenceA [x, y]
-  print $ sequenceA [xs, ys]
-  print $ summed <$> ((,) <$> xs <*> ys)
-  print $ fmap summed ((,) <$> xs <*> zs)
-  print $ bolt 7
-  print $ fmap bolt z
+  print $ sequenceAll 6
+  print sequenceSum
+  print liftAll
