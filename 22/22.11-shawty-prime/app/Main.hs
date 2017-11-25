@@ -4,6 +4,7 @@ module Main where
 
 import           Control.Monad          (replicateM)
 import           Control.Monad.IO.Class (liftIO)
+import           Control.Monad.Reader
 import qualified Data.ByteString.Char8  as BC
 import           Data.Text.Encoding     (decodeUtf8, encodeUtf8)
 import qualified Data.Text.Lazy         as TL
@@ -91,8 +92,15 @@ app rConn = do
                           tbs :: TL.Text
                           tbs = TL.fromStrict (decodeUtf8 bs)
 
+runApp :: ReaderT R.Connection IO ()
+runApp = ReaderT (\r -> scotty 3000 (app r))
+
+rConn :: IO R.Connection
+rConn = do
+  putStrLn "Connecting to Redis"
+  R.connect R.defaultConnectInfo
 
 main :: IO ()
 main = do
-  rConn <- R.connect R.defaultConnectInfo
-  scotty 3000 (app rConn)
+  connection <- rConn
+  runReaderT runApp connection
