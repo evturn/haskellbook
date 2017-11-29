@@ -30,7 +30,7 @@
 - [Foldable](https://github.com/evturn/haskellbook/tree/master/20)
 - [Traversable](https://github.com/evturn/haskellbook/tree/master/21)
 - [Reader](https://github.com/evturn/haskellbook/tree/master/22)
-- State
+- [State](https://github.com/evturn/haskellbook/tree/master/23)
 - Parser Combinators
 - Composing Types
 - Monad Transformers
