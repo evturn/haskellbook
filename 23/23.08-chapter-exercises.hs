@@ -10,3 +10,8 @@ get = State $ \x -> (x, x)
 -- 2.
 put :: s -> State s ()
 put x = State $ \_ -> ((), x)
+
+-----------------------------------------------------------------------------
+-- 3.
+exec :: State s a -> s -> s
+exec (State sa) s = snd $ runState (State $ \_ -> sa s) s
