@@ -15,3 +15,13 @@ put x = State $ \_ -> ((), x)
 -- 3.
 exec :: State s a -> s -> s
 exec (State sa) s = snd $ runState (State $ \_ -> sa s) s
+
+-----------------------------------------------------------------------------
+-- 4.
+eval :: State s a -> s -> a
+eval (State sa) = \x -> fst $ sa x
+
+-----------------------------------------------------------------------------
+-- 5.
+modify :: (s -> s) -> State s ()
+modify = \f -> State $ \x -> ((), f x)
