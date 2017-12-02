@@ -14,9 +14,9 @@ one' = one >> stop
 
 type Token = Char
 
-type    Parser'   a =     String -> Maybe  (a, String)
-newtype Parser''  a = P ([Token] ->       [(a, Token)])
-type    Parser''' a =     String ->       [(a, String)]
+type    Parser'   a =     String -> Maybe  (a,  String)
+newtype Parser''  a = P ([Token] ->       [(a, [Token])])
+type    Parser''' a =     String ->       [(a,  String)]
 
 oneTwo :: Parser Char
 oneTwo = char '1' >> char '2'
