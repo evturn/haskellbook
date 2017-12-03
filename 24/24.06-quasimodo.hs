@@ -18,8 +18,7 @@ eitherOr = [r|
 123
 abc
 456
-def
-|]
+def|]
 
 main :: IO ()
 main = do
