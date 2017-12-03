@@ -25,6 +25,13 @@ testEOF p = print $ parseString p mempty "123"
 three :: Parser Char
 three = char '3'
 
+-----------------------------------------------------------------------------
+-- 2.
+testString :: Parser String -> IO ()
+testString p = print $ parseString p mempty "123"
+
+strParser :: String -> Parser String
+strParser s = string s
 
 main :: IO ()
 main = do
@@ -34,3 +41,7 @@ main = do
   testEOF $ oneTwo >> eof
   pNL "1 >> 2 >> 3 >> eof:"
   testEOF $ one >> two >> three >> eof
+  pNL "String parsers:"
+  testString $ strParser "1"
+  testString $ strParser "12"
+  testString $ strParser "123"
