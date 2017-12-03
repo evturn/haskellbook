@@ -33,6 +33,16 @@ testString p = print $ parseString p mempty "123"
 strParser :: String -> Parser String
 strParser s = string s
 
+-----------------------------------------------------------------------------
+-- 3.
+rStrParser :: String -> Parser String
+rStrParser [] = return []
+rStrParser (x:xs) = do
+  char x
+  rStrParser xs
+  return (x:xs)
+
+
 main :: IO ()
 main = do
   pNL "one:"
@@ -45,3 +55,7 @@ main = do
   testString $ strParser "1"
   testString $ strParser "12"
   testString $ strParser "123"
+  pNL "String parser using char:"
+  testString $ rStrParser "1"
+  testString $ rStrParser "12"
+  testString $ rStrParser "123"
