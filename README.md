@@ -31,7 +31,7 @@
 - [Traversable](https://github.com/evturn/haskellbook/tree/master/21)
 - [Reader](https://github.com/evturn/haskellbook/tree/master/22)
 - [State](https://github.com/evturn/haskellbook/tree/master/23)
-- Parser Combinators
+- [Parser Combinators](https://github.com/evturn/haskellbook/tree/master/24)
 - Composing Types
 - Monad Transformers
 - Non-strictness
