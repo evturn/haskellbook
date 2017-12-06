@@ -17,7 +17,22 @@ sectionJson = [r|
 }
 |]
 
+data TestData = TestData
+    { section :: Host
+    , what    :: Color
+    } deriving (Eq, Show)
+
+newtype Host = Host String
+  deriving (Eq, Show)
+
+type Annotation = String
+
+data Color = Red    Annotation
+           | Blue   Annotation
+           | Yellow Annotation
+           deriving (Eq, Show)
+
 main = do
-  let blah :: Maybe Value
-      blah = decode sectionJson
-  print blah
+  let d :: Maybe TestData
+      d = decode sectionJson
+  print d
