@@ -24,14 +24,18 @@ nobackParse = (char '1' >> char '2') <|> char '3'
 tryParse :: (Monad f, CharParsing f) => f Char
 tryParse = try (char '1' >> char '2') <|> char '3'
 
+tryAnnot :: (Monad f, CharParsing f) => f Char
+tryAnnot = (try (char '1' >> char '2') <?> "Tried 12")
+            <|> (char '3' <?> "Tried 3")
+
 main :: IO ()
 main = do
-  trifP nobackParse "13"
-  trifP tryParse "13"
+  trifP nobackParse "12"
+  trifP tryParse "3"
 
-  parsecP nobackParse "13"
-  parsecP tryParse "13"
+  parsecP nobackParse "12"
+  parsecP tryParse "3"
 
-  attoP nobackParse "13"
-  attoP tryParse "13"
+  attoP nobackParse "12"
+  attoP tryParse "3"
 
