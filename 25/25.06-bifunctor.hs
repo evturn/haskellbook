@@ -24,3 +24,11 @@ data Const a b = Const a
 
 instance Bifunctor Const where
   bimap f _ (Const x) = Const (f x)
+
+-----------------------------------------------------------------------------
+-- 3.
+data Drei a b c = Drei a b c
+  deriving (Eq, Show)
+
+instance Bifunctor (Drei a) where
+  bimap f g (Drei x y z) = Drei x (f y) (g z)
