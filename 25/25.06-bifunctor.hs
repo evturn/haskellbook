@@ -16,3 +16,11 @@ data Deux a b = Deux a b
 
 instance Bifunctor Deux where
   bimap f g (Deux x y) = Deux (f x) (g y)
+
+-----------------------------------------------------------------------------
+-- 2.
+data Const a b = Const a
+  deriving (Eq, Show)
+
+instance Bifunctor Const where
+  bimap f _ (Const x) = Const (f x)
