@@ -48,3 +48,11 @@ data SemiDrei a b c = SemiDrei a
 
 instance Bifunctor (SemiDrei a) where
   bimap _ _ (SemiDrei x) = SemiDrei x
+
+-----------------------------------------------------------------------------
+-- 6.
+data Quadriceps a b c d = Quadzzz a b c d
+  deriving (Eq, Show)
+
+instance Bifunctor (Quadriceps a b) where
+  bimap f g (Quadzzz w x y z) = Quadzzz w x (f y) (g z)
