@@ -40,3 +40,11 @@ data SuperDrei a b c = SuperDrei a b
 
 instance Bifunctor (SuperDrei a) where
   bimap f _ (SuperDrei x y) = SuperDrei x (f y)
+
+-----------------------------------------------------------------------------
+-- 5.
+data SemiDrei a b c = SemiDrei a
+  deriving (Eq, Show)
+
+instance Bifunctor (SemiDrei a) where
+  bimap _ _ (SemiDrei x) = SemiDrei x
