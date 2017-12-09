@@ -32,3 +32,11 @@ data Drei a b c = Drei a b c
 
 instance Bifunctor (Drei a) where
   bimap f g (Drei x y z) = Drei x (f y) (g z)
+
+-----------------------------------------------------------------------------
+-- 4.
+data SuperDrei a b c = SuperDrei a b
+  deriving (Eq, Show)
+
+instance Bifunctor (SuperDrei a) where
+  bimap f _ (SuperDrei x y) = SuperDrei x (f y)
