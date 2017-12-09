@@ -56,3 +56,13 @@ data Quadriceps a b c d = Quadzzz a b c d
 
 instance Bifunctor (Quadriceps a b) where
   bimap f g (Quadzzz w x y z) = Quadzzz w x (f y) (g z)
+
+-----------------------------------------------------------------------------
+-- 7.
+data Either' a b = Left' a
+                 | Right' b
+                 deriving (Eq, Show)
+
+instance Bifunctor Either' where
+  bimap f _ (Left' x)  = Left' (f x)
+  bimap _ g (Right' y) = Right' (g y)
