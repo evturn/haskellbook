@@ -15,3 +15,11 @@ instance Monad m => Applicative (StateT s m) where
     (x, s'') <- mx s'
     return (f x, s'')
 
+-----------------------------------------------------------------------------
+-- 3.
+instance Monad m => Monad (StateT s m) where
+  return = pure
+  StateT m >>= f = StateT $ \s -> do
+    (x, s') <- m s
+    runStateT (f x) s'
+
