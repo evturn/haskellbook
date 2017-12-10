@@ -33,7 +33,7 @@
 - [State](https://github.com/evturn/haskellbook/tree/master/23)
 - [Parser Combinators](https://github.com/evturn/haskellbook/tree/master/24)
 - [Composing Types](https://github.com/evturn/haskellbook/tree/master/25)
-- Monad Transformers
+- [Monad Transformers](https://github.com/evturn/haskellbook/tree/master/26)
 - Non-strictness
 - Basic Libraries
 - IO
