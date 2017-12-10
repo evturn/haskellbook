@@ -21,3 +21,11 @@ instance Monad m => Monad (EitherT e m) where
     case x of
       Left y  -> return (Left y)
       Right z -> runEitherT $ f z
+
+-----------------------------------------------------------------------------
+-- 4.
+swapEitherT :: Functor m => EitherT e m a -> EitherT a m e
+swapEitherT (EitherT x) = EitherT $ fmap go x
+  where
+    go (Left e)  = Right e
+    go (Right a) = Left a
