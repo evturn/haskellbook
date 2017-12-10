@@ -29,3 +29,12 @@ swapEitherT (EitherT x) = EitherT $ fmap go x
   where
     go (Left e)  = Right e
     go (Right a) = Left a
+
+-----------------------------------------------------------------------------
+-- 5.
+eitherT :: Monad m => (a -> m c) -> (b -> m c) -> EitherT a m b -> m c
+eitherT f g (EitherT m) = do
+  x <- m
+  case x of
+    Left a  -> f a
+    Right b -> g b
