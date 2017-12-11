@@ -1,4 +1,5 @@
 import           Control.Monad.Trans.Reader
+import           Control.Monad.Trans.State
 import           Data.Functor.Identity
 
 -----------------------------------------------------------------------------
@@ -23,3 +24,9 @@ rPrintAndInc = ReaderT $ \r -> do
   putStrLn ("Hi: " ++ show r)
   return $ r + 1
 
+-----------------------------------------------------------------------------
+-- 6.
+sPrintIncAccum :: (Num a, Show a) => StateT a IO String
+sPrintIncAccum = StateT $ \s -> do
+  putStrLn ("Hi: " ++ show s)
+  return (show s, s + 1)
