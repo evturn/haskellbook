@@ -34,7 +34,7 @@
 - [Parser Combinators](https://github.com/evturn/haskellbook/tree/master/24)
 - [Composing Types](https://github.com/evturn/haskellbook/tree/master/25)
 - [Monad Transformers](https://github.com/evturn/haskellbook/tree/master/26)
-- Non-strictness
+- [Non-strictness](https://github.com/evturn/haskellbook/tree/master/27)
 - Basic Libraries
 - IO
 - Exceptions
