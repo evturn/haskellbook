@@ -54,13 +54,10 @@ chris = Person (HumanName "Chris Allen")
                (Address   "Austin")
 
 getDogRM :: Person -> Dog
-getDogRm = do
+getDogRM = do
   name <- dogName
   addy <- address
   return $ Dog name addy
 
 getDogRM' :: Reader Person Dog
-getDogRM' = do
-  x <- Reader dogName
-  y <- Reader address
-  return $ Dog x y
+getDogRM' = Reader $ getDogRM
