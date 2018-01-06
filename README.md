@@ -35,7 +35,7 @@
 - [Composing Types](https://github.com/evturn/haskellbook/tree/master/25)
 - [Monad Transformers](https://github.com/evturn/haskellbook/tree/master/26)
 - [Non-strictness](https://github.com/evturn/haskellbook/tree/master/27)
-- Basic Libraries
+- [Basic Libraries](https://github.com/evturn/haskellbook/tree/master/28)
 - IO
 - Exceptions
 - Final Project
