@@ -17,11 +17,12 @@ library
   build-depends:     base >=4.7 && <5
                    , bytestring 
                    , containers
-                   , hspec
+                   , directory
                    , raw-strings-qq
                    , text
                    , trifecta
   exposed-modules:   Parser
+                   , Run
   other-modules:     Paths_ini_parser
   default-language:  Haskell2010
 
