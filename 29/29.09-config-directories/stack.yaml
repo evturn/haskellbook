@@ -1,0 +1,4 @@
+resolver: lts-10.2
+packages:
+- .
+extra-library-dirs: ~/.cabal/packages/hackage.haskell.org/

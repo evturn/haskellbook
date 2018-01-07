@@ -1,0 +1,40 @@
+name:                ini-parser
+version:             0.1.0.0
+description:         Configurations, am I right?
+homepage:            https://github.com/evturn/haskellbook
+bug-reports:         https://github.com/evturn/haskellbook
+author:              Evan Turner
+maintainer:          ev@evturn.com
+copyright:           Copyright (c) 2018 Evan Turner
+license:             BSD3
+license-file:        LICENSE
+build-type:          Simple
+cabal-version:       >= 1.10
+extra-source-files:  README.md
+
+library
+  hs-source-dirs:    src
+  build-depends:     base >=4.7 && <5
+                   , bytestring 
+                   , containers
+                   , hspec
+                   , raw-strings-qq
+                   , text
+                   , trifecta
+  exposed-modules:   Parser
+  other-modules:     Paths_ini_parser
+  default-language:  Haskell2010
+
+executable ini-parser
+  main-is:           Main.hs
+  hs-source-dirs:    app
+  ghc-options:       -threaded -rtsopts -with-rtsopts=-N
+  build-depends:     base >=4.7 && <5
+                   , ini-parser
+  other-modules:     Paths_ini_parser
+  default-language:  Haskell2010
+
+source-repository head
+  type:              git
+  location:          https://github.com/evturn/haskellbook
+
