@@ -36,7 +36,7 @@
 - [Monad Transformers](https://github.com/evturn/haskellbook/tree/master/26)
 - [Non-strictness](https://github.com/evturn/haskellbook/tree/master/27)
 - [Basic Libraries](https://github.com/evturn/haskellbook/tree/master/28)
-- IO
+- [IO](https://github.com/evturn/haskellbook/tree/master/29)
 - Exceptions
 - Final Project
 
