@@ -29,5 +29,11 @@ cons x xs = DL ((x:) . unDL xs)
 -- 5.
 infixl `snoc`
 snoc :: DList a -> a -> DList a
-snoc xs x = DL ((++ [x]) . unDL xs)
+snoc xs x = DL ((++  [x]) . unDL xs)
 {-# INLINE snoc #-}
+
+-----------------------------------------------------------------------------
+-- 6.
+append :: DList a -> DList a -> DList a
+append xs ys = DL (unDL xs . unDL ys)
+{-# INLINE append #-}
