@@ -1,0 +1,50 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 64318baff6f68e7a0421d79b829d65faca12c8289a2da5640de8038c30294485
+
+name:           vigenere
+version:        0.1.0.0
+description:    Ok, so like I know what this looks like.
+homepage:       https://github.com/evturn/haskellbook
+bug-reports:    https://github.com/evturn/haskellbook
+author:         Evan Turner
+maintainer:     ev@evturn.com
+copyright:      Copyright (c) 2018 Evan Turner
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/evturn/haskellbook
+
+library
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  exposed-modules:
+      Vigenere
+    , Cipher
+  other-modules:
+      Paths_vigenere
+  default-language: Haskell2010
+
+executable vigenere
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , vigenere
+  other-modules:
+      Paths_vigenere
+  default-language: Haskell2010
