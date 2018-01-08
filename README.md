@@ -37,6 +37,6 @@
 - [Non-strictness](https://github.com/evturn/haskellbook/tree/master/27)
 - [Basic Libraries](https://github.com/evturn/haskellbook/tree/master/28)
 - [IO](https://github.com/evturn/haskellbook/tree/master/29)
-- Exceptions
+- [Exceptions](https://github.com/evturn/haskellbook/tree/master/30)
 - Final Project
 
