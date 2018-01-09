@@ -1,0 +1,34 @@
+name:                fingerd
+version:             0.1.0.0
+synopsis:            Yes, it's true.
+description:         An audio version of the dictionary from cover to cover.
+homepage:            https://github.com/evturn/haskellbook
+license:             BSD3
+license-file:        LICENSE
+author:              Evan Turner
+maintainer:          ev@evturn.com
+copyright:           Copyright (c) 2018 Evan Turner
+category:            Very Cool
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  README.md
+
+executable debug
+  ghc-options:         -Wall
+  hs-source-dirs:      src
+  main-is:             Debug.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.7 && < 5
+                     , network
+
+executable fingerd
+  ghc-options:         -Wall
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.7 && < 5
+                     , bytestring
+                     , network
+                     , raw-strings-qq
+                     , sqlite-simple
+                     , text
