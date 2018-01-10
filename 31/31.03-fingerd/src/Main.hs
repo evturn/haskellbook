@@ -20,7 +20,53 @@ import           Network.Socket               hiding (close, recv)
 import           Network.Socket.ByteString    (recv, sendAll)
 import           Text.RawString.QQ
 
+data User = User
+    { userId        :: Integer
+    , username      :: Text
+    , shell         :: Text
+    , homeDirectory :: Text
+    , realName      :: Text
+    , phone         :: Text
+    } deriving (Eq, Show)
 
+instance FromRow User where
+  fromRow = User <$> field
+                 <*> field
+                 <*> field
+                 <*> field
+                 <*> field
+                 <*> field
+
+instance ToRow User where
+  toRow (User id_ username shell homeDir realName phone) =
+    toRow ( id_
+          , username
+          , shell
+          , homeDir
+          , realName
+          , phone
+          )
+
+createUsers :: Query
+createUsers = [r|
+CREATE TABLE IF NOT EXISTS users
+  ( id INTEGER PRIMARY KEY AUTOINCREMENT
+  , username TEXT UNIQUE
+  , shell TEXT
+  , homeDirectory TEXT
+  , realName TEXT
+  , phone TEXT
+  )
+|]
+
+insertUser :: Query
+insertUser = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)"
+
+allUser :: Query
+allUsers = "SELECT * from users"
+
+getUserQuery :: Query
+getUserQuery = "SELECT * from users where username = ?"
 
 main :: IO ()
 main = do
