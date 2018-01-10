@@ -38,5 +38,5 @@
 - [Basic Libraries](https://github.com/evturn/haskellbook/tree/master/28)
 - [IO](https://github.com/evturn/haskellbook/tree/master/29)
 - [Exceptions](https://github.com/evturn/haskellbook/tree/master/30)
-- Final Project
+- [Final Project](https://github.com/evturn/haskellbook/tree/master/31)
 
