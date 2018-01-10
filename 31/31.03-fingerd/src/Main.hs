@@ -101,5 +101,31 @@ createDatabase = do
               , "555-123-4567"
               )
 
+returnUsers :: Connection -> Socket -> IO ()
+returnUsers dbConn soc = do
+  rows <- query_ dbConn allUsers
+  let usernames       = map username rows
+      newlinSeparated = T.concat $ intersperse "\n" usernames
+  sendAll soc (encodeUtf8 newlineSeparated)
+
+formatUser :: User -> ByteString
+formatUser (User _ username shell homeDir realName _) = BS.concat
+  [ "Login: ",      e  username, "\t\t\t\t"
+  , "Name: ",       e  realName, "\n"
+  , "Directory: " , e  homeDir,  "\t\t\t"
+  , "Shell :",      e  shell,    "\n"
+  ]
+    where
+      e = encodeUtf8
+
+returnUser :: Connection -> Socket -> Text -> IO ()
+returnUser dbConn soc username = do
+  maybeUser <- getUser dbConn (T.strip username)
+  case maybeUser of
+    Nothing   -> do
+      putStrLn ("Couldn't find matching user for username: " ++ (show username))
+      return ()
+    Just user -> sendAll soc (formatUser user)
+
 main :: IO ()
 main = createDatabase
