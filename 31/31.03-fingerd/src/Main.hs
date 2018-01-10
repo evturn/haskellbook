@@ -13,8 +13,8 @@ import           Data.Text                    (Text)
 import qualified Data.Text                    as T
 import           Data.Text.Encoding           (decodeUtf8, encodeUtf8)
 import           Data.Typeable
-import qualified Database.SQList.Simple       as SQLite
 import           Database.SQLite.Simple       hiding (close)
+import qualified Database.SQLite.Simple       as SQLite
 import           Database.SQLite.Simple.Types
 import           Network.Socket               hiding (close, recv)
 import           Network.Socket.ByteString    (recv, sendAll)
@@ -62,12 +62,44 @@ CREATE TABLE IF NOT EXISTS users
 insertUser :: Query
 insertUser = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)"
 
-allUser :: Query
+allUsers :: Query
 allUsers = "SELECT * from users"
 
 getUserQuery :: Query
 getUserQuery = "SELECT * from users where username = ?"
 
+data DuplicateData = DuplicateData
+  deriving (Eq, Show, Typeable)
+
+instance Exception DuplicateData
+
+type UserRow = (Null, Text, Text, Text, Text, Text)
+
+getUser :: Connection -> Text -> IO (Maybe User)
+getUser conn username = do
+  results <- query conn getUserQuery (Only username)
+  case results of
+    []     -> return $ Nothing
+    [user] -> return $ Just user
+    _      -> throwIO DuplicateData
+
+createDatabase :: IO ()
+createDatabase = do
+  conn <- open "finger.db"
+  execute_ conn createUsers
+  execute conn insertUser meRow
+  rows <- query_ conn allUsers
+  mapM_ print (rows :: [User])
+  SQLite.close conn
+    where
+      meRow :: UserRow
+      meRow = ( Null
+              , "callen"
+              , "/bin/zsh"
+              , "/home/callen"
+              , "Chris Allen"
+              , "555-123-4567"
+              )
+
 main :: IO ()
-main = do
-  putStrLn "For store hours press 4"
+main = createDatabase
