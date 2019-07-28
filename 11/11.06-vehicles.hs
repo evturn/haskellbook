@@ -40,6 +40,18 @@ isCar :: Vehicle -> Bool
 isCar (Car _ _) = True
 isCar _         = False
 
+-- Alternative implemantations:
+isCar2 :: Vehicle -> Bool
+isCar2 vehicle = case vehicle of
+  (Car _ _) -> True
+  _ -> False
+
+isCar3 :: Vehicle -> Bool
+isCar3 vehicle
+  | (Car _ _) <- vehicle = True
+  | otherwise = False
+ 
+
 isPlane :: Vehicle -> Bool
 isPlane (Plane _ _) = True
 isPlane _           = False
