@@ -23,11 +23,10 @@ instance Traversable Tree where
   traverse f (Node l x r) = Node <$> traverse f l <*> f x <*> traverse f r
 
 instance Arbitrary a => Arbitrary (Tree a) where
-  arbitrary = do
-    x <- arbitrary
-    y <- arbitrary
-    z <- arbitrary
-    return $ Node (Leaf x) y (Leaf z)
+     arbitrary = frequency [
+                            (1, return Empty)
+                            ,(1, Leaf <$> arbitrary)
+                            ,(1, Node <$> arbitrary <*> arbitrary <*> arbitrary)]
 
 instance Eq a => EqProp (Tree a) where
   (=-=) = eq
